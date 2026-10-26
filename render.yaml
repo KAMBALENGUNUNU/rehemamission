@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: rehema-mission-rwanda
+    runtime: static
+    buildCommand: npm run build
+    staticPublishPath: ./dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_SUPABASE_URL
+        value: https://lkcvjxliynexqjmujyxq.supabase.co
+      - key: VITE_SUPABASE_ANON_KEY
+        value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxrY3ZqeGxpeW5leHFqbXVqeXhxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY3ODA1NzgsImV4cCI6MjEwMjM1NjU3OH0.4sgYWa6PIFQtHwUuK2B6JhSUOe0GWbRp9sOnV6mpaI8
