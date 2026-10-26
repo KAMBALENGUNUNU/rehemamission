@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-slate-50 text-slate-900 font-sans antialiased selection:bg-amber-200 selection:text-slate-900;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply px-7 py-3 bg-slate-900 text-white font-sans text-xs sm:text-sm font-semibold tracking-[0.16em] uppercase transition-all duration-300 hover:bg-amber-500 hover:text-slate-950 hover:shadow-md disabled:opacity-40 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2;
+  }
+  .btn-accent {
+    @apply px-7 py-3 bg-amber-500 text-slate-950 font-sans text-xs sm:text-sm font-semibold tracking-[0.16em] uppercase transition-all duration-300 hover:bg-amber-400 hover:shadow-md hover:shadow-amber-500/20 inline-flex items-center justify-center gap-2;
+  }
+  .btn-outline {
+    @apply px-7 py-3 border border-slate-800 text-slate-900 font-sans text-xs sm:text-sm font-semibold tracking-[0.16em] uppercase transition-all duration-300 hover:bg-slate-900 hover:text-white inline-flex items-center justify-center gap-2;
+  }
+  .btn-outline-clear {
+    @apply px-7 py-3 border border-slate-300 bg-white/90 text-slate-800 font-sans text-xs sm:text-sm font-semibold tracking-[0.16em] uppercase transition-all duration-300 hover:border-slate-900 hover:text-slate-950 hover:bg-white inline-flex items-center justify-center gap-2 shadow-sm;
+  }
+  .input-field {
+    @apply w-full px-4 py-3 bg-white border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-colors duration-200 text-sm;
+  }
+  .section-title {
+    @apply font-serif text-3xl sm:text-4xl md:text-5xl font-light text-slate-950 tracking-tight leading-tight;
+  }
+  .eyebrow {
+    @apply font-sans text-xs tracking-[0.25em] uppercase font-semibold text-amber-700;
+  }
+  .skeleton {
+    @apply bg-gradient-to-r from-slate-100 via-amber-50/50 to-slate-100 bg-[length:1000px_100%] animate-shimmer;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f8fafc;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Smooth page transitions */
+.page-enter {
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* Marquee Ticker */
+@keyframes marqueeScroll {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marqueeScroll 26s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
