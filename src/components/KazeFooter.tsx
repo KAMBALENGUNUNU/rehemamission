@@ -17,12 +17,12 @@ export default function KazeFooter() {
 
   return (
     <footer className="kaze-footer relative z-30 -mt-12 sm:-mt-16 lg:-mt-20 bg-[#080808] text-stone-300 overflow-hidden rounded-t-[40px] sm:rounded-t-[60px] lg:rounded-t-[76px] shadow-[0_-20px_60px_rgba(0,0,0,0.55)] border-t border-white/10">
-      {/* Bespoke Fine Art Studio SVG Theme Pattern in Luminous Visible White on Black */}
+      {/* Bespoke Fine Art Studio SVG Theme Pattern - Subtle, Delicate Whisper Watermark on Black */}
       <ArtGalleryThemePattern
         id="kaze-footer-art-pattern"
-        opacity={0.32}
-        strokeWidth={2.2}
-        className="text-stone-100"
+        opacity={0.07}
+        strokeWidth={1.2}
+        className="text-white"
       />
 
       {/* Subtle warm golden ambient halos in background */}
