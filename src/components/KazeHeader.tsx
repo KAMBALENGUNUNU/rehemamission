@@ -18,11 +18,25 @@ export default function KazeHeader() {
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 15);
+
+      // Disappear only when arriving at the carousel, and come back when finished
+      const el = document.getElementById('triptych-coverflow');
+      if (el) {
+        const rect = el.getBoundingClientRect();
+        const atCarousel = rect.top <= 100 && rect.bottom >= 100;
+        setHidden(atCarousel);
+      } else {
+        setHidden(false);
+      }
     };
     handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [location.pathname]);
+    window.addEventListener('resize', handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
+  }, [location.pathname, location.hash]);
 
   // Close mobile drawer on route change
   useEffect(() => {
