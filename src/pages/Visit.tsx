@@ -10,6 +10,7 @@ import {
 import { useWebsiteSettings } from '@/lib/settings';
 import { useStore } from '@/store/StoreContext';
 import { TRANSLATIONS, type TranslationKey } from '@/lib/translations';
+import Pushpin, { PIN_CARD_THEMES } from '@/components/Pushpin';
 
 export default function Visit() {
   const settings = useWebsiteSettings();
@@ -64,169 +65,227 @@ export default function Visit() {
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-16">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
           {/* Left: Visit Guidance & Information */}
-          <div className="lg:col-span-5 space-y-6">
-            <div className="bg-white border border-slate-200 p-8 shadow-sm space-y-6 rounded-sm">
-              <h2 className="font-serif text-2xl text-slate-950 font-medium">
-                {t('visit.arrangementsTitle')}
-              </h2>
-              <div className="w-12 h-[2px] bg-amber-500" />
+          <div className="lg:col-span-5 space-y-8">
+            <div className="relative flex flex-col pt-4 group">
+              <Pushpin id="visit-info-pin" theme={PIN_CARD_THEMES[5]} />
+              <div className="bg-white rounded-[32px] p-3 sm:p-3.5 shadow-[0_8px_30px_rgba(0,0,0,0.06)] border border-stone-200/80 transition-all duration-300 group-hover:shadow-[0_18px_44px_rgba(0,0,0,0.11)] group-hover:-translate-y-0.5 flex flex-col">
+                <div
+                  className="rounded-[22px] px-6 sm:px-7 pt-9 pb-8 flex flex-col"
+                  style={{
+                    backgroundColor: PIN_CARD_THEMES[5].bg,
+                    border: `1.5px solid ${PIN_CARD_THEMES[5].border}`,
+                  }}
+                >
+                  <h2 className="font-['Oswald',sans-serif] text-[22px] sm:text-[24px] font-bold uppercase tracking-wide text-stone-950 mb-2">
+                    {t('visit.arrangementsTitle')}
+                  </h2>
+                  <div className="w-12 h-[2px] bg-amber-500 mb-4" />
 
-              <p className="text-sm text-slate-600 font-light leading-relaxed">
-                {t('visit.arrangementsDesc')}
-              </p>
+                  <p className="font-['Plus_Jakarta_Sans',sans-serif] text-xs sm:text-sm text-stone-600 font-light leading-relaxed mb-6">
+                    {t('visit.arrangementsDesc')}
+                  </p>
 
-              <div className="space-y-4 pt-2 text-sm text-slate-700">
-                <div className="flex items-start gap-3">
-                  <MapPin className="w-5 h-5 text-amber-700 flex-shrink-0 mt-0.5" />
-                  <div>
-                    <p className="font-medium text-slate-900">{t('visit.locTitle')}</p>
-                    <p className="text-xs text-slate-600">{settings.address || 'Kicukiro, Kigali, Rwanda'}</p>
-                    <p className="text-[11px] text-slate-400 mt-0.5">{t('visit.locSub')}</p>
-                  </div>
-                </div>
+                  <div className="space-y-4">
+                    <div className="flex items-start gap-3.5 bg-white/90 p-4 rounded-2xl border border-orange-200/60 shadow-xs">
+                      <div className="p-2.5 rounded-xl bg-orange-100 text-orange-900 flex-shrink-0">
+                        <MapPin className="w-5 h-5" />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <p className="font-['Plus_Jakarta_Sans',sans-serif] font-semibold text-stone-900 text-sm">{t('visit.locTitle')}</p>
+                        <p className="font-['Plus_Jakarta_Sans',sans-serif] text-xs text-stone-600 mt-0.5">{settings.address || 'Kicukiro, Kigali, Rwanda'}</p>
+                        <p className="font-['Plus_Jakarta_Sans',sans-serif] text-[11px] text-stone-400 mt-0.5">{t('visit.locSub')}</p>
+                      </div>
+                    </div>
 
-                <div className="flex items-start gap-3">
-                  <Clock className="w-5 h-5 text-amber-700 flex-shrink-0 mt-0.5" />
-                  <div>
-                    <p className="font-medium text-slate-900">{t('visit.hoursTitle')}</p>
-                    <p className="text-xs text-slate-600">{t('visit.hoursSub')}</p>
-                  </div>
-                </div>
+                    <div className="flex items-start gap-3.5 bg-white/90 p-4 rounded-2xl border border-orange-200/60 shadow-xs">
+                      <div className="p-2.5 rounded-xl bg-orange-100 text-orange-900 flex-shrink-0">
+                        <Clock className="w-5 h-5" />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <p className="font-['Plus_Jakarta_Sans',sans-serif] font-semibold text-stone-900 text-sm">{t('visit.hoursTitle')}</p>
+                        <p className="font-['Plus_Jakarta_Sans',sans-serif] text-xs text-stone-600 mt-0.5">{t('visit.hoursSub')}</p>
+                      </div>
+                    </div>
 
-                <div className="flex items-start gap-3">
-                  <Phone className="w-5 h-5 text-amber-700 flex-shrink-0 mt-0.5" />
-                  <div>
-                    <p className="font-medium text-slate-900">{t('visit.directTitle')}</p>
-                    <p className="text-xs text-slate-600">{settings.phone || '+250 798 618 524'}</p>
+                    <div className="flex items-start gap-3.5 bg-white/90 p-4 rounded-2xl border border-orange-200/60 shadow-xs">
+                      <div className="p-2.5 rounded-xl bg-orange-100 text-orange-900 flex-shrink-0">
+                        <Phone className="w-5 h-5" />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <p className="font-['Plus_Jakarta_Sans',sans-serif] font-semibold text-stone-900 text-sm">{t('visit.directTitle')}</p>
+                        <a
+                          href={`tel:${settings.phone || '+250798618524'}`}
+                          className="font-['Plus_Jakarta_Sans',sans-serif] text-xs text-stone-900 hover:text-amber-700 font-medium mt-0.5 block transition-colors"
+                        >
+                          {settings.phone || '+250 798 618 524'}
+                        </a>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Respectful Atmosphere Card — CLEAR LIGHT WARM */}
-            <div className="bg-gradient-to-r from-amber-50 via-yellow-50/70 to-amber-50 border border-amber-200 p-6 rounded-sm space-y-3 shadow-sm">
-              <div className="flex items-center gap-2 text-amber-800 text-xs tracking-wider uppercase font-bold">
-                <Shield className="w-4 h-4 text-amber-600" />
+            {/* Respectful Atmosphere Card */}
+            <div className="bg-gradient-to-r from-amber-50 via-yellow-50/70 to-amber-50 border border-amber-200/80 p-6 rounded-[24px] space-y-2.5 shadow-xs">
+              <div className="flex items-center gap-2.5 text-amber-900 text-xs font-bold uppercase tracking-wider font-['Plus_Jakarta_Sans',sans-serif]">
+                <Shield className="w-4 h-4 text-amber-700 flex-shrink-0" />
                 <span>{t('visit.settingTitle')}</span>
               </div>
-              <p className="text-xs text-slate-700 font-light leading-relaxed">
+              <p className="text-xs text-stone-700 font-light leading-relaxed font-['Plus_Jakarta_Sans',sans-serif]">
                 {t('visit.settingDesc')}
               </p>
             </div>
           </div>
 
           {/* Right: Appointment Request Form */}
-          <div className="lg:col-span-7 bg-white border border-slate-200 p-8 sm:p-10 shadow-sm rounded-sm">
-            <h2 className="font-serif text-2xl text-slate-950 font-medium mb-2">
-              {t('visit.formTitle')}
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-600 font-light mb-8 leading-relaxed">
-              {t('visit.formDesc')}
-            </p>
-
-            {submitted ? (
-              <div className="p-8 bg-emerald-50 border border-emerald-200 text-center space-y-3 rounded animate-fade-in">
-                <div className="w-12 h-12 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto">
-                  <Check className="w-6 h-6" />
+          <div className="lg:col-span-7 relative flex flex-col pt-4 group">
+            <Pushpin id="visit-form-pin" theme={PIN_CARD_THEMES[3]} />
+            <div className="bg-white rounded-[36px] sm:rounded-[40px] p-3.5 sm:p-5 shadow-[0_12px_40px_rgba(0,0,0,0.08)] border border-stone-200/80 transition-all duration-300 group-hover:shadow-[0_20px_50px_rgba(0,0,0,0.12)] group-hover:-translate-y-0.5 flex flex-col">
+              <div
+                className="rounded-[26px] sm:rounded-[30px] px-6 sm:px-9 pt-10 pb-9 flex flex-col flex-1"
+                style={{
+                  backgroundColor: PIN_CARD_THEMES[3].bg,
+                  border: `1.5px solid ${PIN_CARD_THEMES[3].border}`,
+                }}
+              >
+                <div className="mb-6">
+                  <span className="inline-block text-[10px] font-bold uppercase tracking-[0.18em] px-3.5 py-1 rounded-full bg-teal-100/90 text-teal-900 border border-teal-300/70 mb-3 font-['Plus_Jakarta_Sans',sans-serif]">
+                    Private Atelier Visit
+                  </span>
+                  <h2 className="font-['Oswald',sans-serif] text-2xl sm:text-3xl font-bold uppercase tracking-wide text-stone-950 mb-2 leading-tight">
+                    {t('visit.formTitle')}
+                  </h2>
+                  <p className="font-['Plus_Jakarta_Sans',sans-serif] text-xs sm:text-sm text-stone-600 font-light leading-relaxed">
+                    {t('visit.formDesc')}
+                  </p>
                 </div>
-                <h3 className="font-serif text-xl font-medium text-emerald-950">
-                  {t('visit.successTitle')}
-                </h3>
-                <p className="text-xs sm:text-sm text-emerald-800 font-light max-w-md mx-auto">
-                  {t('visit.successDesc')}
-                </p>
+
+                {submitted ? (
+                  <div className="p-8 sm:p-10 bg-white/90 rounded-2xl border border-emerald-300 text-center space-y-4 shadow-sm animate-fade-in my-auto">
+                    <div className="w-14 h-14 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto shadow-xs">
+                      <Check className="w-7 h-7" />
+                    </div>
+                    <h3 className="font-['Oswald',sans-serif] text-2xl font-bold uppercase tracking-wide text-emerald-950">
+                      {t('visit.successTitle')}
+                    </h3>
+                    <p className="font-['Plus_Jakarta_Sans',sans-serif] text-xs sm:text-sm text-stone-700 font-light max-w-md mx-auto leading-relaxed">
+                      {t('visit.successDesc')}
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSubmitted(false);
+                        setFormData({
+                          name: '',
+                          email: '',
+                          phone: '',
+                          date: '',
+                          artworksOfInterest: '',
+                          notes: '',
+                        });
+                      }}
+                      className="mt-4 inline-flex items-center gap-2 text-xs font-semibold text-stone-600 hover:text-stone-900 underline underline-offset-4"
+                    >
+                      Request another appointment
+                    </button>
+                  </div>
+                ) : (
+                  <form onSubmit={handleSubmit} className="space-y-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-[11px] font-bold uppercase tracking-[0.14em] text-stone-700 mb-2 font-['Plus_Jakarta_Sans',sans-serif]">
+                          {t('visit.nameLabel')}
+                        </label>
+                        <input
+                          type="text"
+                          required
+                          value={formData.name}
+                          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                          placeholder={t('visit.namePlaceholder')}
+                          className="w-full px-4 py-3 sm:py-3.5 bg-white rounded-2xl border border-stone-200/90 text-stone-900 text-sm placeholder:text-stone-400 font-medium focus:outline-none focus:border-stone-900 focus:ring-4 focus:ring-stone-900/5 transition-all shadow-xs font-['Plus_Jakarta_Sans',sans-serif]"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[11px] font-bold uppercase tracking-[0.14em] text-stone-700 mb-2 font-['Plus_Jakarta_Sans',sans-serif]">
+                          {t('visit.emailLabel')}
+                        </label>
+                        <input
+                          type="email"
+                          required
+                          value={formData.email}
+                          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                          placeholder="name@example.com"
+                          className="w-full px-4 py-3 sm:py-3.5 bg-white rounded-2xl border border-stone-200/90 text-stone-900 text-sm placeholder:text-stone-400 font-medium focus:outline-none focus:border-stone-900 focus:ring-4 focus:ring-stone-900/5 transition-all shadow-xs font-['Plus_Jakarta_Sans',sans-serif]"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-[11px] font-bold uppercase tracking-[0.14em] text-stone-700 mb-2 font-['Plus_Jakarta_Sans',sans-serif]">
+                          {t('visit.phoneLabel')}
+                        </label>
+                        <input
+                          type="tel"
+                          required
+                          value={formData.phone}
+                          onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                          placeholder="+250 788 000 000"
+                          className="w-full px-4 py-3 sm:py-3.5 bg-white rounded-2xl border border-stone-200/90 text-stone-900 text-sm placeholder:text-stone-400 font-medium focus:outline-none focus:border-stone-900 focus:ring-4 focus:ring-stone-900/5 transition-all shadow-xs font-['Plus_Jakarta_Sans',sans-serif]"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[11px] font-bold uppercase tracking-[0.14em] text-stone-700 mb-2 font-['Plus_Jakarta_Sans',sans-serif]">
+                          {t('visit.dateLabel')}
+                        </label>
+                        <input
+                          type="text"
+                          value={formData.date}
+                          onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                          placeholder={t('visit.datePlaceholder')}
+                          className="w-full px-4 py-3 sm:py-3.5 bg-white rounded-2xl border border-stone-200/90 text-stone-900 text-sm placeholder:text-stone-400 font-medium focus:outline-none focus:border-stone-900 focus:ring-4 focus:ring-stone-900/5 transition-all shadow-xs font-['Plus_Jakarta_Sans',sans-serif]"
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-[11px] font-bold uppercase tracking-[0.14em] text-stone-700 mb-2 font-['Plus_Jakarta_Sans',sans-serif]">
+                        {t('visit.artworksLabel')}
+                      </label>
+                      <input
+                        type="text"
+                        value={formData.artworksOfInterest}
+                        onChange={(e) => setFormData({ ...formData, artworksOfInterest: e.target.value })}
+                        placeholder={t('visit.artworksPlaceholder')}
+                        className="w-full px-4 py-3 sm:py-3.5 bg-white rounded-2xl border border-stone-200/90 text-stone-900 text-sm placeholder:text-stone-400 font-medium focus:outline-none focus:border-stone-900 focus:ring-4 focus:ring-stone-900/5 transition-all shadow-xs font-['Plus_Jakarta_Sans',sans-serif]"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-[11px] font-bold uppercase tracking-[0.14em] text-stone-700 mb-2 font-['Plus_Jakarta_Sans',sans-serif]">
+                        {t('visit.notesLabel')}
+                      </label>
+                      <textarea
+                        rows={4}
+                        value={formData.notes}
+                        onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
+                        placeholder={t('visit.notesPlaceholder')}
+                        className="w-full px-4 py-3.5 bg-white rounded-2xl border border-stone-200/90 text-stone-900 text-sm placeholder:text-stone-400 font-medium focus:outline-none focus:border-stone-900 focus:ring-4 focus:ring-stone-900/5 transition-all shadow-xs resize-none font-['Plus_Jakarta_Sans',sans-serif]"
+                      />
+                    </div>
+
+                    <button
+                      type="submit"
+                      className="w-full inline-flex items-center justify-center gap-3 py-4 px-8 rounded-full bg-stone-950 text-white font-['Plus_Jakarta_Sans',sans-serif] text-xs font-semibold tracking-wider uppercase hover:bg-stone-800 active:scale-[0.99] transition-all duration-300 shadow-md hover:shadow-xl hover:-translate-y-0.5 group"
+                    >
+                      <span>{t('visit.submitBtn')}</span>
+                      <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                    </button>
+                  </form>
+                )}
               </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">
-                      {t('visit.nameLabel')}
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      placeholder={t('visit.namePlaceholder')}
-                      className="input-field"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">
-                      {t('visit.emailLabel')}
-                    </label>
-                    <input
-                      type="email"
-                      required
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      placeholder="name@example.com"
-                      className="input-field"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">
-                      {t('visit.phoneLabel')}
-                    </label>
-                    <input
-                      type="tel"
-                      required
-                      value={formData.phone}
-                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      placeholder="+250 788 000 000"
-                      className="input-field"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">
-                      {t('visit.dateLabel')}
-                    </label>
-                    <input
-                      type="text"
-                      value={formData.date}
-                      onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                      placeholder={t('visit.datePlaceholder')}
-                      className="input-field"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">
-                    {t('visit.artworksLabel')}
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.artworksOfInterest}
-                    onChange={(e) => setFormData({ ...formData, artworksOfInterest: e.target.value })}
-                    placeholder={t('visit.artworksPlaceholder')}
-                    className="input-field"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">
-                    {t('visit.notesLabel')}
-                  </label>
-                  <textarea
-                    rows={4}
-                    value={formData.notes}
-                    onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                    placeholder={t('visit.notesPlaceholder')}
-                    className="input-field resize-none"
-                  />
-                </div>
-
-                <button type="submit" className="btn-accent w-full text-xs py-3.5 justify-center shadow">
-                  <span>{t('visit.submitBtn')}</span>
-                  <ArrowRight className="w-4 h-4" />
-                </button>
-              </form>
-            )}
+            </div>
           </div>
         </div>
       </section>
