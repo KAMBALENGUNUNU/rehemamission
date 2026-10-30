@@ -36,7 +36,7 @@ export default function TriptychCoverflow({ onSelectArtwork }: TriptychCoverflow
     {
       id: 'kaze-hero-masterpiece',
       title: language === 'fr' ? 'Symphonie des Mille Collines' : 'Symphony of the Thousand Hills',
-      artistIdentifier: language === 'fr' ? 'Atelier Kaze · Collectif Jeunesse' : 'Kaze Atelier Youth Masters',
+      artistIdentifier: 'KAZE Collection',
       year: 2025,
       categoryLabel: language === 'fr' ? 'Chef-d’Œuvre Panoramique' : 'Panoramic Masterwork',
       medium: language === 'fr' ? 'Acrylique & pigments naturels sur toile' : 'Acrylic & natural earth pigments on canvas',
