@@ -220,7 +220,10 @@ function AtelierSticker() {
 
 interface PillarCardConfig {
   id: string;
-  bgColor: string; // The exact rich colors from the user's reference image
+  bgColorHex: string;        // Exact core solid color
+  borderGradient: string;    // Specular mirror gradient around the rounded corners
+  cornerGlow: string;        // Ambient dégradé / neon bloom around the rounded corners
+  ambientBoxShadow: string;  // Multi-layered glow aura matching reference image
   tagLabel: string;
   tagIcon: React.ElementType;
   headlineLine1: string;
@@ -232,7 +235,7 @@ interface PillarCardConfig {
 export default function PillarStickerCards() {
   const { language } = useStore();
 
-  // 4 Core Pillars with the exact colors from the user's uploaded reference:
+  // 4 Core Pillars with exact colors and mirror/gradient corner degradation matching user reference:
   // Card 1: Terracotta / Rust Orange (#D25A24)
   // Card 2: Deep Slate Navy (#2C3E55)
   // Card 3: Vibrant Electric Cobalt (#0069D2)
@@ -240,7 +243,11 @@ export default function PillarStickerCards() {
   const pillars: PillarCardConfig[] = [
     {
       id: 'pillar-recovery',
-      bgColor: 'bg-[#D25A24]',
+      bgColorHex: '#D25A24',
+      // Specular mirror edge transitioning to luminous terracotta glow
+      borderGradient: 'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 180, 130, 0.9) 25%, #F97316 55%, #D25A24 85%, rgba(255, 255, 255, 0.45) 100%)',
+      cornerGlow: 'radial-gradient(circle at 100% 0%, rgba(249, 115, 22, 0.75) 0%, transparent 65%), radial-gradient(circle at 0% 100%, rgba(210, 90, 36, 0.65) 0%, transparent 65%)',
+      ambientBoxShadow: '0 0 22px 2px rgba(249, 115, 22, 0.45), 0 0 46px 6px rgba(210, 90, 36, 0.22)',
       tagLabel: language === 'fr' ? 'REHEMA · SOUTIEN ADDICTIONS' : 'REHEMA · ADDICTION RECOVERY',
       tagIcon: Compass,
       headlineLine1: language === 'fr' ? 'SOUTIEN CLINIQUE &' : 'COMPASSIONATE',
@@ -250,7 +257,11 @@ export default function PillarStickerCards() {
     },
     {
       id: 'pillar-dialogue',
-      bgColor: 'bg-[#2C3E55]',
+      bgColorHex: '#2C3E55',
+      // Specular mirror edge transitioning to ice/cyan-blue glow
+      borderGradient: 'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(147, 197, 253, 0.9) 25%, #60A5FA 55%, #2C3E55 85%, rgba(255, 255, 255, 0.4) 100%)',
+      cornerGlow: 'radial-gradient(circle at 0% 0%, rgba(96, 165, 250, 0.75) 0%, transparent 65%), radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.6) 0%, transparent 65%)',
+      ambientBoxShadow: '0 0 22px 2px rgba(96, 165, 250, 0.45), 0 0 46px 6px rgba(44, 62, 85, 0.28)',
       tagLabel: language === 'fr' ? 'REHEMA · JEUNESSE & DIALOGUE' : 'REHEMA · YOUTH DIALOGUE',
       tagIcon: Users,
       headlineLine1: language === 'fr' ? 'MASCULINITÉ POSITIVE &' : 'EMPOWERED YOUTH IN',
@@ -260,7 +271,11 @@ export default function PillarStickerCards() {
     },
     {
       id: 'pillar-family',
-      bgColor: 'bg-[#0069D2]',
+      bgColorHex: '#0069D2',
+      // Specular mirror edge transitioning to cobalt electric blue glow
+      borderGradient: 'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(191, 219, 254, 0.95) 25%, #3B82F6 50%, #0069D2 80%, rgba(255, 255, 255, 0.45) 100%)',
+      cornerGlow: 'radial-gradient(circle at 100% 0%, rgba(59, 130, 246, 0.85) 0%, transparent 65%), radial-gradient(circle at 0% 100%, rgba(0, 105, 210, 0.7) 0%, transparent 65%)',
+      ambientBoxShadow: '0 0 24px 3px rgba(59, 130, 246, 0.55), 0 0 50px 8px rgba(0, 105, 210, 0.28)',
       tagLabel: language === 'fr' ? 'REHEMA · RESTAURATION FAMILIALE' : 'REHEMA · FAMILY RESTORATION',
       tagIcon: Heart,
       headlineLine1: language === 'fr' ? 'RÉCONCILIATION DANS' : 'REBUILDING TRUST IN',
@@ -270,7 +285,11 @@ export default function PillarStickerCards() {
     },
     {
       id: 'pillar-kaze',
-      bgColor: 'bg-[#45635E]',
+      bgColorHex: '#45635E',
+      // Specular mirror edge transitioning to emerald/mint sage glow
+      borderGradient: 'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(167, 243, 208, 0.9) 25%, #34D399 55%, #45635E 85%, rgba(255, 255, 255, 0.4) 100%)',
+      cornerGlow: 'radial-gradient(circle at 0% 0%, rgba(52, 211, 153, 0.75) 0%, transparent 65%), radial-gradient(circle at 100% 100%, rgba(69, 99, 94, 0.6) 0%, transparent 65%)',
+      ambientBoxShadow: '0 0 22px 2px rgba(52, 211, 153, 0.45), 0 0 46px 6px rgba(69, 99, 94, 0.26)',
       tagLabel: language === 'fr' ? 'REHEMA · KAZE COLLECTIONS' : 'REHEMA · KAZE COLLECTIONS',
       tagIcon: Palette,
       headlineLine1: language === 'fr' ? 'HAUTE CRÉATION &' : 'VOCATIONAL ART &',
@@ -281,7 +300,7 @@ export default function PillarStickerCards() {
   ];
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-4.5 lg:gap-5 items-stretch">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-5.5 lg:gap-6 items-stretch">
       {pillars.map((pillar) => {
         const Icon = pillar.tagIcon;
         const Sticker = pillar.StickerComponent;
@@ -289,74 +308,99 @@ export default function PillarStickerCards() {
         return (
           <div
             key={pillar.id}
-            className={`${pillar.bgColor} rounded-[22px] sm:rounded-[26px] text-white flex flex-col justify-between shadow-[0_12px_28px_rgba(0,0,0,0.14)] hover:shadow-[0_18px_38px_rgba(0,0,0,0.22)] transition-all duration-300 hover:-translate-y-1.5 p-4 sm:p-5 relative overflow-hidden group select-none min-h-[350px] sm:min-h-[375px]`}
+            className="relative group transition-transform duration-300 hover:-translate-y-2"
           >
-            {/* 1. Tactile Risograph / Film Grain Fractal Noise Overlay */}
+            {/* 1. Ambient Corner Dégradé Glow (Diffused neon aura radiating outside rounded corners like reference image) */}
             <div
-              className="absolute inset-0 pointer-events-none opacity-45 mix-blend-overlay z-[1]"
-              style={{
-                backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-                backgroundSize: '120px 120px',
-              }}
+              className="absolute -inset-[3px] rounded-[30px] opacity-65 group-hover:opacity-100 blur-[10px] transition-all duration-500 pointer-events-none z-0"
+              style={{ background: pillar.cornerGlow }}
               aria-hidden="true"
             />
 
-            {/* 2. Secondary Fine Paper Flecks & Stipple Grain Texture */}
+            {/* 2. Precision Mirror Gradient Rim Frame (2px rounded stroke with specular reflection) */}
             <div
-              className="absolute inset-0 pointer-events-none opacity-30 mix-blend-soft-light z-[1]"
+              className="relative p-[2px] rounded-[26px] z-10 transition-shadow duration-300"
               style={{
-                backgroundImage: `radial-gradient(rgba(255,255,255,0.25) 1px, transparent 1px), radial-gradient(rgba(0,0,0,0.3) 1px, transparent 1px)`,
-                backgroundSize: '4px 4px',
-                backgroundPosition: '0 0, 2px 2px',
+                background: pillar.borderGradient,
+                boxShadow: `0 14px 32px -4px rgba(0,0,0,0.22), ${pillar.ambientBoxShadow}`,
               }}
-              aria-hidden="true"
-            />
+            >
+              {/* 3. Solid Inner Card Surface with Grain & Content */}
+              <div
+                className="w-full h-full rounded-[24px] text-white flex flex-col justify-between p-4 sm:p-5 relative overflow-hidden select-none min-h-[350px] sm:min-h-[375px]"
+                style={{ backgroundColor: pillar.bgColorHex }}
+              >
+                {/* A. Tactile Risograph / Film Grain Fractal Noise Overlay */}
+                <div
+                  className="absolute inset-0 pointer-events-none opacity-45 mix-blend-overlay z-[1]"
+                  style={{
+                    backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+                    backgroundSize: '120px 120px',
+                  }}
+                  aria-hidden="true"
+                />
 
-            {/* 3. Subtle Inner Vignette for Physical Paper Depth */}
-            <div className="absolute inset-0 pointer-events-none shadow-[inset_0_0_28px_rgba(0,0,0,0.2)] rounded-[inherit] z-[1]" aria-hidden="true" />
+                {/* B. Secondary Fine Paper Flecks & Stipple Grain Texture */}
+                <div
+                  className="absolute inset-0 pointer-events-none opacity-30 mix-blend-soft-light z-[1]"
+                  style={{
+                    backgroundImage: `radial-gradient(rgba(255,255,255,0.25) 1px, transparent 1px), radial-gradient(rgba(0,0,0,0.3) 1px, transparent 1px)`,
+                    backgroundSize: '4px 4px',
+                    backgroundPosition: '0 0, 2px 2px',
+                  }}
+                  aria-hidden="true"
+                />
 
-            {/* Top Inset Hairline (Matching Reference Inset Framing) */}
-            <div className="absolute top-3 left-4 right-4 h-[1px] bg-white/20 pointer-events-none z-[2]" />
+                {/* C. Subtle Inner Vignette for Physical Paper Depth */}
+                <div
+                  className="absolute inset-0 pointer-events-none shadow-[inset_0_0_28px_rgba(0,0,0,0.2)] rounded-[inherit] z-[1]"
+                  aria-hidden="true"
+                />
 
-            {/* Bottom Inset Hairline (Matching Reference Inset Framing) */}
-            <div className="absolute bottom-3 left-4 right-4 h-[1px] bg-white/20 pointer-events-none z-[2]" />
+                {/* Top Inset Hairline (Matching Reference Inset Framing) */}
+                <div className="absolute top-3 left-4 right-4 h-[1px] bg-white/20 pointer-events-none z-[2]" />
 
-            {/* Upper Content: Line-Art Sticker Illustration */}
-            <div className="pt-1.5 sm:pt-2 pb-2 flex items-center justify-center flex-1 relative z-10">
-              <Sticker />
-            </div>
+                {/* Bottom Inset Hairline (Matching Reference Inset Framing) */}
+                <div className="absolute bottom-3 left-4 right-4 h-[1px] bg-white/20 pointer-events-none z-[2]" />
 
-            {/* Lower Content: Tag, Bold Centered Headline, and Learn More Link */}
-            <div className="flex flex-col items-center text-center pb-1 relative z-10">
-              {/* Brand Tag with Icon (Matches reference logo & eyebrow) */}
-              <div className="flex items-center justify-center gap-1.5 mb-2">
-                <div className="w-3.5 h-3.5 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
-                  <Icon className="w-2 h-2 text-white" />
+                {/* Upper Content: Line-Art Sticker Illustration */}
+                <div className="pt-1.5 sm:pt-2 pb-2 flex items-center justify-center flex-1 relative z-10">
+                  <Sticker />
                 </div>
-                <span className="text-[9.5px] sm:text-[10px] font-sans tracking-[0.16em] uppercase font-bold text-white/95">
-                  {pillar.tagLabel}
-                </span>
-              </div>
 
-              {/* Bold Condensed All-Caps Headline (Matches reference) */}
-              <h3 className="font-sans font-black text-sm sm:text-[1.05rem] lg:text-[1.12rem] leading-snug text-white uppercase tracking-tight max-w-[210px] mx-auto">
-                <span className="block">{pillar.headlineLine1}</span>
-                <span className="block">{pillar.headlineLine2}</span>
-              </h3>
+                {/* Lower Content: Tag, Bold Centered Headline, and Learn More Link */}
+                <div className="flex flex-col items-center text-center pb-1 relative z-10">
+                  {/* Brand Tag with Icon (Matches reference logo & eyebrow) */}
+                  <div className="flex items-center justify-center gap-1.5 mb-2">
+                    <div className="w-3.5 h-3.5 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
+                      <Icon className="w-2 h-2 text-white" />
+                    </div>
+                    <span className="text-[9.5px] sm:text-[10px] font-sans tracking-[0.16em] uppercase font-bold text-white/95">
+                      {pillar.tagLabel}
+                    </span>
+                  </div>
 
-              {/* Centered 'learn more >' Link (Matches reference) */}
-              <div className="mt-3.5 pt-0.5">
-                <Link
-                  to={pillar.href}
-                  className="text-[11.5px] sm:text-xs font-sans font-medium text-white/95 hover:text-white transition-all inline-flex items-center gap-1 group/link py-0.5 px-2 rounded-full hover:bg-white/10"
-                >
-                  <span className="tracking-wide lowercase">
-                    {language === 'fr' ? 'en savoir plus' : 'learn more'}
-                  </span>
-                  <span className="group-hover/link:translate-x-0.5 transition-transform font-bold text-white text-xs">
-                    &gt;
-                  </span>
-                </Link>
+                  {/* Bold Condensed All-Caps Headline (Matches reference) */}
+                  <h3 className="font-sans font-black text-sm sm:text-[1.05rem] lg:text-[1.12rem] leading-snug text-white uppercase tracking-tight max-w-[210px] mx-auto">
+                    <span className="block">{pillar.headlineLine1}</span>
+                    <span className="block">{pillar.headlineLine2}</span>
+                  </h3>
+
+                  {/* Centered 'learn more >' Link (Matches reference) */}
+                  <div className="mt-3.5 pt-0.5">
+                    <Link
+                      to={pillar.href}
+                      className="text-[11.5px] sm:text-xs font-sans font-medium text-white/95 hover:text-white transition-all inline-flex items-center gap-1 group/link py-0.5 px-2 rounded-full hover:bg-white/10"
+                    >
+                      <span className="tracking-wide lowercase">
+                        {language === 'fr' ? 'en savoir plus' : 'learn more'}
+                      </span>
+                      <span className="group-hover/link:translate-x-0.5 transition-transform font-bold text-white text-xs">
+                        &gt;
+                      </span>
+                    </Link>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
