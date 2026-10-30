@@ -1,171 +1,185 @@
 import { Link } from 'react-router-dom';
-import { Mail, Phone, MapPin, Lock, Sparkles, ArrowRight, Heart } from 'lucide-react';
+import { Mail, Phone, MapPin, Lock, Heart, ArrowUp } from 'lucide-react';
 import { useWebsiteSettings } from '@/lib/settings';
+import { useStore } from '@/store/StoreContext';
+import { TRANSLATIONS, type TranslationKey } from '@/lib/translations';
 
 export default function Footer() {
   const settings = useWebsiteSettings();
+  const { language } = useStore();
+  const t = (key: TranslationKey, fallback?: string) =>
+    TRANSLATIONS[language]?.[key] ?? TRANSLATIONS.en[key] ?? fallback ?? key;
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   return (
-    <footer className="relative bg-gradient-to-b from-slate-900 via-slate-950 to-neutral-950 text-slate-300 overflow-hidden border-t border-amber-500/20">
+    <footer className="relative bg-[#020408] text-slate-300 overflow-hidden border-t border-white/10">
+      {/* Background wireframe grid image */}
+      <div className="absolute inset-0 z-0">
+        <img
+          src="/footer-bg.jpg"
+          alt=""
+          aria-hidden="true"
+          className="w-full h-full object-cover object-center opacity-25 pointer-events-none select-none"
+        />
+        {/* Soft atmospheric fade for contrast and readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#020408]/90 via-[#020408]/40 to-[#020408]/95 pointer-events-none" />
+      </div>
+
       {/* Radiant ambient gradient light beams in background */}
-      <div className="absolute -top-32 right-1/4 w-[500px] h-[350px] bg-gradient-to-b from-amber-500/10 via-amber-600/5 to-transparent rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute -bottom-24 left-10 w-96 h-96 bg-gradient-to-tr from-amber-700/10 via-amber-500/5 to-transparent rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute -top-32 right-1/4 w-[500px] h-[350px] bg-gradient-to-b from-amber-500/10 via-amber-600/5 to-transparent rounded-full blur-3xl pointer-events-none z-0" />
+      <div className="absolute -bottom-24 left-10 w-96 h-96 bg-gradient-to-tr from-amber-700/10 via-amber-500/5 to-transparent rounded-full blur-3xl pointer-events-none z-0" />
 
-      {/* Top delicate amber accent hairline */}
-      <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-amber-500/50 to-transparent" />
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-12 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-12 pb-14 border-b border-white/10">
-          {/* Brand & Purpose Column (5 cols) */}
-          <div className="lg:col-span-5 space-y-5">
-            <div>
-              <p className="text-[10px] tracking-[0.25em] uppercase font-semibold text-amber-400">
-                Faith · Recovery · Purpose
-              </p>
-              <h3 className="font-serif text-2xl sm:text-3xl font-light text-white tracking-tight mt-1">
-                Rehema Mission Rwanda
-              </h3>
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 sm:pt-16 pb-10 relative z-10">
+        {/* Navigation & Contact Columns - closer together without vertical dividing lines */}
+        <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12 lg:gap-16 pb-12 sm:pb-14">
+          {/* Quick Links Column 1: Our Mission */}
+          <div className="space-y-4">
+            <div className="space-y-1">
+              <span className="text-[11px] sm:text-xs tracking-[0.26em] uppercase font-semibold text-amber-400 font-sans">
+                {t('footer.foundation')}
+              </span>
+              <h4 className="font-serif text-2xl sm:text-[1.7rem] font-light text-white tracking-wide">
+                {t('footer.missionHeader')}
+              </h4>
             </div>
-
-            {/* Ebenezer Verse - organically integrated without boxed cards */}
-            <div className="border-l-2 border-amber-500/60 pl-3.5 py-0.5">
-              <p className="font-serif italic text-amber-300 text-sm font-normal">
-                “Thus far the Lord has helped us”
-              </p>
-              <p className="text-[11px] uppercase tracking-wider text-slate-400 font-sans mt-0.5">
-                1 Samuel 7:12 · Ebenezer
-              </p>
-            </div>
-
-            <p className="text-sm text-slate-300 font-light leading-relaxed max-w-md">
-              A faith-rooted, youth-centered global mission founded in 1998 in Kigali. Walking alongside young people and families facing addiction and related challenges through listening, follow-up support, prevention, and creative expression.
-            </p>
-
-            {/* Natural Organic Bridge to Kaze Collection */}
-            <div className="pt-2">
-              <Link
-                to="/gallery"
-                className="group inline-flex items-center gap-2 text-xs font-semibold tracking-wider uppercase text-amber-300 hover:text-amber-200 transition-colors"
-              >
-                <Sparkles className="w-3.5 h-3.5 text-amber-400 group-hover:rotate-12 transition-transform" />
-                <span>Explore Original Youth Artworks at Kaze Collection</span>
-                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </div>
-          </div>
-
-          {/* Quick Links Column 1: Our Mission (2 cols) */}
-          <div className="lg:col-span-2 space-y-4">
-            <h4 className="text-xs font-bold tracking-[0.22em] uppercase text-amber-300">
-              Our Mission
-            </h4>
-            <ul className="space-y-2.5 text-sm font-light">
+            <ul className="space-y-3 text-[15px] sm:text-base font-light">
               <li>
-                <Link to="/our-story" className="text-slate-300 hover:text-white transition-colors">
-                  Our Story & Origins
+                <Link to="/our-story" className="text-slate-300 hover:text-white hover:translate-x-1 transition-all inline-block">
+                  {t('footer.storyLink')}
                 </Link>
               </li>
               <li>
-                <Link to="/our-work" className="text-slate-300 hover:text-white transition-colors">
-                  Programmes & Pillars
+                <Link to="/our-work" className="text-slate-300 hover:text-white hover:translate-x-1 transition-all inline-block">
+                  {t('footer.workLink')}
                 </Link>
               </li>
               <li>
-                <Link to="/our-story" className="text-slate-300 hover:text-white transition-colors">
-                  Faith & Core Values
+                <Link to="/our-story" className="text-slate-300 hover:text-white hover:translate-x-1 transition-all inline-block">
+                  {t('footer.valuesLink')}
                 </Link>
               </li>
               <li>
-                <Link to="/partner" className="text-slate-300 hover:text-white transition-colors">
-                  Partner With Us
+                <Link to="/partner" className="text-slate-300 hover:text-white hover:translate-x-1 transition-all inline-block">
+                  {t('footer.partnerLink')}
                 </Link>
               </li>
               <li>
-                <Link to="/gallery" className="text-slate-300 hover:text-amber-300 transition-colors inline-flex items-center gap-1.5">
-                  <span>Kaze Collection</span>
-                  <span className="text-[9px] uppercase px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">Art</span>
+                <Link to="/gallery" className="text-slate-300 hover:text-amber-300 hover:translate-x-1 transition-all inline-flex items-center gap-2">
+                  <span>{t('footer.kazeCollection')}</span>
+                  <span className="text-[10px] uppercase px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30 font-medium">
+                    {t('footer.artBadge')}
+                  </span>
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Quick Links Column 2: Involve & Support (2 cols) */}
-          <div className="lg:col-span-2 space-y-4">
-            <h4 className="text-xs font-bold tracking-[0.22em] uppercase text-amber-300">
-              Get Involved
-            </h4>
-            <ul className="space-y-2.5 text-sm font-light">
+          {/* Quick Links Column 2: Involve & Support */}
+          <div className="space-y-4">
+            <div className="space-y-1">
+              <span className="text-[11px] sm:text-xs tracking-[0.26em] uppercase font-semibold text-amber-400 font-sans">
+                {t('footer.community')}
+              </span>
+              <h4 className="font-serif text-2xl sm:text-[1.7rem] font-light text-white tracking-wide">
+                {t('footer.getInvolvedHeader')}
+              </h4>
+            </div>
+            <ul className="space-y-3 text-[15px] sm:text-base font-light">
               <li>
-                <Link to="/visit" className="text-slate-300 hover:text-white transition-colors">
-                  Arrange a Visit in Kigali
+                <Link to="/visit" className="text-slate-300 hover:text-white hover:translate-x-1 transition-all inline-block">
+                  {t('footer.visitLink')}
                 </Link>
               </li>
               <li>
-                <Link to="/contact" className="text-slate-300 hover:text-white transition-colors">
-                  Start a Conversation
+                <Link to="/contact" className="text-slate-300 hover:text-white hover:translate-x-1 transition-all inline-block">
+                  {t('footer.contactLink')}
                 </Link>
               </li>
               <li>
-                <Link to="/partner" className="text-slate-300 hover:text-white transition-colors">
-                  Church & Ministry Links
+                <Link to="/partner" className="text-slate-300 hover:text-white hover:translate-x-1 transition-all inline-block">
+                  {t('footer.churchLink')}
                 </Link>
               </li>
               <li>
-                <Link to="/favorites" className="text-slate-300 hover:text-white transition-colors inline-flex items-center gap-1">
-                  <Heart className="w-3.5 h-3.5 text-rose-400" />
-                  <span>Saved Artworks</span>
+                <Link to="/favorites" className="text-slate-300 hover:text-white hover:translate-x-1 transition-all inline-flex items-center gap-1.5">
+                  <Heart className="w-4 h-4 text-rose-400" />
+                  <span>{t('footer.savedLink')}</span>
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Contact Details Column (3 cols) */}
-          <div className="lg:col-span-3 space-y-4">
-            <h4 className="text-xs font-bold tracking-[0.22em] uppercase text-amber-300">
-              Kigali Office
-            </h4>
-            <ul className="space-y-3 text-sm font-light">
-              <li className="flex items-start gap-2.5 text-slate-300">
-                <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0 text-amber-400" />
+          {/* Contact Details Column */}
+          <div className="space-y-4">
+            <div className="space-y-1">
+              <span className="text-[11px] sm:text-xs tracking-[0.26em] uppercase font-semibold text-amber-400 font-sans">
+                {t('footer.presence')}
+              </span>
+              <h4 className="font-serif text-2xl sm:text-[1.7rem] font-light text-white tracking-wide">
+                {t('footer.kigaliOfficeHeader')}
+              </h4>
+            </div>
+            <ul className="space-y-3.5 text-[15px] sm:text-base font-light">
+              <li className="flex items-start gap-3 text-slate-300">
+                <MapPin className="w-4 h-4 mt-1 flex-shrink-0 text-amber-400" />
                 <span>{settings.address || 'Kicukiro, Kigali, Rwanda'}</span>
               </li>
-              <li className="flex items-center gap-2.5 text-slate-300">
+              <li className="flex items-center gap-3 text-slate-300">
                 <Phone className="w-4 h-4 flex-shrink-0 text-amber-400" />
                 <a href={`tel:${settings.phone || '+250798618524'}`} className="hover:text-amber-300 transition-colors">
                   {settings.phone || '+250 798 618 524'}
                 </a>
               </li>
-              <li className="flex items-center gap-2.5 text-slate-300">
+              <li className="flex items-center gap-3 text-slate-300">
                 <Mail className="w-4 h-4 flex-shrink-0 text-amber-400" />
                 <a href={`mailto:${settings.contact_email || 'assumptakayiranga05@gmail.com'}`} className="hover:text-amber-300 transition-colors break-all">
                   {settings.contact_email || 'assumptakayiranga05@gmail.com'}
                 </a>
               </li>
             </ul>
-
-            {/* Organic, un-boxed ethical note */}
-            <p className="text-[11px] text-slate-400 font-light leading-relaxed pt-2">
-              <span className="text-slate-200 font-normal">Service Boundary:</span> A social & emotional support mission. We connect individuals with accredited clinical detoxification when specialized medical care is required.
-            </p>
           </div>
         </div>
 
+        {/* Outlined Signature Brand Typography - resized and refined */}
+        <div className="pt-8 sm:pt-10 pb-6 sm:pb-8 text-center select-none overflow-hidden">
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-[4.75rem] font-light tracking-tight text-outline-signature leading-none cursor-default transition-all duration-500">
+            Rehema Mission Rwanda
+          </h2>
+        </div>
+
+        {/* Bottom Horizontal Hairline */}
+        <div className="h-[1px] w-full bg-white/10" />
+
         {/* Bottom Sub-Footer Bar */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-[13px] sm:text-sm text-slate-400">
           <p>
-            © {new Date().getFullYear()} Rehema Mission Rwanda. All rights reserved. Kicukiro, Kigali.
+            © {new Date().getFullYear()} {t('footer.copyright')}
           </p>
-          <div className="flex items-center gap-6">
+
+          <div className="flex items-center gap-6 sm:gap-8">
             <Link to="/contact" className="hover:text-slate-200 transition-colors">
-              Privacy & Inquiries
+              {t('footer.privacy')}
             </Link>
             <Link to="/gallery" className="hover:text-amber-300 transition-colors">
-              Kaze Collection Gallery
+              {t('footer.kazeCollection')}
             </Link>
-            <Link to="/admin/login" className="flex items-center gap-1.5 hover:text-amber-300 transition-colors text-[11px]">
-              <Lock className="w-3 h-3 text-amber-400" />
-              <span>Admin Portal</span>
+            <Link to="/admin/login" className="flex items-center gap-1.5 hover:text-amber-300 transition-colors text-xs">
+              <Lock className="w-3.5 h-3.5 text-amber-400" />
+              <span>{t('footer.adminPortal')}</span>
             </Link>
+
+            {/* Back to Top Square Button (as seen in the reference) */}
+            <button
+              onClick={scrollToTop}
+              type="button"
+              aria-label={t('footer.backToTop')}
+              className="w-9 h-9 border border-white/20 hover:border-amber-400 hover:text-amber-300 hover:bg-white/5 transition-all flex items-center justify-center text-slate-300 group"
+            >
+              <ArrowUp className="w-4 h-4 group-hover:-translate-y-0.5 transition-transform" />
+            </button>
           </div>
         </div>
       </div>
