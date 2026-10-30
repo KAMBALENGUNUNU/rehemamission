@@ -306,7 +306,7 @@ export default function ArtGallery() {
               <Compass className="w-3.5 h-3.5 text-amber-600" />
               <span>{t('kazeNav.collection', 'The Curated Collection')}</span>
             </div>
-            <h2 className="font-serif text-3xl sm:text-4xl text-stone-950 font-normal">
+            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-slate-950 font-bold tracking-tight leading-[1.08] drop-shadow-sm">
               {language === 'fr' ? 'Catalogue des Œuvres Récentes' : 'Masterworks & Recent Creations'}
             </h2>
           </div>
@@ -582,12 +582,7 @@ export default function ArtGallery() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             {/* Left Curatorial Narrative (7 cols) */}
             <div className="lg:col-span-7 space-y-6">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-900 text-xs font-semibold uppercase tracking-wider">
-                <Sparkles className="w-3.5 h-3.5 text-amber-600" />
-                <span>{t('kazeNav.currentExhibitionBadge', 'Special Curatorial Exhibition')}</span>
-              </div>
-
-              <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-stone-950 font-normal leading-tight">
+              <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-slate-950 font-bold tracking-tight leading-[1.08] drop-shadow-sm">
                 {t('kazeNav.currentExhibitionTitle', 'Horizons of the Thousand Hills')}
               </h2>
 
@@ -660,15 +655,11 @@ export default function ArtGallery() {
 
       {/* 7. The Artisan Store & Acquisition Concierge (`id="store"`) */}
       <section id="store" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 scroll-mt-24 relative z-10">
-        <div className="text-center max-w-3xl mx-auto mb-14">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-900 text-xs font-semibold uppercase tracking-wider mb-3">
-            <ShoppingBag className="w-3.5 h-3.5 text-amber-600" />
-            <span>{t('kazeNav.storeTitle', 'The Artisan Store & Acquisitions')}</span>
-          </div>
-          <h2 className="font-serif text-3xl sm:text-4xl text-stone-950 font-normal">
+        <div className="text-center max-w-4xl mx-auto mb-14">
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-slate-950 font-bold tracking-tight leading-[1.08] drop-shadow-sm">
             {language === 'fr' ? 'Acquérir une Œuvre Éthique & Signée' : 'Acquire Authentic Rwandan Fine Art'}
           </h2>
-          <p className="text-stone-600 text-sm sm:text-base font-light mt-3 max-w-2xl mx-auto">
+          <p className="text-stone-600 text-sm sm:text-base font-light mt-4 max-w-2xl mx-auto">
             {t(
               'kazeNav.storeSubtitle',
               'Direct from our Kigali atelier. 100% of proceeds fund youth education, art materials, and vocational independence.'
@@ -743,7 +734,7 @@ export default function ArtGallery() {
         {/* Collector Concierge Contact Box (`id="inquire"`) */}
         <div id="inquire" className="mt-12 bg-white border border-amber-300/80 rounded-2xl p-8 sm:p-10 shadow-lg text-center max-w-3xl mx-auto scroll-mt-24">
           <KazeLogo variant="light" size="md" className="justify-center mb-4" />
-          <h3 className="font-serif text-2xl sm:text-3xl text-stone-950 font-normal">
+          <h3 className="font-serif text-2xl sm:text-3xl md:text-4xl text-slate-950 font-bold tracking-tight leading-[1.1] drop-shadow-sm">
             {language === 'fr' ? 'Une Question sur une Œuvre ou une Commande ?' : 'Inquire on an Artwork or Private Viewing'}
           </h3>
           <p className="text-xs sm:text-sm text-stone-600 font-light mt-2 max-w-xl mx-auto">
