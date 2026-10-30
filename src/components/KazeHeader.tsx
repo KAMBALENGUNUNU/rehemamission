@@ -9,6 +9,7 @@ export default function KazeHeader() {
   const { favorites, language, setLanguage } = useStore();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [hidden, setHidden] = useState(false);
   const location = useLocation();
 
   const t = (key: TranslationKey, fallback?: string) =>
@@ -17,11 +18,21 @@ export default function KazeHeader() {
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 15);
+
+      // Hide navbar when user arrives at the Triptych Coverflow section
+      const el = document.getElementById('triptych-coverflow');
+      if (el) {
+        const rect = el.getBoundingClientRect();
+        const inView = rect.top <= 100 && rect.bottom >= 100;
+        setHidden(inView);
+      } else {
+        setHidden(false);
+      }
     };
     handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [location.pathname]);
 
   // Close mobile drawer on route change
   useEffect(() => {
@@ -44,7 +55,11 @@ export default function KazeHeader() {
   };
 
   return (
-    <header className="sticky top-0 z-50 transition-all duration-300">
+    <header
+      className={`sticky top-0 z-50 transition-all duration-500 ease-in-out ${
+        hidden ? '-translate-y-full opacity-0 pointer-events-none' : 'translate-y-0 opacity-100'
+      }`}
+    >
       {/* 1. Luminous Light Atelier Bridge Strip: Clear Connection to Rehema Mission Rwanda */}
       <div className="bg-[#f8f5ee] border-b border-stone-200/90 text-stone-700 text-[11px] px-4 sm:px-6 lg:px-8 py-2 relative z-20">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
