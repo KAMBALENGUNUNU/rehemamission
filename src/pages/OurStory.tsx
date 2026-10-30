@@ -45,7 +45,7 @@ export default function OurStory() {
   return (
     <div className="page-enter bg-[#FAF7F2] min-h-screen text-slate-900 pb-24">
       {/* 1. Page Header Hero Section */}
-      <section className="relative bg-[#FAF7F2] min-h-[520px] sm:min-h-[620px] lg:min-h-[680px] flex flex-col items-center justify-center py-20 sm:py-28 md:py-36 px-4 sm:px-6 lg:px-8 border-b border-stone-200/60 overflow-hidden">
+      <section className="relative bg-[#FAF7F2] min-h-[520px] sm:min-h-[620px] lg:min-h-[680px] flex flex-col items-center justify-center py-20 sm:py-28 md:py-36 px-4 sm:px-6 lg:px-8 overflow-hidden">
         {/* Luxury Rotating Rings SVG Theme (The Signature Gallery) in Background */}
         <RotatingRingsTheme
           className="w-[480px] h-[480px] sm:w-[600px] sm:h-[600px] lg:w-[720px] lg:h-[720px]"
