@@ -13,10 +13,14 @@ import {
 import { REHEMA_ARTWORKS, type Artwork } from '@/lib/artworks';
 import { useStore } from '@/store/StoreContext';
 import { formatPrice } from '@/lib/utils';
+import { TRANSLATIONS, type TranslationKey } from '@/lib/translations';
 import KazeLogo from '@/components/logos/KazeLogo';
 
 export default function ArtGallery() {
-  const { toggleFavorite, isFavorite } = useStore();
+  const { toggleFavorite, isFavorite, language } = useStore();
+  const t = (key: TranslationKey, fallback?: string) =>
+    TRANSLATIONS[language]?.[key] ?? TRANSLATIONS.en[key] ?? fallback ?? key;
+
   const [activeCategory, setActiveCategory] = useState<string>('all');
   const [selectedArtwork, setSelectedArtwork] = useState<Artwork | null>(null);
   const [inquirySent, setInquirySent] = useState(false);
@@ -51,14 +55,14 @@ export default function ArtGallery() {
 
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-100 text-amber-900 text-xs font-semibold uppercase tracking-wider mb-4 border border-amber-300">
             <Sparkles className="w-3.5 h-3.5 text-amber-700" />
-            <span>Under Rehema Mission Rwanda · Kigali Atelier</span>
+            <span>{t('gal.badge')}</span>
           </div>
 
           <h1 className="font-serif text-3xl sm:text-5xl md:text-6xl font-light text-slate-950 tracking-tight leading-tight">
-            Original works. Real perspectives. Stories told on the artist’s terms.
+            {t('gal.headline')}
           </h1>
           <p className="mt-6 text-base sm:text-lg text-slate-700 font-light max-w-2xl mx-auto leading-relaxed">
-            <strong>Kaze Collection</strong> brings together authentic original artworks created by the young people supported and mentored through Rehema Mission Rwanda. Through art, they express renewal, raw experience, and hope. The artworks are created and sold under Kaze Collection to build self-reliance, vocational dignity, and sustainable futures for each young artisan.
+            {t('gal.subtitle')}
           </p>
         </div>
       </section>
@@ -72,10 +76,10 @@ export default function ArtGallery() {
             </div>
             <div>
               <p className="text-xs font-bold uppercase tracking-wider text-slate-950">
-                Ethical Art Acquisition Principle
+                {t('gal.principleTitle')}
               </p>
               <p className="text-xs text-slate-600 font-light">
-                We celebrate the quality, craft, and authentic story of each piece — never pity. 100% of creations stem from Rehema youth.
+                {t('gal.principleDesc')}
               </p>
             </div>
           </div>
@@ -83,7 +87,7 @@ export default function ArtGallery() {
             to="/visit"
             className="text-xs font-semibold text-slate-900 hover:text-amber-700 uppercase tracking-wider inline-flex items-center gap-1.5 flex-shrink-0"
           >
-            <span>Arrange Atelier Viewing in Kicukiro</span>
+            <span>{t('gal.principleLink')}</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
@@ -94,10 +98,10 @@ export default function ArtGallery() {
         <div className="flex items-center justify-between border-b border-slate-200 pb-4 flex-wrap gap-4">
           <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
             {[
-              { id: 'all', label: 'All Works' },
-              { id: 'paintings', label: 'Paintings' },
-              { id: 'drawings', label: 'Drawings & Ink' },
-              { id: 'mixed-media', label: 'Mixed Media & Wood' },
+              { id: 'all', label: t('gal.catAll') },
+              { id: 'paintings', label: t('gal.catPaintings') },
+              { id: 'drawings', label: t('gal.catDrawings') },
+              { id: 'mixed-media', label: t('gal.catMixed') },
             ].map((tab) => {
               const active = activeCategory === tab.id;
               return (
@@ -117,7 +121,7 @@ export default function ArtGallery() {
           </div>
 
           <div className="text-xs text-slate-500 font-light">
-            Showing <strong className="text-slate-950 font-semibold">{filteredArtworks.length}</strong> original creations
+            {t('gal.showing')} <strong className="text-slate-950 font-semibold">{filteredArtworks.length}</strong> {t('gal.creations')}
           </div>
         </div>
 
@@ -153,10 +157,10 @@ export default function ArtGallery() {
                       }`}
                     >
                       {art.status === 'available'
-                        ? 'Available'
+                        ? t('gal.statusAvailable')
                         : art.status === 'showroom'
-                        ? 'In Showroom'
-                        : 'Reserved'}
+                        ? t('gal.statusShowroom')
+                        : t('gal.statusReserved')}
                     </span>
                   </div>
 
@@ -180,7 +184,7 @@ export default function ArtGallery() {
                   {/* Hover Overlay */}
                   <div className="absolute inset-0 bg-slate-900/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                     <span className="btn-accent text-[11px] py-2 px-4 shadow">
-                      Read Artwork Story
+                      {t('gal.readStory')}
                     </span>
                   </div>
                 </div>
@@ -223,7 +227,7 @@ export default function ArtGallery() {
                       onClick={() => setSelectedArtwork(art)}
                       className="btn-outline text-[11px] py-1.5 px-3 uppercase tracking-wider"
                     >
-                      View Story
+                      {t('gal.viewStory')}
                     </button>
                   </div>
                 </div>
@@ -247,14 +251,14 @@ export default function ArtGallery() {
                 />
                 <div className="mt-4 flex items-center gap-1.5 px-3 py-1 bg-amber-100/80 rounded-full border border-amber-200 text-amber-900 text-[11px] font-medium">
                   <Award className="w-3.5 h-3.5 text-amber-700" />
-                  <span>Kaze Collection · Signed Original with Certificate</span>
+                  <span>{t('gal.certTag')}</span>
                 </div>
               </div>
               <div className="mt-5 pt-4 border-t border-slate-200 text-center space-y-1">
                 <p className="text-xs text-slate-800 font-semibold">{selectedArtwork.dimensions}</p>
                 <p className="text-[11px] text-slate-600 font-light">{selectedArtwork.medium}</p>
                 <p className="text-[10px] text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded inline-block mt-1 font-medium border border-emerald-200">
-                  100% of proceeds fund youth recovery & artisan vocational independence
+                  {t('gal.proceedsTag')}
                 </p>
               </div>
             </div>
@@ -278,7 +282,7 @@ export default function ArtGallery() {
                       {selectedArtwork.title}
                     </h3>
                     <p className="text-xs text-slate-500 mt-0.5">
-                      {selectedArtwork.artistIdentifier} · Created in {selectedArtwork.year}
+                      {selectedArtwork.artistIdentifier} · {t('gal.createdIn')} {selectedArtwork.year}
                     </p>
                   </div>
                   <button
@@ -297,7 +301,7 @@ export default function ArtGallery() {
                   {/* Part 1: The Hook */}
                   <div>
                     <p className="text-[11px] uppercase tracking-wider font-bold text-amber-800">
-                      1. The Visual Hook
+                      {t('gal.sec1Title')}
                     </p>
                     <p className="font-serif text-base italic font-normal text-slate-950 mt-1">
                       {selectedArtwork.hook}
@@ -307,7 +311,7 @@ export default function ArtGallery() {
                   {/* Part 2: What You See */}
                   <div>
                     <p className="text-[11px] uppercase tracking-wider font-bold text-slate-400">
-                      2. What the Viewer Sees
+                      {t('gal.sec2Title')}
                     </p>
                     <p className="mt-1 text-xs sm:text-sm text-slate-700 leading-relaxed">
                       {selectedArtwork.whatViewerSees}
@@ -317,7 +321,7 @@ export default function ArtGallery() {
                   {/* Part 3: Artist's Voice */}
                   <div>
                     <p className="text-[11px] uppercase tracking-wider font-bold text-slate-400">
-                      3. The Artist’s Story & Testimony
+                      {t('gal.sec3Title')}
                     </p>
                     <div className="bg-amber-50 border-l-3 border-amber-500 p-3.5 my-1 text-xs italic text-slate-900 leading-relaxed rounded-r">
                       {selectedArtwork.artistPerspective}
@@ -327,7 +331,7 @@ export default function ArtGallery() {
                   {/* Part 4: Why This Artwork Belongs in Your Space */}
                   <div>
                     <p className="text-[11px] uppercase tracking-wider font-bold text-amber-800">
-                      4. Why This Piece Belongs in Your Home
+                      {t('gal.sec4Title')}
                     </p>
                     <p className="mt-1 text-xs sm:text-sm text-slate-800 font-normal leading-relaxed bg-slate-50 p-3 rounded border border-slate-100">
                       {selectedArtwork.whyBuy}
@@ -337,15 +341,15 @@ export default function ArtGallery() {
                   {/* Part 5: Craftsmanship & Provenance */}
                   <div>
                     <p className="text-[11px] uppercase tracking-wider font-bold text-slate-400">
-                      5. Craftsmanship & Provenance
+                      {t('gal.sec5Title')}
                     </p>
                     <div className="border border-slate-100 bg-slate-50 p-3 text-xs text-slate-600 space-y-1.5 mt-1 rounded">
-                      <p><strong>Medium:</strong> {selectedArtwork.medium}</p>
-                      <p><strong>Support:</strong> {selectedArtwork.craftDetails.support}</p>
-                      <p><strong>Technique:</strong> {selectedArtwork.craftDetails.technique}</p>
-                      <p><strong>Framing:</strong> {selectedArtwork.framed}</p>
-                      <p><strong>Signature:</strong> {selectedArtwork.craftDetails.signature}</p>
-                      <p><strong>Location:</strong> {selectedArtwork.craftDetails.location}</p>
+                      <p><strong>{t('gal.medium')}</strong> {selectedArtwork.medium}</p>
+                      <p><strong>{t('gal.support')}</strong> {selectedArtwork.craftDetails.support}</p>
+                      <p><strong>{t('gal.technique')}</strong> {selectedArtwork.craftDetails.technique}</p>
+                      <p><strong>{t('gal.framing')}</strong> {selectedArtwork.framed}</p>
+                      <p><strong>{t('gal.signature')}</strong> {selectedArtwork.craftDetails.signature}</p>
+                      <p><strong>{t('gal.location')}</strong> {selectedArtwork.craftDetails.location}</p>
                     </div>
                   </div>
                 </div>
@@ -355,14 +359,14 @@ export default function ArtGallery() {
               <div className="pt-4 border-t border-slate-200">
                 <div className="flex items-center justify-between mb-4">
                   <div>
-                    <p className="text-xs uppercase tracking-wider text-slate-400 font-semibold">Original Artwork Price</p>
+                    <p className="text-xs uppercase tracking-wider text-slate-400 font-semibold">{t('gal.priceLabel')}</p>
                     <p className="font-serif text-2xl font-medium text-slate-950">
                       {formatPrice(selectedArtwork.priceRwf)}
                     </p>
                     <p className="text-xs text-slate-500 font-medium">~${selectedArtwork.priceUsd} USD</p>
                   </div>
                   <span className="px-3 py-1 rounded bg-emerald-100 text-emerald-900 text-xs font-semibold uppercase tracking-wider border border-emerald-300">
-                    {selectedArtwork.status === 'available' ? 'Available for Acquisition' : selectedArtwork.status}
+                    {selectedArtwork.status === 'available' ? t('gal.availableForAcquisition') : selectedArtwork.status}
                   </span>
                 </div>
 
@@ -377,27 +381,27 @@ export default function ArtGallery() {
                     className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-3 px-4 rounded text-xs flex items-center justify-center gap-2 shadow transition-all duration-200 group"
                   >
                     <MessageCircle className="w-4 h-4 fill-white text-emerald-600 group-hover:scale-110 transition-transform" />
-                    <span>Inquire / Reserve via WhatsApp (+250 798 618 524)</span>
+                    <span>{t('gal.inquireWhatsApp')}</span>
                   </a>
 
                   {inquirySent ? (
                     <div className="p-4 bg-emerald-50 border border-emerald-200 text-emerald-900 rounded text-xs text-center space-y-1 animate-fade-in">
                       <Check className="w-5 h-5 mx-auto text-emerald-600" />
-                      <p className="font-semibold">Inquiry Sent Successfully!</p>
+                      <p className="font-semibold">{t('gal.inquirySuccessTitle')}</p>
                       <p className="text-emerald-700 font-light">
-                        The Kaze Collection team will confirm availability, atelier viewing, and delivery details shortly.
+                        {t('gal.inquirySuccessDesc')}
                       </p>
                     </div>
                   ) : (
                     <form onSubmit={handleInquirySubmit} className="space-y-2.5 pt-2 border-t border-slate-100">
                       <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-700">
-                        Or Send Written Atelier Inquiry:
+                        {t('gal.writtenInquiryTitle')}
                       </p>
                       <div className="grid grid-cols-2 gap-2">
                         <input
                           type="text"
                           required
-                          placeholder="Your Name"
+                          placeholder={t('gal.placeholderName')}
                           value={inquiryName}
                           onChange={(e) => setInquiryName(e.target.value)}
                           className="input-field text-xs py-2 px-3"
@@ -405,7 +409,7 @@ export default function ArtGallery() {
                         <input
                           type="email"
                           required
-                          placeholder="Email or Phone"
+                          placeholder={t('gal.placeholderEmail')}
                           value={inquiryEmail}
                           onChange={(e) => setInquiryEmail(e.target.value)}
                           className="input-field text-xs py-2 px-3"
@@ -413,13 +417,13 @@ export default function ArtGallery() {
                       </div>
                       <textarea
                         rows={2}
-                        placeholder="Any questions regarding framing, showroom appointment, or international delivery?"
+                        placeholder={t('gal.placeholderQuestions')}
                         value={inquiryMessage}
                         onChange={(e) => setInquiryMessage(e.target.value)}
                         className="input-field text-xs py-2 px-3 resize-none"
                       />
                       <button type="submit" className="btn-outline w-full text-xs py-2.5 justify-center">
-                        <span>Submit Written Inquiry</span>
+                        <span>{t('gal.btnSubmitInquiry')}</span>
                         <ArrowRight className="w-3.5 h-3.5" />
                       </button>
                     </form>
