@@ -45,7 +45,7 @@ function StorefrontLayout({ children }: { children: React.ReactNode }) {
     location.pathname.startsWith('/kaze');
 
   return (
-    <div className={`min-h-screen flex flex-col ${isKazePage ? 'bg-[#0B192C] text-stone-900' : 'bg-slate-50 text-slate-900'}`}>
+    <div className={`min-h-screen flex flex-col ${isKazePage ? 'bg-[#F5B324] text-stone-900' : 'bg-slate-50 text-slate-900'}`}>
       {isKazePage ? <KazeHeader /> : <Header />}
       <main className={`flex-1 ${isKazePage ? '' : 'pt-16 sm:pt-20'}`}>{children}</main>
       {isKazePage ? <KazeFooter /> : <Footer />}

@@ -241,7 +241,7 @@ export const TRANSLATIONS = {
     'work.ctaCall': 'Call +250 798 618 524',
 
     // Gallery Page
-    'gal.badge': 'Under Rehema Mission Rwanda · Kigali Atelier',
+    'gal.badge': 'Kaze Collection · Fine Art Atelier',
     'gal.headline': 'Original works. Real perspectives. Stories told on the artist’s terms.',
     'gal.subtitle':
       'Kaze Collection brings together authentic original artworks created by the young people supported and mentored through Rehema Mission Rwanda. Through art, they express renewal, raw experience, and hope. The artworks are created and sold under Kaze Collection to build self-reliance, vocational dignity, and sustainable futures for each young artisan.',
@@ -664,7 +664,7 @@ export const TRANSLATIONS = {
     'work.ctaCall': 'Appeler le +250 798 618 524',
 
     // Gallery Page
-    'gal.badge': 'Sous l’égide de Rehema Mission Rwanda · Atelier de Kigali',
+    'gal.badge': 'Collection Kaze · Atelier d\'Art',
     'gal.headline': 'Œuvres originales. Regards authentiques. L’histoire selon l’artiste.',
     'gal.subtitle':
       'La Collection Kaze réunit des œuvres authentiques créées par des jeunes accompagnés et guidés au sein de Rehema Mission Rwanda. À travers l’art, ils expriment la renaissance, la résilience et l’espérance. Les toiles sont créées et vendues au profit direct des jeunes artisans pour leur offrir autonomie, dignité professionnelle et avenir durable.',

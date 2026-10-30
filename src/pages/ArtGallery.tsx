@@ -75,31 +75,25 @@ export default function ArtGallery() {
   };
 
   return (
-    <div className="page-enter bg-[#0B192C] min-h-screen text-stone-900 pb-0 relative overflow-hidden">
-      {/* 1. Kaze Collection Hero Section with Bespoke Fine Art SVG Theme Pattern (Exact Match to Reference Design) */}
-      <section className="relative z-10 pt-28 sm:pt-36 lg:pt-44 pb-28 sm:pb-36 lg:pb-44 px-4 sm:px-6 lg:px-8 overflow-hidden bg-gradient-to-b from-[#0B192C] via-[#0E2038] to-[#071322] text-white">
-        {/* Tone-on-tone Fine Art Studio Vector Pattern in Background */}
-        <ArtGalleryThemePattern opacity={0.22} className="text-cyan-200/90" />
+    <div className="page-enter bg-[#F5B324] min-h-screen text-stone-900 pb-0 relative overflow-hidden">
+      {/* 1. Kaze Collection Hero Section with Bespoke Fine Art SVG Theme Pattern in Brand Yellow (Matching Reference) */}
+      <section className="relative z-10 pt-28 sm:pt-36 lg:pt-44 pb-28 sm:pb-36 lg:pb-44 px-4 sm:px-6 lg:px-8 overflow-hidden bg-gradient-to-b from-[#F5B82E] via-[#F3A81A] to-[#E6990C] text-slate-950">
+        {/* Tone-on-tone Fine Art Studio Vector Pattern in Warm Amber on Yellow */}
+        <ArtGalleryThemePattern opacity={0.16} className="text-amber-950" />
 
-        {/* Ambient atmospheric lighting for museum depth */}
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[320px] bg-gradient-radial from-amber-400/15 via-cyan-400/10 to-transparent rounded-full blur-3xl pointer-events-none z-0" />
+        {/* Ambient atmospheric lighting for rich golden warmth */}
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[360px] bg-gradient-radial from-amber-200/40 via-yellow-200/20 to-transparent rounded-full blur-3xl pointer-events-none z-0" />
 
         <div className="max-w-5xl mx-auto text-center relative z-10">
-          {/* Atelier Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md text-amber-300 text-xs font-semibold uppercase tracking-wider mb-6 border border-white/20 shadow-sm">
-            <Sparkles className="w-3.5 h-3.5 text-amber-300" />
-            <span>{t('gal.badge', 'Kaze Collection · Fine Art Atelier')}</span>
-          </div>
-
           {/* Bold Impactful Headline (Styled exactly like "Our Work" in the reference image) */}
-          <h1 className="font-serif text-4xl sm:text-6xl md:text-7xl lg:text-[5rem] text-white font-bold tracking-tight leading-[1.08] drop-shadow-md max-w-4xl mx-auto">
+          <h1 className="font-serif text-4xl sm:text-6xl md:text-7xl lg:text-[5.25rem] text-slate-950 font-bold tracking-tight leading-[1.08] drop-shadow-sm max-w-4xl mx-auto">
             {language === 'fr'
               ? 'L’Âme Rwandaise Révélée par la Haute Création'
               : 'Where Rwandan Heritage Meets Contemporary Haute Artistry'}
           </h1>
 
           {/* Subtitle */}
-          <p className="mt-6 text-base sm:text-lg md:text-xl text-slate-200/95 font-light max-w-2xl mx-auto leading-relaxed">
+          <p className="mt-6 text-base sm:text-lg md:text-xl text-slate-900/90 font-medium max-w-2xl mx-auto leading-relaxed">
             {t(
               'gal.subtitle',
               'Original paintings, fine drawings, and collector pieces handcrafted by talented youth at the Ebenezer vocational atelier in Kigali. 100% of acquisition proceeds fund their education, health, and vocational independence.'
@@ -110,30 +104,30 @@ export default function ArtGallery() {
           <div className="mt-8 flex items-center justify-center gap-3.5 flex-wrap text-xs">
             <a
               href="#gallery"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white hover:bg-amber-400 text-slate-950 font-semibold tracking-wider uppercase transition-all shadow-md group"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-slate-950 hover:bg-slate-800 text-white font-semibold tracking-wider uppercase transition-all shadow-md group"
             >
-              <Layers className="w-3.5 h-3.5 text-amber-600 group-hover:text-slate-950 transition-colors" />
+              <Layers className="w-3.5 h-3.5 text-amber-400 group-hover:scale-110 transition-transform" />
               <span>{t('kazeNav.collection', 'Curated Collection')}</span>
             </a>
             <a
               href="#exhibitions"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/25 text-white font-semibold tracking-wider uppercase transition-all backdrop-blur-sm"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/70 hover:bg-white text-slate-950 border border-slate-900/20 font-semibold tracking-wider uppercase transition-all shadow-sm backdrop-blur-sm"
             >
-              <Eye className="w-3.5 h-3.5 text-amber-300" />
+              <Eye className="w-3.5 h-3.5 text-amber-800" />
               <span>{t('kazeNav.exhibitions', 'Exhibitions')}</span>
             </a>
             <a
               href="#store"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/25 text-white font-semibold tracking-wider uppercase transition-all backdrop-blur-sm"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/70 hover:bg-white text-slate-950 border border-slate-900/20 font-semibold tracking-wider uppercase transition-all shadow-sm backdrop-blur-sm"
             >
-              <ShoppingBag className="w-3.5 h-3.5 text-amber-300" />
+              <ShoppingBag className="w-3.5 h-3.5 text-amber-800" />
               <span>{t('kazeNav.store', 'Artisan Store')}</span>
             </a>
             <Link
               to="/visit"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold tracking-wider uppercase transition-all shadow-md"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-slate-950 hover:bg-slate-800 text-amber-300 font-bold tracking-wider uppercase transition-all shadow-md"
             >
-              <Calendar className="w-3.5 h-3.5" />
+              <Calendar className="w-3.5 h-3.5 text-amber-300" />
               <span>{t('kazeNav.visits', 'Book Atelier Visit')}</span>
             </Link>
           </div>
