@@ -211,28 +211,28 @@ export default function Home() {
                 key={art.id}
                 className="relative group transition-all duration-300 hover:-translate-y-2 flex flex-col"
               >
-                {/* 1. Ambient Corner Dégradé Glow (Deep obsidian & charcoal ambient aura radiating outside rounded corners) */}
+                {/* 1. Ambient Gradient Black Glow Halo radiating all around the card */}
                 <div
-                  className="absolute -inset-[3px] rounded-[30px] opacity-45 group-hover:opacity-85 blur-[10px] transition-all duration-500 pointer-events-none z-0"
+                  className="absolute -inset-[5px] sm:-inset-[6px] rounded-[32px] opacity-75 group-hover:opacity-100 blur-[12px] sm:blur-[15px] transition-all duration-500 pointer-events-none z-0"
                   style={{
                     background:
-                      'radial-gradient(circle at 100% 0%, rgba(15, 23, 42, 0.45) 0%, transparent 65%), radial-gradient(circle at 0% 100%, rgba(30, 41, 59, 0.35) 0%, transparent 65%)',
+                      'radial-gradient(circle at 50% 0%, rgba(0, 0, 0, 0.75) 0%, rgba(15, 23, 42, 0.5) 45%, transparent 75%), radial-gradient(circle at 50% 100%, rgba(0, 0, 0, 0.8) 0%, rgba(2, 6, 23, 0.55) 50%, transparent 80%)',
                   }}
                   aria-hidden="true"
                 />
 
-                {/* 2. Precision Black Mirror Gradient Rim Frame (2px rounded stroke with specular chrome/mirror reflection) */}
+                {/* 2. Bold Gradient Black Rim Frame (3px stroke with deep midnight to obsidian black gradient) */}
                 <div
-                  className="relative p-[2px] rounded-[26px] z-10 transition-all duration-300 flex-1 flex flex-col h-full"
+                  className="relative p-[3px] rounded-[26px] z-10 transition-all duration-300 flex-1 flex flex-col h-full"
                   style={{
                     background:
-                      'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, #475569 22%, #0f172a 48%, rgba(255, 255, 255, 0.55) 72%, #020617 88%, #334155 100%)',
+                      'linear-gradient(145deg, #000000 0%, #1e293b 25%, #050508 50%, #334155 75%, #000000 100%)',
                     boxShadow:
-                      '0 14px 34px -4px rgba(0, 0, 0, 0.22), 0 0 20px 2px rgba(15, 23, 42, 0.12)',
+                      '0 0 22px 3px rgba(0, 0, 0, 0.45), 0 16px 36px -4px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(0, 0, 0, 0.9)',
                   }}
                 >
                   {/* 3. Solid Inner Card Surface */}
-                  <div className="w-full h-full bg-white rounded-[24px] overflow-hidden flex flex-col justify-between shadow-sm relative z-[1]">
+                  <div className="w-full h-full bg-white rounded-[23px] overflow-hidden flex flex-col justify-between shadow-sm relative z-[1]">
                     {/* Artwork Image */}
                     <div
                       className="relative aspect-[3/4] bg-stone-100 overflow-hidden cursor-pointer"
