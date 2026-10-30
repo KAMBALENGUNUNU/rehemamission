@@ -25,6 +25,170 @@ import KazeLogo from '@/components/logos/KazeLogo';
 import TriptychCoverflow from '@/components/TriptychCoverflow';
 import ArtGalleryThemePattern from '@/components/ArtGalleryThemePattern';
 
+interface PushpinTheme {
+  primary: string;
+  dark: string;
+  light: string;
+  glow: string;
+  bg: string;
+  border: string;
+}
+
+const STORE_CARD_THEMES: PushpinTheme[] = [
+  // 1. Blue (like "Signed Certificate")
+  {
+    primary: '#2563EB',
+    dark: '#1D4ED8',
+    light: '#93C5FD',
+    glow: '#3B82F6',
+    bg: '#EEF4FF',
+    border: '#D6E4FF',
+  },
+  // 2. Magenta Pink (like "100% Social Impact")
+  {
+    primary: '#E11D48',
+    dark: '#9F1239',
+    light: '#FDA4AF',
+    glow: '#EC4899',
+    bg: '#FDF0F8',
+    border: '#FAD2EC',
+  },
+  // 3. Grass Green (like "Worldwide White-Glove")
+  {
+    primary: '#16A34A',
+    dark: '#15803D',
+    light: '#86EFAC',
+    glow: '#22C55E',
+    bg: '#F1FBE9',
+    border: '#D4F6C2',
+  },
+  // 4. Teal / Mint (like "WhatsApp Concierge")
+  {
+    primary: '#0D9488',
+    dark: '#0F766E',
+    light: '#5EEAD4',
+    glow: '#14B8A6',
+    bg: '#E7FAF7',
+    border: '#C2F4EC',
+  },
+];
+
+// Realistic 3D pushpin matching the exact rendered thumbtack from the reference image
+function Pushpin({ id, theme }: { id: string; theme: PushpinTheme }) {
+  return (
+    <div className="absolute -top-6 left-1/2 -translate-x-1/2 z-20 pointer-events-none select-none">
+      <svg
+        width="54"
+        height="60"
+        viewBox="0 0 54 60"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className="drop-shadow-[0_4px_12px_rgba(0,0,0,0.18)]"
+      >
+        <defs>
+          {/* Ambient colored radial glow onto the paper */}
+          <radialGradient
+            id={`store-glow-${id}`}
+            cx="50%"
+            cy="65%"
+            r="50%"
+            fx="50%"
+            fy="65%"
+          >
+            <stop offset="0%" stopColor={theme.glow} stopOpacity="0.85" />
+            <stop offset="50%" stopColor={theme.glow} stopOpacity="0.4" />
+            <stop offset="100%" stopColor={theme.glow} stopOpacity="0" />
+          </radialGradient>
+
+          {/* Base flange linear gradient */}
+          <linearGradient id={`store-base-${id}`} x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor={theme.light} />
+            <stop offset="45%" stopColor={theme.primary} />
+            <stop offset="100%" stopColor={theme.dark} />
+          </linearGradient>
+
+          {/* 3D sphere gradient for the head bulb */}
+          <radialGradient
+            id={`store-head-${id}`}
+            cx="34%"
+            cy="32%"
+            r="68%"
+            fx="30%"
+            fy="28%"
+          >
+            <stop offset="0%" stopColor="#ffffff" stopOpacity="0.9" />
+            <stop offset="25%" stopColor={theme.light} />
+            <stop offset="68%" stopColor={theme.primary} />
+            <stop offset="100%" stopColor={theme.dark} />
+          </radialGradient>
+
+          {/* Top beveled face cap */}
+          <linearGradient id={`store-topCap-${id}`} x1="20%" y1="0%" x2="80%" y2="100%">
+            <stop offset="0%" stopColor={theme.light} />
+            <stop offset="60%" stopColor={theme.primary} />
+            <stop offset="100%" stopColor={theme.dark} />
+          </linearGradient>
+        </defs>
+
+        {/* 1. Ambient colored aura / glow spreading onto paper */}
+        <ellipse cx="27" cy="40" rx="23" ry="14" fill={`url(#store-glow-${id})`} />
+
+        {/* 2. Soft contact drop shadow under the base */}
+        <ellipse cx="30" cy="43" rx="14" ry="6" fill="rgba(0,0,0,0.26)" />
+
+        {/* 3. Base Disc Flange (round bottom that presses against card) */}
+        <ellipse cx="27" cy="41" rx="14" ry="6" fill={theme.dark} opacity="0.65" />
+        <ellipse cx="27" cy="39.5" rx="13.5" ry="5.5" fill={`url(#store-base-${id})`} />
+        {/* Base rim specular reflection */}
+        <path
+          d="M 15.5 39.5 C 18.5 43 35.5 43 38.5 39.5"
+          stroke="#ffffff"
+          strokeWidth="1.2"
+          strokeLinecap="round"
+          opacity="0.55"
+        />
+
+        {/* 4. Conical Neck / Waist connecting base to head */}
+        <path
+          d="M 21.5 24 C 21.5 31, 19 36, 17 38.5 L 37 38.5 C 35 36, 32.5 31, 32.5 24 Z"
+          fill={`url(#store-base-${id})`}
+        />
+
+        {/* 5. 3D Head Bulb */}
+        <circle cx="27" cy="20.5" r="13" fill={`url(#store-head-${id})`} />
+
+        {/* 6. Top Beveled Circular Face */}
+        <ellipse cx="27" cy="17" rx="11" ry="6.8" fill={`url(#store-topCap-${id})`} />
+
+        {/* 7. Inner Bevel Highlight */}
+        <ellipse cx="26.5" cy="16.5" rx="9.5" ry="5.2" fill={theme.primary} opacity="0.4" />
+
+        {/* 8. Specular Reflections (Glossy 3D shine) */}
+        {/* Arc highlight along top-left rim */}
+        <path
+          d="M 18 16 C 20 13, 26 12, 32 13"
+          stroke="#ffffff"
+          strokeWidth="2.2"
+          strokeLinecap="round"
+          opacity="0.95"
+        />
+        {/* Secondary soft shine spot */}
+        <ellipse
+          cx="22.5"
+          cy="15.5"
+          rx="3.5"
+          ry="1.8"
+          fill="#ffffff"
+          opacity="0.8"
+          transform="rotate(-15 22.5 15.5)"
+        />
+        {/* Hot pinpoint reflection on lower sphere */}
+        <circle cx="21" cy="23.5" r="1.5" fill="#ffffff" opacity="0.75" />
+      </svg>
+    </div>
+  );
+}
+
 export default function ArtGallery() {
   const { toggleFavorite, isFavorite, language } = useStore();
   const t = (key: TranslationKey, fallback?: string) =>
@@ -512,63 +676,68 @@ export default function ArtGallery() {
           </p>
         </div>
 
-        {/* 4 Pillars of Collector Assurance */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="bg-white border border-stone-200/90 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
-            <div className="w-10 h-10 rounded-xl bg-amber-500/15 text-amber-700 flex items-center justify-center mb-4">
-              <Award className="w-5 h-5" />
-            </div>
-            <h4 className="font-serif text-lg text-stone-950 font-normal mb-1.5">
-              {language === 'fr' ? 'Certificat d’Authenticité' : 'Signed Certificate'}
-            </h4>
-            <p className="text-xs text-stone-600 font-light leading-relaxed">
-              {language === 'fr'
-                ? 'Chaque œuvre est accompagnée d’un certificat numéroté, signé par l’artiste et la direction de Rehema Mission Rwanda.'
-                : 'Every acquisition includes a provenance certificate signed by the youth artist and the founder of Rehema Mission Rwanda.'}
-            </p>
-          </div>
+        {/* 4 Pillars of Collector Assurance (Exact Pushpin Card Design) */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12 pt-6">
+          {[
+            {
+              title: language === 'fr' ? 'Certificat d’Authenticité' : 'Signed Certificate',
+              description:
+                language === 'fr'
+                  ? 'Chaque œuvre est accompagnée d’un certificat numéroté, signé par l’artiste et la direction de Rehema Mission Rwanda.'
+                  : 'Every acquisition includes a provenance certificate signed by the youth artist and the founder of Rehema Mission Rwanda.',
+            },
+            {
+              title: language === 'fr' ? '100% Impact Social' : '100% Social Impact',
+              description:
+                language === 'fr'
+                  ? 'Zéro dividende commercial. L’intégralité des fonds finance directement les apprentissages et soins des jeunes.'
+                  : 'Zero commercial profit markup. 100% of proceeds sustain vocational training, art tools, and healthcare.',
+            },
+            {
+              title: language === 'fr' ? 'Expédition Internationale' : 'Worldwide White-Glove',
+              description:
+                language === 'fr'
+                  ? 'Emballage renforcé et sécurisé depuis Kigali pour les collectionneurs et institutions du monde entier.'
+                  : 'Secure white-glove packaging from our Kigali studio to private and institutional collectors worldwide.',
+            },
+            {
+              title: language === 'fr' ? 'Concierge WhatsApp' : 'WhatsApp Concierge',
+              description:
+                language === 'fr'
+                  ? 'Discussion directe avec notre équipe pour toute commande sur mesure, dimensions personnalisées ou questions.'
+                  : 'Direct concierge line for custom commissions, frame options, private viewings, and shipping estimates.',
+            },
+          ].map((pillar, idx) => {
+            const theme = STORE_CARD_THEMES[idx % STORE_CARD_THEMES.length];
+            return (
+              <div key={pillar.title} className="relative flex flex-col pt-4 group">
+                {/* 3D Glossy Pushpin with colored ambient glow and shadow, centered at top */}
+                <Pushpin id={`store-pin-${idx}`} theme={theme} />
 
-          <div className="bg-white border border-stone-200/90 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
-            <div className="w-10 h-10 rounded-xl bg-amber-500/15 text-amber-700 flex items-center justify-center mb-4">
-              <ShieldCheck className="w-5 h-5" />
-            </div>
-            <h4 className="font-serif text-lg text-stone-950 font-normal mb-1.5">
-              {language === 'fr' ? '100% Impact Social' : '100% Social Impact'}
-            </h4>
-            <p className="text-xs text-stone-600 font-light leading-relaxed">
-              {language === 'fr'
-                ? 'Zéro dividende commercial. L’intégralité des fonds finance directement les apprentissages et soins des jeunes.'
-                : 'Zero commercial profit markup. 100% of proceeds sustain vocational training, art tools, and healthcare.'}
-            </p>
-          </div>
+                {/* Outer White Card Frame with rounded corners */}
+                <div className="bg-white rounded-[32px] p-3 sm:p-3.5 shadow-[0_8px_30px_rgba(0,0,0,0.06)] border border-stone-200/80 transition-all duration-300 group-hover:shadow-[0_18px_44px_rgba(0,0,0,0.11)] group-hover:-translate-y-1 flex flex-col flex-1">
+                  {/* Inner Pastel Card */}
+                  <div
+                    className="rounded-[22px] px-6 sm:px-7 pt-9 pb-8 flex flex-col flex-1 min-h-[240px]"
+                    style={{
+                      backgroundColor: theme.bg,
+                      border: `1.5px solid ${theme.border}`,
+                    }}
+                  >
+                    {/* Title in Tall Condensed Bold Uppercase (Oswald Font) */}
+                    <h4 className="font-['Oswald',sans-serif] text-[20px] sm:text-[22px] font-bold uppercase tracking-wide text-stone-950 leading-[1.18] mb-3">
+                      {pillar.title}
+                    </h4>
 
-          <div className="bg-white border border-stone-200/90 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
-            <div className="w-10 h-10 rounded-xl bg-amber-500/15 text-amber-700 flex items-center justify-center mb-4">
-              <Compass className="w-5 h-5" />
-            </div>
-            <h4 className="font-serif text-lg text-stone-950 font-normal mb-1.5">
-              {language === 'fr' ? 'Expédition Internationale' : 'Worldwide White-Glove'}
-            </h4>
-            <p className="text-xs text-stone-600 font-light leading-relaxed">
-              {language === 'fr'
-                ? 'Emballage renforcé et sécurisé depuis Kigali pour les collectionneurs et institutions du monde entier.'
-                : 'Secure white-glove packaging from our Kigali studio to private and institutional collectors worldwide.'}
-            </p>
-          </div>
-
-          <div className="bg-white border border-stone-200/90 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
-            <div className="w-10 h-10 rounded-xl bg-amber-500/15 text-amber-700 flex items-center justify-center mb-4">
-              <MessageCircle className="w-5 h-5" />
-            </div>
-            <h4 className="font-serif text-lg text-stone-950 font-normal mb-1.5">
-              {language === 'fr' ? 'Concierge WhatsApp' : 'WhatsApp Concierge'}
-            </h4>
-            <p className="text-xs text-stone-600 font-light leading-relaxed">
-              {language === 'fr'
-                ? 'Discussion directe avec notre équipe pour toute commande sur mesure, dimensions personnalisées ou questions.'
-                : 'Direct concierge line for custom commissions, frame options, private viewings, and shipping estimates.'}
-            </p>
-          </div>
+                    {/* Description in Clean Geometric Sans (Plus Jakarta Sans Font) */}
+                    <p className="font-['Plus_Jakarta_Sans',sans-serif] text-[13px] sm:text-[13.5px] text-stone-700 font-normal leading-[1.65]">
+                      {pillar.description}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
 
         {/* Collector Concierge Contact Box (`id="inquire"`) */}
