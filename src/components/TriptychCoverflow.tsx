@@ -168,8 +168,8 @@ export default function TriptychCoverflow({ onSelectArtwork }: TriptychCoverflow
           </p>
         </div>
 
-        {/* 2. THE TRIPTYCH COVERFLOW CAROUSEL (3 Rounded-Rectangle Cards at a Time) */}
-        <div className="relative w-full max-w-5xl mx-auto flex items-center justify-center h-[340px] sm:h-[420px] md:h-[480px]">
+        {/* 2. THE TRIPTYCH COVERFLOW CAROUSEL (Center Tall & Large On Top of Left & Right) */}
+        <div className="relative w-full max-w-6xl mx-auto flex items-center justify-center h-[460px] sm:h-[560px] md:h-[640px] lg:h-[700px]">
           {items.map((item, index) => {
             // Circular positioning: -1 (left), 0 (center), 1 (right)
             let diff = (index - activeIndex + total) % total;
@@ -188,34 +188,34 @@ export default function TriptychCoverflow({ onSelectArtwork }: TriptychCoverflow
             let cursor = 'cursor-default';
 
             if (isCenter) {
-              // Large, sharp central focal artwork
+              // Center card: LARGER, substantially TALLER, razor sharp, and ON TOP (z-40) of left and right cards
               transformStyle = 'translateX(0) scale(1)';
               filterStyle = 'blur(0px)';
               opacityStyle = 1;
-              zIndex = 30;
+              zIndex = 40;
               cursor = 'cursor-pointer';
             } else if (isLeft) {
-              // Smaller, blurred and slightly scaled-down preview card on the left
-              transformStyle = 'translateX(calc(-100% - 16px)) scale(0.84)';
-              filterStyle = 'blur(2.5px)';
-              opacityStyle = 0.72;
-              zIndex = 20;
+              // Left card: SMALLER (scale 0.74), SHORTER, BLURRED (3.5px), tucked BEHIND the center card (z-10)
+              transformStyle = 'translateX(calc(-56% - 8px)) scale(0.74)';
+              filterStyle = 'blur(3.5px)';
+              opacityStyle = 0.65;
+              zIndex = 10;
               cursor = 'cursor-pointer';
             } else if (isRight) {
-              // Smaller, blurred and slightly scaled-down preview card on the right
-              transformStyle = 'translateX(calc(100% + 16px)) scale(0.84)';
-              filterStyle = 'blur(2.5px)';
-              opacityStyle = 0.72;
-              zIndex = 20;
+              // Right card: SMALLER (scale 0.74), SHORTER, BLURRED (3.5px), tucked BEHIND the center card (z-10)
+              transformStyle = 'translateX(calc(56% + 8px)) scale(0.74)';
+              filterStyle = 'blur(3.5px)';
+              opacityStyle = 0.65;
+              zIndex = 10;
               cursor = 'cursor-pointer';
             } else if (isFarLeft) {
-              transformStyle = 'translateX(-220%) scale(0.68)';
-              filterStyle = 'blur(8px)';
+              transformStyle = 'translateX(-160%) scale(0.55)';
+              filterStyle = 'blur(10px)';
               opacityStyle = 0;
               zIndex = 5;
             } else if (isFarRight) {
-              transformStyle = 'translateX(220%) scale(0.68)';
-              filterStyle = 'blur(8px)';
+              transformStyle = 'translateX(160%) scale(0.55)';
+              filterStyle = 'blur(10px)';
               opacityStyle = 0;
               zIndex = 5;
             }
@@ -235,7 +235,7 @@ export default function TriptychCoverflow({ onSelectArtwork }: TriptychCoverflow
                   else if (isRight) handleNext();
                   else if (isCenter && item.artworkRef) onSelectArtwork(item.artworkRef);
                 }}
-                className={`absolute top-0 w-[78vw] sm:w-[380px] md:w-[460px] lg:w-[500px] aspect-[4/3] sm:aspect-[16/11] transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${cursor}`}
+                className={`absolute top-0 w-[78vw] sm:w-[400px] md:w-[460px] lg:w-[520px] aspect-[3/4] transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${cursor}`}
                 style={{
                   transform: transformStyle,
                   filter: filterStyle,
@@ -244,12 +244,12 @@ export default function TriptychCoverflow({ onSelectArtwork }: TriptychCoverflow
                   pointerEvents: isCenter || isLeft || isRight ? 'auto' : 'none',
                 }}
               >
-                {/* Rounded-Rectangle Card Frame */}
+                {/* Rounded-Rectangle Card Frame with Deep Drop Shadow */}
                 <div
                   className={`w-full h-full rounded-2xl sm:rounded-3xl overflow-hidden bg-stone-900 border transition-all duration-500 relative group ${
                     isCenter
-                      ? 'border-amber-400/80 shadow-[0_25px_60px_rgba(0,0,0,0.6)] ring-1 ring-white/20'
-                      : 'border-white/20 shadow-[0_15px_35px_rgba(0,0,0,0.4)] hover:border-amber-400/60'
+                      ? 'border-amber-400 shadow-[0_30px_90px_rgba(0,0,0,0.85)] ring-2 ring-white/30'
+                      : 'border-white/15 shadow-[0_15px_40px_rgba(0,0,0,0.5)] hover:border-amber-400/50'
                   }`}
                 >
                   <img
@@ -310,7 +310,7 @@ export default function TriptychCoverflow({ onSelectArtwork }: TriptychCoverflow
             type="button"
             onClick={handlePrev}
             aria-label="Previous artwork"
-            className="absolute -left-2 sm:-left-6 md:-left-10 top-1/2 -translate-y-1/2 z-40 w-11 h-11 rounded-full bg-stone-950/80 hover:bg-amber-500 text-white hover:text-slate-950 border border-white/20 hover:border-amber-400 backdrop-blur-md flex items-center justify-center shadow-xl transition-all duration-200"
+            className="absolute -left-2 sm:-left-6 md:-left-10 top-1/2 -translate-y-1/2 z-50 w-11 h-11 rounded-full bg-stone-950/80 hover:bg-amber-500 text-white hover:text-slate-950 border border-white/20 hover:border-amber-400 backdrop-blur-md flex items-center justify-center shadow-2xl transition-all duration-200"
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
@@ -320,7 +320,7 @@ export default function TriptychCoverflow({ onSelectArtwork }: TriptychCoverflow
             type="button"
             onClick={handleNext}
             aria-label="Next artwork"
-            className="absolute -right-2 sm:-right-6 md:-right-10 top-1/2 -translate-y-1/2 z-40 w-11 h-11 rounded-full bg-stone-950/80 hover:bg-amber-500 text-white hover:text-slate-950 border border-white/20 hover:border-amber-400 backdrop-blur-md flex items-center justify-center shadow-xl transition-all duration-200"
+            className="absolute -right-2 sm:-right-6 md:-right-10 top-1/2 -translate-y-1/2 z-50 w-11 h-11 rounded-full bg-stone-950/80 hover:bg-amber-500 text-white hover:text-slate-950 border border-white/20 hover:border-amber-400 backdrop-blur-md flex items-center justify-center shadow-2xl transition-all duration-200"
           >
             <ChevronRight className="w-5 h-5" />
           </button>
