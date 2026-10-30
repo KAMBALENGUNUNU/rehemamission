@@ -24,6 +24,8 @@ type StoreContextType = {
   cartTotal: number;
   toggleFavorite: (id: string) => void;
   isFavorite: (id: string) => boolean;
+  language: 'en' | 'fr';
+  setLanguage: (lang: 'en' | 'fr') => void;
   signIn: (email: string, password: string) => Promise<{ error: string | null }>;
   signUp: (email: string, password: string, fullName: string) => Promise<{ error: string | null }>;
   signOut: () => Promise<void>;
@@ -36,12 +38,14 @@ const FAV_KEY = 'bb_favorites';
 const ADMIN_SESSION_KEY = 'bb_admin_session';
 const CUSTOMER_SESSION_KEY = 'bb_customer_session';
 const USERS_STORAGE_KEY = 'bb_registered_users';
+const LANG_KEY = 'rehema_language';
 
 export function StoreProvider({ children }: { children: ReactNode }) {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [favorites, setFavorites] = useState<string[]>([]);
   const [session, setSession] = useState<Session | null>(null);
   const [adminAuth, setAdminAuth] = useState(false);
+  const [language, setLanguageState] = useState<'en' | 'fr'>('en');
 
   useEffect(() => {
     try {
@@ -52,10 +56,22 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       const a = localStorage.getItem(ADMIN_SESSION_KEY);
       if (a === 'true') setAdminAuth(true);
 
+      const l = localStorage.getItem(LANG_KEY);
+      if (l === 'en' || l === 'fr') setLanguageState(l);
+
       const cust = localStorage.getItem(CUSTOMER_SESSION_KEY);
       if (cust) {
         setSession(JSON.parse(cust));
       }
+    } catch {
+      /* ignore */
+    }
+  }, []);
+
+  const setLanguage = useCallback((lang: 'en' | 'fr') => {
+    setLanguageState(lang);
+    try {
+      localStorage.setItem(LANG_KEY, lang);
     } catch {
       /* ignore */
     }
@@ -275,6 +291,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         addToCart, removeFromCart, updateQty, clearCart,
         cartCount, cartTotal,
         toggleFavorite, isFavorite,
+        language, setLanguage,
         signIn, signUp, signOut,
       }}
     >
