@@ -16,10 +16,10 @@ import {
   Calendar,
   Compass,
   CheckCircle2,
+  X,
 } from 'lucide-react';
 import { REHEMA_ARTWORKS, type Artwork } from '@/lib/artworks';
 import { useStore } from '@/store/StoreContext';
-import { formatPrice } from '@/lib/utils';
 import { TRANSLATIONS, type TranslationKey } from '@/lib/translations';
 import KazeLogo from '@/components/logos/KazeLogo';
 import TriptychCoverflow from '@/components/TriptychCoverflow';
@@ -31,7 +31,6 @@ export default function ArtGallery() {
     TRANSLATIONS[language]?.[key] ?? TRANSLATIONS.en[key] ?? fallback ?? key;
 
   const [activeCategory, setActiveCategory] = useState<string>('all');
-  const [availabilityFilter, setAvailabilityFilter] = useState<'all' | 'available' | 'showroom'>('all');
   const [viewMode, setViewMode] = useState<'grid' | 'carousel'>('grid');
   const [carouselIndex, setCarouselIndex] = useState<number>(0);
   const [selectedArtwork, setSelectedArtwork] = useState<Artwork | null>(null);
@@ -42,12 +41,7 @@ export default function ArtGallery() {
 
   // Filtering
   const filteredArtworks = REHEMA_ARTWORKS.filter((art) => {
-    const matchesCategory = activeCategory === 'all' || art.category === activeCategory;
-    const matchesAvailability =
-      availabilityFilter === 'all' ||
-      (availabilityFilter === 'available' && art.status === 'available') ||
-      (availabilityFilter === 'showroom' && art.status === 'showroom');
-    return matchesCategory && matchesAvailability;
+    return activeCategory === 'all' || art.category === activeCategory;
   });
 
   const currentArtwork = filteredArtworks[carouselIndex] || filteredArtworks[0] || REHEMA_ARTWORKS[0];
@@ -241,39 +235,9 @@ export default function ArtGallery() {
             })}
           </div>
 
-          {/* Availability Pills */}
-          <div className="flex items-center gap-2 text-xs">
-            <span className="text-stone-500 hidden sm:inline">{t('gal.showing', 'Showing')}:</span>
-            <button
-              onClick={() => setAvailabilityFilter('all')}
-              className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${
-                availabilityFilter === 'all'
-                  ? 'bg-stone-900 text-white font-semibold'
-                  : 'text-stone-600 hover:text-stone-900 bg-stone-100'
-              }`}
-            >
-              {language === 'fr' ? 'Toutes' : 'All'}
-            </button>
-            <button
-              onClick={() => setAvailabilityFilter('available')}
-              className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${
-                availabilityFilter === 'available'
-                  ? 'bg-emerald-600 text-white font-semibold'
-                  : 'text-stone-600 hover:text-stone-900 bg-stone-100'
-              }`}
-            >
-              {language === 'fr' ? 'Disponibles' : 'Available'}
-            </button>
-            <button
-              onClick={() => setAvailabilityFilter('showroom')}
-              className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${
-                availabilityFilter === 'showroom'
-                  ? 'bg-amber-500 text-slate-950 font-semibold'
-                  : 'text-stone-600 hover:text-stone-900 bg-stone-100'
-              }`}
-            >
-              {language === 'fr' ? 'En Exposition' : 'Exhibition'}
-            </button>
+          {/* Artwork Count */}
+          <div className="text-xs text-stone-500 font-medium">
+            <span>{filteredArtworks.length} {language === 'fr' ? 'œuvres' : 'works'}</span>
           </div>
         </div>
 
@@ -298,25 +262,6 @@ export default function ArtGallery() {
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
 
-                    {/* Status Badge */}
-                    <div className="absolute top-3 left-3">
-                      <span
-                        className={`text-[10px] tracking-wider uppercase font-semibold px-2.5 py-1 rounded-full shadow-sm backdrop-blur-sm border ${
-                          art.status === 'available'
-                            ? 'bg-emerald-600 text-white border-emerald-400/40'
-                            : art.status === 'showroom'
-                            ? 'bg-amber-500 text-slate-950 border-amber-300/40'
-                            : 'bg-stone-700 text-stone-200 border-white/20'
-                        }`}
-                      >
-                        {art.status === 'available'
-                          ? t('gal.statusAvailable', 'Available')
-                          : art.status === 'showroom'
-                          ? t('gal.statusShowroom', 'In Showroom')
-                          : t('gal.statusReserved', 'Reserved')}
-                      </span>
-                    </div>
-
                     {/* Save to Favorites */}
                     <button
                       type="button"
@@ -336,8 +281,9 @@ export default function ArtGallery() {
 
                     {/* Hover Overlay with Warm Amber CTA */}
                     <div className="absolute inset-0 bg-stone-950/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                      <span className="px-5 py-2.5 bg-amber-500 text-slate-950 text-xs font-semibold tracking-[0.16em] uppercase rounded-full shadow-lg shadow-amber-500/30">
-                        {t('gal.readStory', 'View Story & Acquire')}
+                      <span className="px-5 py-2.5 bg-amber-500 text-slate-950 text-xs font-semibold tracking-[0.16em] uppercase rounded-full shadow-lg shadow-amber-500/30 flex items-center gap-1.5">
+                        <span>{t('gal.viewStory', 'View Story')}</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
                       </span>
                     </div>
                   </div>
@@ -369,18 +315,14 @@ export default function ArtGallery() {
                       </p>
                     </div>
 
-                    <div className="mt-5 pt-3.5 border-t border-stone-200 flex items-center justify-between">
-                      <div>
-                        <p className="text-sm font-serif font-medium text-amber-900">
-                          {formatPrice(art.priceRwf)}
-                        </p>
-                        <p className="text-[10px] text-stone-500">~${art.priceUsd} USD</p>
-                      </div>
+                    <div className="mt-5 pt-3.5 border-t border-stone-200">
                       <button
+                        type="button"
                         onClick={() => setSelectedArtwork(art)}
-                        className="px-3.5 py-1.5 bg-amber-500 hover:bg-amber-400 text-slate-950 text-[11px] font-semibold uppercase tracking-wider rounded-full shadow-sm transition-all"
+                        className="w-full py-2.5 px-4 bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-semibold uppercase tracking-wider rounded-full shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-1.5"
                       >
-                        {t('gal.viewStory', 'View Story')}
+                        <span>{t('gal.viewStory', 'View Story')}</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
                       </button>
                     </div>
                   </div>
@@ -405,11 +347,6 @@ export default function ArtGallery() {
                     alt={currentArtwork.title}
                     className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105"
                   />
-                  <div className="absolute top-3 left-3">
-                    <span className="text-[10px] font-semibold tracking-wider uppercase px-3 py-1 rounded-full bg-emerald-600 text-white shadow">
-                      {currentArtwork.status === 'available' ? 'Available for Acquisition' : currentArtwork.status}
-                    </span>
-                  </div>
                 </div>
 
                 {/* Transition Navigation Controls */}
@@ -462,11 +399,6 @@ export default function ArtGallery() {
                   {currentArtwork.hook}
                 </blockquote>
 
-                {/* Description */}
-                <p className="text-sm text-stone-600 font-light leading-relaxed">
-                  {currentArtwork.whatViewerSees}
-                </p>
-
                 {/* Details Pill grid */}
                 <div className="grid grid-cols-2 gap-3 text-xs text-stone-700 bg-stone-50 p-4 rounded-xl border border-stone-200">
                   <div>
@@ -479,33 +411,24 @@ export default function ArtGallery() {
                   </div>
                 </div>
 
-                {/* Price & Acquisition Actions */}
-                <div className="pt-4 border-t border-stone-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                  <div>
-                    <p className="text-[11px] uppercase tracking-wider text-stone-500 font-semibold">
-                      {t('gal.priceLabel', 'Acquisition Value')}
-                    </p>
-                    <p className="font-serif text-2xl font-normal text-amber-900">
-                      {formatPrice(currentArtwork.priceRwf)}
-                    </p>
-                    <p className="text-xs text-stone-500">~${currentArtwork.priceUsd} USD</p>
-                  </div>
-
-                  <div className="flex items-center gap-3">
+                {/* Acquisition Actions */}
+                <div className="pt-4 border-t border-stone-200 flex items-center justify-between gap-4 flex-wrap">
+                  <div className="flex items-center gap-3 w-full sm:w-auto">
                     <button
                       type="button"
                       onClick={() => setSelectedArtwork(currentArtwork)}
-                      className="px-5 py-2.5 bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-semibold uppercase tracking-wider rounded-full shadow-md transition-all"
+                      className="px-6 py-2.5 bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-semibold uppercase tracking-wider rounded-full shadow-md transition-all flex items-center gap-1.5"
                     >
-                      {t('gal.viewStory', 'View Full 5-Part Story')}
+                      <span>{t('gal.viewStory', 'View Story')}</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
                     </button>
                     <a
                       href={`https://wa.me/250798618524?text=${encodeURIComponent(
-                        `Hello Kaze Collection, I am interested in acquiring the artwork "${currentArtwork.title}" (${formatPrice(currentArtwork.priceRwf)} / ~$${currentArtwork.priceUsd} USD). Please let me know how to proceed.`
+                        `Hello Kaze Collection, I am interested in inquiring about the artwork "${currentArtwork.title}". Please let me know how to proceed.`
                       )}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-2.5 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white transition-all shadow-md"
+                      className="p-2.5 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white transition-all shadow-md inline-flex items-center justify-center"
                       title="Direct WhatsApp Acquisition"
                     >
                       <MessageCircle className="w-5 h-5" />
@@ -711,37 +634,62 @@ export default function ArtGallery() {
       </section>
       </div>
 
-      {/* 8. Lightbox / 5-Part Story Modal (LIGHT & CLEAR LUXURY DESIGN) */}
+      {/* 8. Lightbox / Artwork Story Modal (LIGHT & CLEAR LUXURY DESIGN) */}
       {selectedArtwork && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-950/60 backdrop-blur-md animate-fade-in">
-          <div className="relative bg-white max-w-4xl w-full max-h-[92vh] overflow-y-auto shadow-2xl flex flex-col md:flex-row border border-stone-200 rounded-3xl">
-            {/* Left: Artwork photography view */}
-            <div className="md:w-1/2 bg-stone-50 flex flex-col justify-between p-6 sm:p-8 border-b md:border-b-0 md:border-r border-stone-200">
-              <div className="flex-1 flex flex-col items-center justify-center">
-                <img
-                  src={selectedArtwork.image}
-                  alt={selectedArtwork.title}
-                  className="max-h-[55vh] w-auto object-contain shadow-xl rounded-lg"
-                />
-                <div className="mt-4 flex items-center gap-1.5 px-3 py-1 bg-amber-500/15 rounded-full border border-amber-500/30 text-amber-900 text-[11px] font-medium">
-                  <Award className="w-3.5 h-3.5 text-amber-600" />
-                  <span>{t('gal.certTag', 'Signed Provenance Certificate')}</span>
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 pt-14 sm:pt-16 bg-stone-950/70 backdrop-blur-md animate-fade-in"
+          onClick={() => {
+            setSelectedArtwork(null);
+            setInquirySent(false);
+          }}
+        >
+          {/* Wrapper containing the exit button OUT of the box and the white modal dialog */}
+          <div
+            className="relative max-w-4xl w-full my-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Exit button OUT of the box */}
+            <button
+              type="button"
+              onClick={() => {
+                setSelectedArtwork(null);
+                setInquirySent(false);
+              }}
+              className="absolute -top-12 right-0 sm:-top-13 sm:right-0 z-50 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white hover:bg-amber-500 text-stone-900 hover:text-slate-950 shadow-2xl border border-stone-200/90 backdrop-blur-md flex items-center justify-center transition-all duration-200 hover:scale-110 group cursor-pointer"
+              aria-label="Close"
+              title="Close"
+            >
+              <X className="w-5 h-5 group-hover:rotate-90 transition-transform duration-200" />
+            </button>
+
+            {/* Modal Box */}
+            <div className="bg-white max-h-[86vh] overflow-y-auto shadow-2xl flex flex-col md:flex-row border border-stone-200 rounded-3xl">
+              {/* Left: Artwork photography view */}
+              <div className="md:w-1/2 bg-stone-50 flex flex-col justify-between p-6 sm:p-8 border-b md:border-b-0 md:border-r border-stone-200">
+                <div className="flex-1 flex flex-col items-center justify-center">
+                  <img
+                    src={selectedArtwork.image}
+                    alt={selectedArtwork.title}
+                    className="max-h-[55vh] w-auto object-contain shadow-xl rounded-lg"
+                  />
+                  <div className="mt-4 flex items-center gap-1.5 px-3 py-1 bg-amber-500/15 rounded-full border border-amber-500/30 text-amber-900 text-[11px] font-medium">
+                    <Award className="w-3.5 h-3.5 text-amber-600" />
+                    <span>{t('gal.certTag', 'Signed Provenance Certificate')}</span>
+                  </div>
+                </div>
+                <div className="mt-5 pt-4 border-t border-stone-200 text-center space-y-1">
+                  <p className="text-xs text-stone-900 font-semibold">{selectedArtwork.dimensions}</p>
+                  <p className="text-[11px] text-stone-500 font-light">{selectedArtwork.medium}</p>
+                  <p className="text-[10px] text-emerald-800 bg-emerald-50 px-2.5 py-0.5 rounded-full inline-block mt-1 font-medium border border-emerald-200">
+                    {t('gal.proceedsTag', '100% Proceeds Support Rehema Youth Fund')}
+                  </p>
                 </div>
               </div>
-              <div className="mt-5 pt-4 border-t border-stone-200 text-center space-y-1">
-                <p className="text-xs text-stone-900 font-semibold">{selectedArtwork.dimensions}</p>
-                <p className="text-[11px] text-stone-500 font-light">{selectedArtwork.medium}</p>
-                <p className="text-[10px] text-emerald-800 bg-emerald-50 px-2.5 py-0.5 rounded-full inline-block mt-1 font-medium border border-emerald-200">
-                  {t('gal.proceedsTag', '100% Proceeds Support Rehema Youth Fund')}
-                </p>
-              </div>
-            </div>
 
-            {/* Right: 5-Part Story & Purchase Flow */}
-            <div className="md:w-1/2 p-6 sm:p-8 flex flex-col justify-between space-y-6">
-              <div>
-                <div className="flex items-start justify-between border-b border-stone-200 pb-4">
-                  <div>
+              {/* Right: Artwork Story & Inquiry Flow */}
+              <div className="md:w-1/2 p-6 sm:p-8 flex flex-col justify-between space-y-6">
+                <div>
+                  <div className="border-b border-stone-200 pb-4">
                     <div className="flex items-center gap-2 mb-1 flex-wrap">
                       <span className="text-[11px] font-bold uppercase tracking-wider text-amber-800">
                         {selectedArtwork.categoryLabel}
@@ -759,96 +707,62 @@ export default function ArtGallery() {
                       {selectedArtwork.artistIdentifier} · {t('gal.createdIn', 'Created in')} {selectedArtwork.year}
                     </p>
                   </div>
-                  <button
-                    onClick={() => {
-                      setSelectedArtwork(null);
-                      setInquirySent(false);
-                    }}
-                    className="p-1.5 rounded-full hover:bg-stone-100 text-stone-500 hover:text-stone-900 text-lg font-bold transition-colors"
-                  >
-                    ✕
-                  </button>
-                </div>
 
-                {/* 5-Part Story Breakdown */}
-                <div className="mt-5 space-y-4 text-sm text-stone-700 font-light leading-relaxed">
-                  {/* Part 1: The Hook */}
-                  <div>
-                    <p className="text-[11px] uppercase tracking-wider font-bold text-amber-800">
-                      {t('gal.sec1Title', 'The Story & Spark')}
-                    </p>
-                    <p className="font-serif text-base italic font-normal text-stone-900 mt-1">
-                      {selectedArtwork.hook}
-                    </p>
-                  </div>
-
-                  {/* Part 2: What You See */}
-                  <div>
-                    <p className="text-[11px] uppercase tracking-wider font-bold text-stone-500">
-                      {t('gal.sec2Title', 'What the Viewer Sees')}
-                    </p>
-                    <p className="mt-1 text-xs sm:text-sm text-stone-600 leading-relaxed">
-                      {selectedArtwork.whatViewerSees}
-                    </p>
-                  </div>
-
-                  {/* Part 3: Artist's Voice */}
-                  <div>
-                    <p className="text-[11px] uppercase tracking-wider font-bold text-stone-500">
-                      {t('gal.sec3Title', 'Artist’s Perspective')}
-                    </p>
-                    <div className="bg-amber-50/70 border-l-3 border-amber-500 p-3.5 my-1 text-xs italic text-amber-950 leading-relaxed rounded-r">
-                      {selectedArtwork.artistPerspective}
+                  {/* Artwork Story Breakdown */}
+                  <div className="mt-5 space-y-4 text-sm text-stone-700 font-light leading-relaxed">
+                    {/* Part 1: The Hook */}
+                    <div>
+                      <p className="text-[11px] uppercase tracking-wider font-bold text-amber-800">
+                        {t('gal.sec1Title', 'The Story & Spark')}
+                      </p>
+                      <p className="font-serif text-base italic font-normal text-stone-900 mt-1">
+                        {selectedArtwork.hook}
+                      </p>
                     </div>
-                  </div>
 
-                  {/* Part 4: Why This Artwork Belongs in Your Space */}
-                  <div>
-                    <p className="text-[11px] uppercase tracking-wider font-bold text-amber-800">
-                      {t('gal.sec4Title', 'Why This Belongs in Your Collection')}
-                    </p>
-                    <p className="mt-1 text-xs sm:text-sm text-stone-700 font-normal leading-relaxed bg-stone-50 p-3 rounded-lg border border-stone-200">
-                      {selectedArtwork.whyBuy}
-                    </p>
-                  </div>
+                    {/* Part 2: Artist's Voice */}
+                    <div>
+                      <p className="text-[11px] uppercase tracking-wider font-bold text-stone-500">
+                        {t('gal.sec3Title', 'Artist’s Perspective')}
+                      </p>
+                      <div className="bg-amber-50/70 border-l-3 border-amber-500 p-3.5 my-1 text-xs italic text-amber-950 leading-relaxed rounded-r">
+                        {selectedArtwork.artistPerspective}
+                      </div>
+                    </div>
 
-                  {/* Part 5: Craftsmanship & Provenance */}
-                  <div>
-                    <p className="text-[11px] uppercase tracking-wider font-bold text-stone-500">
-                      {t('gal.sec5Title', 'Craftsmanship & Provenance')}
-                    </p>
-                    <div className="border border-stone-200 bg-stone-50 p-3 text-xs text-stone-700 space-y-1.5 mt-1 rounded-lg">
-                      <p><strong>{t('gal.medium', 'Medium')}:</strong> {selectedArtwork.medium}</p>
-                      <p><strong>{t('gal.support', 'Support')}:</strong> {selectedArtwork.craftDetails.support}</p>
-                      <p><strong>{t('gal.technique', 'Technique')}:</strong> {selectedArtwork.craftDetails.technique}</p>
-                      <p><strong>{t('gal.framing', 'Framing')}:</strong> {selectedArtwork.framed}</p>
-                      <p><strong>{t('gal.signature', 'Signature')}:</strong> {selectedArtwork.craftDetails.signature}</p>
-                      <p><strong>{t('gal.location', 'Origin')}:</strong> {selectedArtwork.craftDetails.location}</p>
+                    {/* Part 3: Why This Artwork Belongs in Your Space */}
+                    <div>
+                      <p className="text-[11px] uppercase tracking-wider font-bold text-amber-800">
+                        {t('gal.sec4Title', 'Why This Belongs in Your Collection')}
+                      </p>
+                      <p className="mt-1 text-xs sm:text-sm text-stone-700 font-normal leading-relaxed bg-stone-50 p-3 rounded-lg border border-stone-200">
+                        {selectedArtwork.whyBuy}
+                      </p>
+                    </div>
+
+                    {/* Part 4: Craftsmanship & Provenance */}
+                    <div>
+                      <p className="text-[11px] uppercase tracking-wider font-bold text-stone-500">
+                        {t('gal.sec5Title', 'Craftsmanship & Provenance')}
+                      </p>
+                      <div className="border border-stone-200 bg-stone-50 p-3 text-xs text-stone-700 space-y-1.5 mt-1 rounded-lg">
+                        <p><strong>{t('gal.medium', 'Medium')}:</strong> {selectedArtwork.medium}</p>
+                        <p><strong>{t('gal.support', 'Support')}:</strong> {selectedArtwork.craftDetails.support}</p>
+                        <p><strong>{t('gal.technique', 'Technique')}:</strong> {selectedArtwork.craftDetails.technique}</p>
+                        <p><strong>{t('gal.framing', 'Framing')}:</strong> {selectedArtwork.framed}</p>
+                        <p><strong>{t('gal.signature', 'Signature')}:</strong> {selectedArtwork.craftDetails.signature}</p>
+                        <p><strong>{t('gal.location', 'Origin')}:</strong> {selectedArtwork.craftDetails.location}</p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Purchase Inquiry Flow */}
-              <div className="pt-4 border-t border-stone-200">
-                <div className="flex items-center justify-between mb-4">
-                  <div>
-                    <p className="text-xs uppercase tracking-wider text-stone-500 font-semibold">{t('gal.priceLabel', 'Acquisition Value')}</p>
-                    <p className="font-serif text-2xl font-normal text-amber-900">
-                      {formatPrice(selectedArtwork.priceRwf)}
-                    </p>
-                    <p className="text-xs text-stone-500 font-medium">~${selectedArtwork.priceUsd} USD</p>
-                  </div>
-                  <span className="px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 text-xs font-semibold uppercase tracking-wider border border-emerald-200">
-                    {selectedArtwork.status === 'available' ? t('gal.availableForAcquisition', 'Available for Acquisition') : selectedArtwork.status}
-                  </span>
-                </div>
-
-                {/* Instant WhatsApp Direct Reservation */}
-                <div className="space-y-3">
+                {/* Purchase / Acquisition Inquiry Flow */}
+                <div className="pt-4 border-t border-stone-200 space-y-3">
+                  {/* Instant WhatsApp Direct Reservation */}
                   <a
                     href={`https://wa.me/250798618524?text=${encodeURIComponent(
-                      `Hello Kaze Collection, I am interested in acquiring the original artwork "${selectedArtwork.title}" (${formatPrice(selectedArtwork.priceRwf)} / ~$${selectedArtwork.priceUsd} USD). Please let me know availability and how to arrange viewing or delivery.`
+                      `Hello Kaze Collection, I am interested in inquiring about the original artwork "${selectedArtwork.title}". Please let me know availability and how to arrange viewing or delivery.`
                     )}`}
                     target="_blank"
                     rel="noopener noreferrer"

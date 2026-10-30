@@ -6,11 +6,11 @@ import {
   Calendar,
   MessageCircle,
   Award,
+  X,
 } from 'lucide-react';
 import { useWebsiteSettings } from '@/lib/settings';
 import { REHEMA_ARTWORKS, type Artwork } from '@/lib/artworks';
 import { useStore } from '@/store/StoreContext';
-import { formatPrice } from '@/lib/utils';
 import AnnouncementBar from '@/components/AnnouncementBar';
 import RotatingRingsTheme from '@/components/RotatingRingsTheme';
 import PillarStickerCards from '@/components/PillarStickerCards';
@@ -338,35 +338,54 @@ export default function Home() {
 
       {/* ARTWORK DETAIL MODAL */}
       {selectedArtwork && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm animate-fade-in">
-          <div className="relative bg-white max-w-4xl w-full max-h-[92vh] overflow-y-auto shadow-2xl flex flex-col md:flex-row border border-slate-200 rounded-sm">
-            {/* Left: Artwork image */}
-            <div className="md:w-1/2 bg-slate-100 flex flex-col justify-between p-6 sm:p-8 border-b md:border-b-0 md:border-r border-slate-200">
-              <div className="flex-1 flex flex-col items-center justify-center">
-                <img
-                  src={selectedArtwork.image}
-                  alt={selectedArtwork.title}
-                  className="max-h-[58vh] w-auto object-contain shadow-lg rounded-sm"
-                />
-                <div className="mt-4 flex items-center gap-1.5 px-3 py-1 bg-amber-100/80 rounded-full border border-amber-200 text-amber-900 text-[11px] font-medium">
-                  <Award className="w-3.5 h-3.5 text-amber-700" />
-                  <span>{t('gal.certTag')}</span>
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 pt-14 sm:pt-16 bg-slate-950/70 backdrop-blur-md animate-fade-in"
+          onClick={() => setSelectedArtwork(null)}
+        >
+          {/* Wrapper containing the exit button OUT of the box and the modal */}
+          <div
+            className="relative max-w-4xl w-full my-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Exit button OUT of the box */}
+            <button
+              type="button"
+              onClick={() => setSelectedArtwork(null)}
+              className="absolute -top-12 right-0 sm:-top-13 sm:right-0 z-50 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white hover:bg-amber-500 text-stone-900 hover:text-slate-950 shadow-2xl border border-stone-200/90 backdrop-blur-md flex items-center justify-center transition-all duration-200 hover:scale-110 group cursor-pointer"
+              aria-label="Close"
+              title="Close"
+            >
+              <X className="w-5 h-5 group-hover:rotate-90 transition-transform duration-200" />
+            </button>
+
+            {/* Modal Box */}
+            <div className="bg-white max-h-[86vh] overflow-y-auto shadow-2xl flex flex-col md:flex-row border border-slate-200 rounded-3xl">
+              {/* Left: Artwork image */}
+              <div className="md:w-1/2 bg-slate-100 flex flex-col justify-between p-6 sm:p-8 border-b md:border-b-0 md:border-r border-slate-200">
+                <div className="flex-1 flex flex-col items-center justify-center">
+                  <img
+                    src={selectedArtwork.image}
+                    alt={selectedArtwork.title}
+                    className="max-h-[55vh] w-auto object-contain shadow-lg rounded-sm"
+                  />
+                  <div className="mt-4 flex items-center gap-1.5 px-3 py-1 bg-amber-100/80 rounded-full border border-amber-200 text-amber-900 text-[11px] font-medium">
+                    <Award className="w-3.5 h-3.5 text-amber-700" />
+                    <span>{t('gal.certTag')}</span>
+                  </div>
+                </div>
+                <div className="mt-5 pt-4 border-t border-slate-200 text-center space-y-1">
+                  <p className="text-xs text-slate-800 font-semibold">{selectedArtwork.dimensions}</p>
+                  <p className="text-[11px] text-slate-600 font-light">{selectedArtwork.medium}</p>
+                  <p className="text-[10px] text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded inline-block mt-1 font-medium border border-emerald-200">
+                    {t('gal.proceedsTag')}
+                  </p>
                 </div>
               </div>
-              <div className="mt-5 pt-4 border-t border-slate-200 text-center space-y-1">
-                <p className="text-xs text-slate-800 font-semibold">{selectedArtwork.dimensions}</p>
-                <p className="text-[11px] text-slate-600 font-light">{selectedArtwork.medium}</p>
-                <p className="text-[10px] text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded inline-block mt-1 font-medium border border-emerald-200">
-                  {t('gal.proceedsTag')}
-                </p>
-              </div>
-            </div>
 
-            {/* Right: 5-Part Artwork Story & Inquire */}
-            <div className="md:w-1/2 p-6 sm:p-8 flex flex-col justify-between space-y-6">
-              <div>
-                <div className="flex items-start justify-between border-b border-slate-100 pb-4">
-                  <div>
+              {/* Right: Artwork Story & Inquire */}
+              <div className="md:w-1/2 p-6 sm:p-8 flex flex-col justify-between space-y-6">
+                <div>
+                  <div className="border-b border-slate-100 pb-4">
                     <div className="flex items-center gap-2 mb-1 flex-wrap">
                       <span className="text-[11px] font-bold uppercase tracking-wider text-amber-700">
                         {selectedArtwork.categoryLabel}
@@ -384,93 +403,61 @@ export default function Home() {
                       {selectedArtwork.artistIdentifier} · {t('gal.createdIn')} {selectedArtwork.year}
                     </p>
                   </div>
-                  <button
-                    onClick={() => setSelectedArtwork(null)}
-                    className="p-1.5 rounded-full hover:bg-slate-100 text-slate-400 hover:text-slate-900 text-lg font-bold transition-colors"
-                  >
-                    ✕
-                  </button>
-                </div>
 
-                {/* 5-Part Story */}
-                <div className="mt-5 space-y-4 text-sm text-slate-700 font-light leading-relaxed">
-                  {/* Part 1: The Hook */}
-                  <div>
-                    <p className="text-[11px] uppercase tracking-wider font-bold text-amber-800">
-                      {t('gal.sec1Title')}
-                    </p>
-                    <p className="font-serif text-base italic font-normal text-slate-950 mt-1">
-                      {selectedArtwork.hook}
-                    </p>
-                  </div>
-
-                  {/* Part 2: What You See */}
-                  <div>
-                    <p className="text-[11px] uppercase tracking-wider font-bold text-slate-400">
-                      {t('gal.sec2Title')}
-                    </p>
-                    <p className="mt-1 text-xs sm:text-sm text-slate-700 leading-relaxed">
-                      {selectedArtwork.whatViewerSees}
-                    </p>
-                  </div>
-
-                  {/* Part 3: Artist's Voice */}
-                  <div>
-                    <p className="text-[11px] uppercase tracking-wider font-bold text-slate-400">
-                      {t('gal.sec3Title')}
-                    </p>
-                    <div className="bg-amber-50 border-l-3 border-amber-500 p-3.5 my-1 text-xs italic text-slate-900 leading-relaxed rounded-r">
-                      {selectedArtwork.artistPerspective}
+                  {/* Artwork Story Breakdown */}
+                  <div className="mt-5 space-y-4 text-sm text-slate-700 font-light leading-relaxed">
+                    {/* Part 1: The Hook */}
+                    <div>
+                      <p className="text-[11px] uppercase tracking-wider font-bold text-amber-800">
+                        {t('gal.sec1Title')}
+                      </p>
+                      <p className="font-serif text-base italic font-normal text-slate-950 mt-1">
+                        {selectedArtwork.hook}
+                      </p>
                     </div>
-                  </div>
 
-                  {/* Part 4: Why This Artwork Belongs in Your Space */}
-                  <div>
-                    <p className="text-[11px] uppercase tracking-wider font-bold text-amber-800">
-                      {t('gal.sec4Title')}
-                    </p>
-                    <p className="mt-1 text-xs sm:text-sm text-slate-800 font-normal leading-relaxed bg-slate-50 p-3 rounded border border-slate-100">
-                      {selectedArtwork.whyBuy}
-                    </p>
-                  </div>
+                    {/* Part 2: Artist's Voice */}
+                    <div>
+                      <p className="text-[11px] uppercase tracking-wider font-bold text-slate-400">
+                        {t('gal.sec3Title')}
+                      </p>
+                      <div className="bg-amber-50 border-l-3 border-amber-500 p-3.5 my-1 text-xs italic text-slate-900 leading-relaxed rounded-r">
+                        {selectedArtwork.artistPerspective}
+                      </div>
+                    </div>
 
-                  {/* Part 5: Craftsmanship & Provenance */}
-                  <div>
-                    <p className="text-[11px] uppercase tracking-wider font-bold text-slate-400">
-                      {t('gal.sec5Title')}
-                    </p>
-                    <div className="border border-slate-100 bg-slate-50 p-3 text-xs text-slate-600 space-y-1.5 mt-1 rounded">
-                      <p><strong>{t('gal.medium')}</strong> {selectedArtwork.medium}</p>
-                      <p><strong>{t('gal.support')}</strong> {selectedArtwork.craftDetails.support}</p>
-                      <p><strong>{t('gal.technique')}</strong> {selectedArtwork.craftDetails.technique}</p>
-                      <p><strong>{t('gal.framing')}</strong> {selectedArtwork.framed}</p>
-                      <p><strong>{t('gal.signature')}</strong> {selectedArtwork.craftDetails.signature}</p>
-                      <p><strong>{t('gal.location')}</strong> {selectedArtwork.craftDetails.location}</p>
+                    {/* Part 3: Why This Artwork Belongs in Your Space */}
+                    <div>
+                      <p className="text-[11px] uppercase tracking-wider font-bold text-amber-800">
+                        {t('gal.sec4Title')}
+                      </p>
+                      <p className="mt-1 text-xs sm:text-sm text-slate-800 font-normal leading-relaxed bg-slate-50 p-3 rounded border border-slate-100">
+                        {selectedArtwork.whyBuy}
+                      </p>
+                    </div>
+
+                    {/* Part 4: Craftsmanship & Provenance */}
+                    <div>
+                      <p className="text-[11px] uppercase tracking-wider font-bold text-slate-400">
+                        {t('gal.sec5Title')}
+                      </p>
+                      <div className="border border-slate-100 bg-slate-50 p-3 text-xs text-slate-600 space-y-1.5 mt-1 rounded">
+                        <p><strong>{t('gal.medium')}</strong> {selectedArtwork.medium}</p>
+                        <p><strong>{t('gal.support')}</strong> {selectedArtwork.craftDetails.support}</p>
+                        <p><strong>{t('gal.technique')}</strong> {selectedArtwork.craftDetails.technique}</p>
+                        <p><strong>{t('gal.framing')}</strong> {selectedArtwork.framed}</p>
+                        <p><strong>{t('gal.signature')}</strong> {selectedArtwork.craftDetails.signature}</p>
+                        <p><strong>{t('gal.location')}</strong> {selectedArtwork.craftDetails.location}</p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Price & Action */}
-              <div className="pt-4 border-t border-slate-200">
-                <div className="flex items-center justify-between mb-4">
-                  <div>
-                    <p className="text-xs uppercase tracking-wider text-slate-400 font-semibold">{t('gal.priceLabel')}</p>
-                    <p className="font-serif text-2xl font-medium text-slate-950">
-                      {formatPrice(selectedArtwork.priceRwf)}
-                    </p>
-                    <p className="text-xs text-slate-500 font-medium">~${selectedArtwork.priceUsd} USD</p>
-                  </div>
-                  <span className="px-3 py-1 rounded bg-emerald-100 text-emerald-900 text-xs font-semibold uppercase tracking-wider border border-emerald-300">
-                    {selectedArtwork.status === 'available' ? t('gal.availableForAcquisition') : selectedArtwork.status}
-                  </span>
-                </div>
-
-                {/* Instant WhatsApp Action */}
-                <div className="space-y-2.5">
+                {/* Acquisition Actions */}
+                <div className="pt-4 border-t border-slate-200 space-y-2.5">
                   <a
                     href={`https://wa.me/250798618524?text=${encodeURIComponent(
-                      `Hello Kaze Collection, I am interested in acquiring the original artwork "${selectedArtwork.title}" (${formatPrice(selectedArtwork.priceRwf)} / ~$${selectedArtwork.priceUsd} USD). Please let me know availability and how to arrange viewing or delivery.`
+                      `Hello Kaze Collection, I am interested in inquiring about the original artwork "${selectedArtwork.title}". Please let me know availability and how to arrange viewing or delivery.`
                     )}`}
                     target="_blank"
                     rel="noopener noreferrer"
