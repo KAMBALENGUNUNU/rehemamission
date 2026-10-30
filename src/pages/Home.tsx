@@ -103,62 +103,45 @@ export default function Home() {
       {/* 3. SECTION 1: A MISSION BUILT ON LISTENING */}
       <section className="py-20 md:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-          {/* Image composition with Edge-Adaptive Mirror Gradient Rim & Corner Glow */}
+          {/* Image composition with Edge-Color Matched Ambient Glow (Transparent Border) */}
           <div className="lg:col-span-5 relative group">
-            {/* 1. Ambient Corner Dégradé Glow:
-                - Top-Left: Pure Soft White / Morning Window Aura
+            {/* Ambient Corner Dégradé Glow:
+                - Top-Left: Pure Soft White / Morning Window Light
                 - Top-Right: Warm Chocolate Terracotta Wall Aura
                 - Bottom-Right: Deep Chocolate Espresso Chair/Shadow Aura
                 - Bottom-Left: Soft Warm Sand & Sisal Table Linen Aura
             */}
             <div
-              className="absolute -inset-[5px] sm:-inset-[7px] rounded-[34px] opacity-75 group-hover:opacity-100 blur-[14px] sm:blur-[18px] transition-all duration-500 pointer-events-none z-0"
+              className="absolute -inset-[6px] sm:-inset-[8px] rounded-[32px] opacity-80 group-hover:opacity-100 blur-[16px] sm:blur-[22px] transition-all duration-500 pointer-events-none z-0"
               style={{
                 background: `
                   radial-gradient(circle at 0% 0%, rgba(255, 255, 255, 0.95) 0%, rgba(250, 247, 242, 0.6) 25%, transparent 60%),
                   radial-gradient(circle at 100% 0%, rgba(184, 90, 60, 0.85) 0%, rgba(139, 58, 34, 0.5) 30%, transparent 65%),
-                  radial-gradient(circle at 100% 100%, rgba(66, 32, 6, 0.8) 0%, rgba(45, 30, 24, 0.5) 30%, transparent 65%),
-                  radial-gradient(circle at 0% 100%, rgba(229, 207, 168, 0.8) 0%, rgba(197, 160, 89, 0.45) 30%, transparent 65%)
+                  radial-gradient(circle at 100% 100%, rgba(66, 32, 6, 0.85) 0%, rgba(45, 30, 24, 0.5) 30%, transparent 65%),
+                  radial-gradient(circle at 0% 100%, rgba(229, 207, 168, 0.85) 0%, rgba(197, 160, 89, 0.45) 30%, transparent 65%)
                 `,
               }}
               aria-hidden="true"
             />
 
-            {/* 2. Precision Edge-Color-Matched Mirror Gradient Rim Frame:
-                Matches the exact perimeter colors of the photograph:
-                - Top-Left: Specular White (#FFFFFF) where the window light hits
-                - Top-Right: Rich Chocolate Terracotta (#B85A3C to #7D3823) matching the wall
-                - Bottom-Right: Deep Espresso Chocolate (#3E2723) matching shadows
-                - Bottom-Left: Warm Linen Ochre & White (#FAF7F2 to #E2C799) matching table and sisal
-            */}
-            <div
-              className="relative p-[2.5px] sm:p-[3px] rounded-[28px] z-10 transition-shadow duration-300"
-              style={{
-                background:
-                  'linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, #B85A3C 32%, #7D3823 50%, #3E2723 72%, #E2C799 90%, rgba(255, 255, 255, 0.9) 100%)',
-                boxShadow:
-                  '0 18px 40px -6px rgba(66, 32, 6, 0.28), 0 0 24px 2px rgba(184, 90, 60, 0.18)',
-              }}
-            >
-              {/* 3. Rounded Image Container */}
-              <div className="relative aspect-[3/4] rounded-[25px] overflow-hidden bg-slate-100 shadow-inner">
-                <img
-                  src="/listening-mission.jpg"
-                  alt="A Mission Built on Listening — Compassionate listening and recovery dialogue at Rehema Mission Rwanda"
-                  className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/15 to-transparent pointer-events-none" />
-                <div className="absolute bottom-6 left-6 right-6 text-white pointer-events-none">
-                  <p className="font-serif text-xl sm:text-2xl italic text-amber-200">
-                    {language === 'fr' ? '« L’écoute précède le conseil. »' : '“Listening comes before advice.”'}
-                  </p>
-                  <p className="text-xs uppercase tracking-wider text-slate-200 mt-1.5 font-medium">
-                    {t('philosophy.founderName')}
-                  </p>
-                  <p className="text-[11px] text-amber-300/90 font-light">
-                    {t('philosophy.founderSub')}
-                  </p>
-                </div>
+            {/* Rounded Image Container with Transparent Border */}
+            <div className="relative z-10 aspect-[3/4] rounded-[24px] sm:rounded-[26px] overflow-hidden shadow-2xl bg-slate-100">
+              <img
+                src="/listening-mission.jpg"
+                alt="A Mission Built on Listening — Compassionate listening and recovery dialogue at Rehema Mission Rwanda"
+                className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/15 to-transparent pointer-events-none" />
+              <div className="absolute bottom-6 left-6 right-6 text-white pointer-events-none">
+                <p className="font-serif text-xl sm:text-2xl italic text-amber-200">
+                  {language === 'fr' ? '« L’écoute précède le conseil. »' : '“Listening comes before advice.”'}
+                </p>
+                <p className="text-xs uppercase tracking-wider text-slate-200 mt-1.5 font-medium">
+                  {t('philosophy.founderName')}
+                </p>
+                <p className="text-[11px] text-amber-300/90 font-light">
+                  {t('philosophy.founderSub')}
+                </p>
               </div>
             </div>
           </div>
