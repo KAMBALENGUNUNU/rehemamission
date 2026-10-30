@@ -135,7 +135,7 @@ export default function ArtGallery() {
       </section>
 
       {/* 2. Overlapping Second Section ("The White Stuff That Covers" - Exact Match to Reference Design) */}
-      <div className="relative z-20 -mt-14 sm:-mt-20 lg:-mt-24 bg-[#fdfbf7] rounded-t-[40px] sm:rounded-t-[60px] lg:rounded-t-[76px] shadow-[0_-20px_50px_rgba(0,0,0,0.22)] pt-12 sm:pt-16 pb-28 border-t border-white/60">
+      <div className="relative z-20 -mt-14 sm:-mt-20 lg:-mt-24 bg-[#fdfbf7] rounded-t-[40px] sm:rounded-t-[60px] lg:rounded-t-[76px] shadow-[0_-20px_50px_rgba(0,0,0,0.22)] pt-12 sm:pt-16 pb-36 sm:pb-44 border-t border-white/60">
         {/* Museum Principle Banner at the entrance of the second section */}
         <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-12 sm:mb-16">
           <div className="bg-white border border-amber-300/80 shadow-[0_8px_30px_rgba(217,119,6,0.08)] p-5 sm:p-6 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4">
