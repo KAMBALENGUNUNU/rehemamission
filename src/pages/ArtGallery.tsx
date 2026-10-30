@@ -134,11 +134,14 @@ export default function ArtGallery() {
         </div>
       </section>
 
-      {/* 2. Overlapping Second Section ("The White Stuff That Covers" - Exact Match to Reference Design) */}
-      <div className="relative z-20 -mt-14 sm:-mt-20 lg:-mt-24 bg-[#fdfbf7] rounded-t-[40px] sm:rounded-t-[60px] lg:rounded-t-[76px] shadow-[0_-20px_50px_rgba(0,0,0,0.22)] pt-12 sm:pt-16 pb-36 sm:pb-44 border-t border-white/60">
-        {/* Museum Principle Banner at the entrance of the second section */}
-        <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-12 sm:mb-16">
-          <div className="bg-white border border-amber-300/80 shadow-[0_8px_30px_rgba(217,119,6,0.08)] p-5 sm:p-6 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4">
+      {/* 2. Overlapping Second Section (Warm Luxury Beige Background with Triptych Carousel on Top) */}
+      <div className="relative z-20 -mt-14 sm:-mt-20 lg:-mt-24 bg-[#F4EFE6] rounded-t-[40px] sm:rounded-t-[60px] lg:rounded-t-[76px] shadow-[0_-20px_50px_rgba(0,0,0,0.14)] pt-8 sm:pt-12 pb-36 sm:pb-44 border-t border-amber-200/50">
+        {/* Masterwork Interactive Triptych Coverflow Carousel directly on the Beige Background */}
+        <TriptychCoverflow onSelectArtwork={(art) => setSelectedArtwork(art)} />
+
+        {/* Museum Principle Banner directly beneath the Coverflow Showcase */}
+        <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 sm:mt-14 mb-12 sm:mb-16">
+          <div className="bg-white/95 border border-amber-300/80 shadow-[0_8px_30px_rgba(217,119,6,0.08)] p-5 sm:p-6 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4 backdrop-blur-sm">
             <div className="flex items-center gap-3.5">
               <div className="p-2.5 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-700 flex-shrink-0">
                 <ShieldCheck className="w-5 h-5" />
@@ -164,13 +167,6 @@ export default function ArtGallery() {
             </Link>
           </div>
         </section>
-
-        {/* Masterwork Interactive Triptych Coverflow Carousel housed within a majestic museum pavilion */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
-          <div className="rounded-3xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.18)] border border-stone-300/80">
-            <TriptychCoverflow onSelectArtwork={(art) => setSelectedArtwork(art)} />
-          </div>
-        </div>
 
       {/* 3. The Gallery Experience: Transitions, Filters & Catalog */}
       <section id="gallery" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 sm:pt-20 relative z-10 scroll-mt-24">

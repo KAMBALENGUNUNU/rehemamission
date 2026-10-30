@@ -18,16 +18,6 @@ export default function KazeHeader() {
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 15);
-
-      // Hide navbar when user arrives at the Triptych Coverflow section
-      const el = document.getElementById('triptych-coverflow');
-      if (el) {
-        const rect = el.getBoundingClientRect();
-        const inView = rect.top <= 100 && rect.bottom >= 100;
-        setHidden(inView);
-      } else {
-        setHidden(false);
-      }
     };
     handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });

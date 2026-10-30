@@ -145,32 +145,10 @@ export default function TriptychCoverflow({ onSelectArtwork }: TriptychCoverflow
       id="triptych-coverflow"
       ref={containerRef}
       onWheel={handleWheel}
-      className="relative w-full overflow-hidden min-h-[90vh] lg:min-h-screen flex flex-col justify-center py-6 sm:py-8 text-white select-none transition-colors duration-1000"
+      className="relative w-full overflow-hidden py-8 sm:py-12 select-none"
     >
-      {/* 1. DYNAMIC FULL-BLEED MIRROR BACKGROUND WITH HEAVY GAUSSIAN BLUR & DARK VIGNETTE */}
-      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none select-none">
-        {items.map((item, idx) => (
-          <div
-            key={item.id}
-            className={`absolute inset-0 transition-opacity duration-[1250ms] ease-in-out ${
-              idx === activeIndex ? 'opacity-100' : 'opacity-0'
-            }`}
-          >
-            <img
-              src={item.image}
-              alt=""
-              aria-hidden="true"
-              className="w-full h-full object-cover scale-110 filter blur-[40px] brightness-[0.58] saturate-150"
-              style={{ backdropFilter: 'blur(40px)' }}
-            />
-          </div>
-        ))}
-
-        {/* Dark Vignette Overlay for High Contrast */}
-        <div className="absolute inset-0 bg-stone-950/45" />
-        <div className="absolute inset-0 bg-radial-vignette" />
-        <div className="absolute inset-0 bg-gradient-to-b from-stone-950/70 via-transparent to-stone-950/80" />
-      </div>
+      {/* Soft warm luminous atmospheric glow on beige */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[450px] bg-gradient-radial from-amber-200/35 via-amber-100/15 to-transparent rounded-full blur-3xl pointer-events-none z-0" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex flex-col justify-center">
         {/* 2. THE TRIPTYCH COVERFLOW CAROUSEL (Center Tall & Large On Top of Left & Right, Sized to Fit Screen) */}
@@ -249,12 +227,12 @@ export default function TriptychCoverflow({ onSelectArtwork }: TriptychCoverflow
                   pointerEvents: isCenter || isLeft || isRight ? 'auto' : 'none',
                 }}
               >
-                {/* Rounded-Rectangle Card Frame with Deep Drop Shadow */}
+                {/* Rounded-Rectangle Card Frame with Drop Shadow */}
                 <div
-                  className={`w-full h-full rounded-2xl sm:rounded-3xl overflow-hidden bg-stone-900 border transition-all duration-700 relative group ${
+                  className={`w-full h-full rounded-2xl sm:rounded-3xl overflow-hidden bg-white border transition-all duration-700 relative group ${
                     isCenter
-                      ? 'border-amber-400 shadow-[0_30px_90px_rgba(0,0,0,0.85)] ring-2 ring-white/30'
-                      : 'border-white/15 shadow-[0_15px_40px_rgba(0,0,0,0.5)] hover:border-amber-400/50'
+                      ? 'border-amber-500 shadow-[0_25px_60px_rgba(120,90,40,0.22)] ring-2 ring-amber-400/50'
+                      : 'border-stone-300/80 shadow-[0_12px_30px_rgba(0,0,0,0.1)] hover:border-amber-400/50'
                   }`}
                 >
                   <img
@@ -270,12 +248,12 @@ export default function TriptychCoverflow({ onSelectArtwork }: TriptychCoverflow
                       e.stopPropagation();
                       toggleFavorite(item.id);
                     }}
-                    className="absolute top-3.5 right-3.5 z-10 w-8 h-8 rounded-full bg-stone-950/70 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-stone-900 transition-all shadow"
+                    className="absolute top-3.5 right-3.5 z-10 w-8 h-8 rounded-full bg-white/90 backdrop-blur-md border border-stone-200 flex items-center justify-center text-stone-700 hover:bg-white hover:text-stone-950 transition-all shadow"
                     aria-label="Save to favorites"
                   >
                     <Heart
                       className={`w-4 h-4 transition-colors ${
-                        fav ? 'fill-rose-500 text-rose-500' : 'text-stone-300 hover:text-white'
+                        fav ? 'fill-rose-500 text-rose-500' : 'text-stone-400 hover:text-rose-500'
                       }`}
                     />
                   </button>
@@ -292,8 +270,8 @@ export default function TriptychCoverflow({ onSelectArtwork }: TriptychCoverflow
 
                   {/* Side Card Hover Guide Hint */}
                   {!isCenter && (
-                    <div className="absolute inset-0 bg-stone-950/20 hover:bg-transparent transition-colors flex items-center justify-center">
-                      <span className="text-[11px] font-medium uppercase tracking-wider text-white/90 bg-stone-950/60 backdrop-blur-sm px-3.5 py-1.5 rounded-full border border-white/20 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div className="absolute inset-0 bg-stone-950/15 hover:bg-transparent transition-colors flex items-center justify-center">
+                      <span className="text-[11px] font-medium uppercase tracking-wider text-stone-900 bg-white/85 backdrop-blur-sm px-3.5 py-1.5 rounded-full border border-stone-200 opacity-0 group-hover:opacity-100 transition-opacity shadow-sm">
                         {language === 'fr' ? 'Cliquer pour centrer' : 'Click to center'}
                       </span>
                     </div>
@@ -308,7 +286,7 @@ export default function TriptychCoverflow({ onSelectArtwork }: TriptychCoverflow
             type="button"
             onClick={handlePrev}
             aria-label="Previous artwork"
-            className="absolute -left-2 sm:-left-6 md:-left-12 top-1/2 -translate-y-1/2 z-50 w-11 h-11 rounded-full bg-stone-950/80 hover:bg-amber-500 text-white hover:text-slate-950 border border-white/20 hover:border-amber-400 backdrop-blur-md flex items-center justify-center shadow-2xl transition-all duration-300"
+            className="absolute -left-2 sm:-left-6 md:-left-12 top-1/2 -translate-y-1/2 z-50 w-11 h-11 rounded-full bg-white/95 hover:bg-slate-950 text-stone-900 hover:text-white border border-stone-300 hover:border-slate-950 shadow-xl transition-all duration-300 flex items-center justify-center"
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
@@ -318,7 +296,7 @@ export default function TriptychCoverflow({ onSelectArtwork }: TriptychCoverflow
             type="button"
             onClick={handleNext}
             aria-label="Next artwork"
-            className="absolute -right-2 sm:-right-6 md:-right-12 top-1/2 -translate-y-1/2 z-50 w-11 h-11 rounded-full bg-stone-950/80 hover:bg-amber-500 text-white hover:text-slate-950 border border-white/20 hover:border-amber-400 backdrop-blur-md flex items-center justify-center shadow-2xl transition-all duration-300"
+            className="absolute -right-2 sm:-right-6 md:-right-12 top-1/2 -translate-y-1/2 z-50 w-11 h-11 rounded-full bg-white/95 hover:bg-slate-950 text-stone-900 hover:text-white border border-stone-300 hover:border-slate-950 shadow-xl transition-all duration-300 flex items-center justify-center"
           >
             <ChevronRight className="w-5 h-5" />
           </button>
@@ -327,30 +305,30 @@ export default function TriptychCoverflow({ onSelectArtwork }: TriptychCoverflow
         {/* 3. CAPTION SYNC METADATA BLOCK DIRECTLY BENEATH CENTRAL CARD (Compact & Screen-Fitting) */}
         <div
           key={currentItem.id}
-          className="animate-caption-sync mt-4 sm:mt-5 text-center max-w-xl mx-auto px-4 z-20 relative"
+          className="animate-caption-sync mt-5 sm:mt-6 text-center max-w-xl mx-auto px-4 z-20 relative"
         >
           {/* Artwork Title */}
-          <h3 className="font-serif text-2xl sm:text-3xl lg:text-3xl text-white font-normal tracking-tight leading-tight">
+          <h3 className="font-serif text-2xl sm:text-3xl lg:text-3xl text-stone-950 font-normal tracking-tight leading-tight">
             {currentItem.title}
           </h3>
 
-          <p className="text-[11px] sm:text-xs text-amber-400 font-medium uppercase tracking-wider mt-1">
+          <p className="text-[11px] sm:text-xs text-amber-900 font-semibold uppercase tracking-wider mt-1">
             {currentItem.artistIdentifier} · {currentItem.dimensions}
           </p>
 
           {/* Curatorial Description */}
           <div className="mt-2 max-w-lg mx-auto">
-            <p className="text-xs sm:text-sm text-stone-200 font-light leading-relaxed italic line-clamp-2">
+            <p className="text-xs sm:text-sm text-stone-700 font-light leading-relaxed italic line-clamp-2">
               “{currentItem.aboutArt}”
             </p>
           </div>
 
           {/* Value Indicator */}
           <div className="mt-2.5 flex items-center justify-center gap-2">
-            <span className="font-serif text-lg sm:text-xl text-amber-300 font-normal">
+            <span className="font-serif text-lg sm:text-xl text-amber-950 font-bold">
               {formatPrice(currentItem.priceRwf)}
             </span>
-            <span className="text-[11px] text-stone-400">~${currentItem.priceUsd} USD</span>
+            <span className="text-[11px] text-stone-600 font-medium">~${currentItem.priceUsd} USD</span>
           </div>
 
           {/* Pill-Shaped Call-To-Action Buttons ("Inquire" or "Learn More") */}
@@ -360,7 +338,7 @@ export default function TriptychCoverflow({ onSelectArtwork }: TriptychCoverflow
               onClick={() => {
                 if (currentItem.artworkRef) onSelectArtwork(currentItem.artworkRef);
               }}
-              className="px-5 py-2 sm:px-6 sm:py-2.5 rounded-full bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-semibold uppercase tracking-wider shadow-lg transition-transform hover:scale-105 inline-flex items-center gap-1.5"
+              className="px-6 py-2.5 rounded-full bg-slate-950 hover:bg-slate-800 text-white text-xs font-semibold uppercase tracking-wider shadow-md transition-transform hover:scale-105 inline-flex items-center gap-1.5"
             >
               <span>{language === 'fr' ? 'En Savoir Plus' : 'Learn More'}</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -372,9 +350,9 @@ export default function TriptychCoverflow({ onSelectArtwork }: TriptychCoverflow
               )}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-5 py-2 sm:px-6 sm:py-2.5 rounded-full bg-white/15 hover:bg-white/25 border border-white/30 text-white text-xs font-semibold uppercase tracking-wider backdrop-blur-md transition-all inline-flex items-center gap-1.5"
+              className="px-6 py-2.5 rounded-full bg-white hover:bg-stone-50 border border-stone-300 text-stone-900 text-xs font-semibold uppercase tracking-wider shadow-sm transition-all inline-flex items-center gap-1.5"
             >
-              <MessageCircle className="w-3.5 h-3.5 text-amber-300" />
+              <MessageCircle className="w-3.5 h-3.5 text-emerald-600" />
               <span>{language === 'fr' ? 'Acquérir / Demander' : 'Inquire'}</span>
             </a>
           </div>
@@ -398,8 +376,8 @@ export default function TriptychCoverflow({ onSelectArtwork }: TriptychCoverflow
               aria-label={`Show ${item.title}`}
               className={`transition-all duration-500 rounded-full ${
                 idx === activeIndex
-                  ? 'w-7 h-2 bg-amber-400 shadow'
-                  : 'w-2 h-2 bg-white/35 hover:bg-white/70'
+                  ? 'w-7 h-2 bg-amber-600 shadow-sm'
+                  : 'w-2 h-2 bg-stone-400/60 hover:bg-stone-600'
               }`}
             />
           ))}
