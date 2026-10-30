@@ -1,4 +1,6 @@
-﻿import { useState } from 'react';
+﻿import RotatingRingsTheme from '@/components/RotatingRingsTheme';
+import { TRANSLATIONS } from '@/lib/translations';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   ArrowRight,
