@@ -23,6 +23,7 @@ import { formatPrice } from '@/lib/utils';
 import { TRANSLATIONS, type TranslationKey } from '@/lib/translations';
 import KazeLogo from '@/components/logos/KazeLogo';
 import TriptychCoverflow from '@/components/TriptychCoverflow';
+import ArtGalleryThemePattern from '@/components/ArtGalleryThemePattern';
 
 export default function ArtGallery() {
   const { toggleFavorite, isFavorite, language } = useStore();
@@ -74,160 +75,108 @@ export default function ArtGallery() {
   };
 
   return (
-    <div className="page-enter bg-[#fdfbf7] min-h-screen text-stone-900 pb-28 relative overflow-hidden">
-      {/* Background soft luminous artistic gradient */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1100px] h-[550px] bg-gradient-radial from-amber-100/50 via-amber-50/20 to-transparent rounded-full blur-3xl pointer-events-none z-0" />
-      <div className="absolute top-[800px] -right-40 w-[600px] h-[600px] bg-gradient-radial from-stone-200/40 via-transparent to-transparent rounded-full blur-3xl pointer-events-none z-0" />
+    <div className="page-enter bg-[#0B192C] min-h-screen text-stone-900 pb-0 relative overflow-hidden">
+      {/* 1. Kaze Collection Hero Section with Bespoke Fine Art SVG Theme Pattern (Exact Match to Reference Design) */}
+      <section className="relative z-10 pt-28 sm:pt-36 lg:pt-44 pb-28 sm:pb-36 lg:pb-44 px-4 sm:px-6 lg:px-8 overflow-hidden bg-gradient-to-b from-[#0B192C] via-[#0E2038] to-[#071322] text-white">
+        {/* Tone-on-tone Fine Art Studio Vector Pattern in Background */}
+        <ArtGalleryThemePattern opacity={0.22} className="text-cyan-200/90" />
 
-      {/* 1. Luminous Hero Section featuring the User's Artwork (public/kaze-hero.jpg) */}
-      <section className="relative z-10 pt-8 sm:pt-12 pb-14 sm:pb-20 px-4 sm:px-6 lg:px-8 border-b border-stone-200/90">
-        <div className="max-w-7xl mx-auto">
-          {/* Top Brand Header in Hero */}
-          <div className="text-center max-w-3xl mx-auto flex flex-col items-center">
-            {/* Atelier Badge */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/15 text-amber-900 text-xs font-semibold uppercase tracking-wider mb-4 border border-amber-500/30">
-              <Sparkles className="w-3.5 h-3.5 text-amber-600" />
-              <span>{t('gal.badge', 'Kaze Collection · Fine Art Atelier')}</span>
-            </div>
+        {/* Ambient atmospheric lighting for museum depth */}
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[320px] bg-gradient-radial from-amber-400/15 via-cyan-400/10 to-transparent rounded-full blur-3xl pointer-events-none z-0" />
 
-            {/* Headline */}
-            <h1 className="font-serif text-3xl sm:text-5xl md:text-6xl text-stone-950 font-normal tracking-tight leading-[1.12]">
-              {language === 'fr'
-                ? 'L’Âme Rwandaise Révélée par la Haute Création'
-                : 'Where Rwandan Heritage Meets Contemporary Haute Artistry'}
-            </h1>
-
-            {/* Subtitle */}
-            <p className="mt-5 text-base sm:text-lg text-stone-600 font-light max-w-2xl mx-auto leading-relaxed">
-              {t(
-                'gal.subtitle',
-                'Original paintings, fine drawings, and collector pieces handcrafted by talented youth at the Ebenezer vocational atelier in Kigali. 100% of acquisition proceeds fund their education, health, and vocational independence.'
-              )}
-            </p>
-
-            {/* Quick Section Jump Pills */}
-            <div className="mt-7 flex items-center justify-center gap-3 flex-wrap text-xs">
-              <a
-                href="#gallery"
-                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-stone-900 hover:bg-amber-600 text-white font-medium tracking-wider uppercase transition-all shadow-sm"
-              >
-                <Layers className="w-3.5 h-3.5 text-amber-400" />
-                <span>{t('kazeNav.collection', 'Curated Collection')}</span>
-              </a>
-              <a
-                href="#exhibitions"
-                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white hover:bg-stone-50 border border-stone-300 text-stone-800 font-medium tracking-wider uppercase transition-all shadow-sm"
-              >
-                <Eye className="w-3.5 h-3.5 text-amber-600" />
-                <span>{t('kazeNav.exhibitions', 'Exhibitions')}</span>
-              </a>
-              <a
-                href="#store"
-                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white hover:bg-stone-50 border border-stone-300 text-stone-800 font-medium tracking-wider uppercase transition-all shadow-sm"
-              >
-                <ShoppingBag className="w-3.5 h-3.5 text-amber-600" />
-                <span>{t('kazeNav.store', 'Artisan Store')}</span>
-              </a>
-              <Link
-                to="/visit"
-                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-semibold tracking-wider uppercase transition-all shadow-sm"
-              >
-                <Calendar className="w-3.5 h-3.5" />
-                <span>{t('kazeNav.visits', 'Book Atelier Visit')}</span>
-              </Link>
-            </div>
+        <div className="max-w-5xl mx-auto text-center relative z-10">
+          {/* Atelier Badge */}
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md text-amber-300 text-xs font-semibold uppercase tracking-wider mb-6 border border-white/20 shadow-sm">
+            <Sparkles className="w-3.5 h-3.5 text-amber-300" />
+            <span>{t('gal.badge', 'Kaze Collection · Fine Art Atelier')}</span>
           </div>
 
-          {/* Curated Hero Artwork Showcase Frame */}
-          <div className="mt-12 sm:mt-16 max-w-5xl mx-auto">
-            <div className="relative rounded-3xl overflow-hidden bg-white border border-stone-200/90 shadow-[0_12px_45px_rgba(0,0,0,0.08)] group">
-              <div className="relative aspect-[16/9] sm:aspect-[21/9] w-full overflow-hidden bg-stone-100">
-                <img
-                  src="/kaze-hero.jpg"
-                  alt="Kaze Collection Exhibition Hero - Mountain Horizons"
-                  className="w-full h-full object-cover object-center transition-transform duration-1000 group-hover:scale-105"
-                />
-                {/* Luminous, subtle atmospheric vignette overlay (light bottom fade for readability) */}
-                <div className="absolute inset-0 bg-gradient-to-t from-stone-950/80 via-stone-950/20 to-transparent" />
+          {/* Bold Impactful Headline (Styled exactly like "Our Work" in the reference image) */}
+          <h1 className="font-serif text-4xl sm:text-6xl md:text-7xl lg:text-[5rem] text-white font-bold tracking-tight leading-[1.08] drop-shadow-md max-w-4xl mx-auto">
+            {language === 'fr'
+              ? 'L’Âme Rwandaise Révélée par la Haute Création'
+              : 'Where Rwandan Heritage Meets Contemporary Haute Artistry'}
+          </h1>
 
-                {/* Museum Exhibition Tag */}
-                <div className="absolute top-4 left-4 sm:top-6 sm:left-6 flex items-center gap-2">
-                  <span className="px-3.5 py-1 rounded-full bg-white/95 backdrop-blur-md text-stone-900 text-xs font-semibold tracking-wider uppercase shadow-md flex items-center gap-2">
-                    <Sparkles className="w-3.5 h-3.5 text-amber-600" />
-                    <span>{language === 'fr' ? 'Exposition Permanente' : 'Featured Exhibition Masterwork'}</span>
-                  </span>
-                </div>
+          {/* Subtitle */}
+          <p className="mt-6 text-base sm:text-lg md:text-xl text-slate-200/95 font-light max-w-2xl mx-auto leading-relaxed">
+            {t(
+              'gal.subtitle',
+              'Original paintings, fine drawings, and collector pieces handcrafted by talented youth at the Ebenezer vocational atelier in Kigali. 100% of acquisition proceeds fund their education, health, and vocational independence.'
+            )}
+          </p>
 
-                {/* Bottom Curatorial Caption Bar inside the Hero Frame */}
-                <div className="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 text-white">
-                  <div>
-                    <p className="text-xs uppercase tracking-[0.25em] text-amber-300 font-semibold">
-                      {language === 'fr' ? 'Série Paysages du Rwanda' : 'Rwandan Horizons Collection'}
-                    </p>
-                    <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-normal leading-tight text-white mt-1">
-                      {language === 'fr'
-                        ? 'Symphonie des Mille Collines'
-                        : 'Symphony of the Thousand Hills'}
-                    </h2>
-                    <p className="text-xs sm:text-sm text-stone-200 font-light mt-1">
-                      {language === 'fr'
-                        ? 'Acrylique & pigments naturels sur toile · Création originale des ateliers Ebenezer'
-                        : 'Acrylic & natural earth pigments on canvas · Original masterwork by Ebenezer atelier youth'}
-                    </p>
-                  </div>
+          {/* Quick Section Jump Pills */}
+          <div className="mt-8 flex items-center justify-center gap-3.5 flex-wrap text-xs">
+            <a
+              href="#gallery"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white hover:bg-amber-400 text-slate-950 font-semibold tracking-wider uppercase transition-all shadow-md group"
+            >
+              <Layers className="w-3.5 h-3.5 text-amber-600 group-hover:text-slate-950 transition-colors" />
+              <span>{t('kazeNav.collection', 'Curated Collection')}</span>
+            </a>
+            <a
+              href="#exhibitions"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/25 text-white font-semibold tracking-wider uppercase transition-all backdrop-blur-sm"
+            >
+              <Eye className="w-3.5 h-3.5 text-amber-300" />
+              <span>{t('kazeNav.exhibitions', 'Exhibitions')}</span>
+            </a>
+            <a
+              href="#store"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/25 text-white font-semibold tracking-wider uppercase transition-all backdrop-blur-sm"
+            >
+              <ShoppingBag className="w-3.5 h-3.5 text-amber-300" />
+              <span>{t('kazeNav.store', 'Artisan Store')}</span>
+            </a>
+            <Link
+              to="/visit"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold tracking-wider uppercase transition-all shadow-md"
+            >
+              <Calendar className="w-3.5 h-3.5" />
+              <span>{t('kazeNav.visits', 'Book Atelier Visit')}</span>
+            </Link>
+          </div>
+        </div>
+      </section>
 
-                  <div className="flex items-center gap-2.5 flex-shrink-0">
-                    <a
-                      href="#exhibitions"
-                      className="px-4 py-2 bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-semibold uppercase tracking-wider rounded-full shadow-md transition-all"
-                    >
-                      {language === 'fr' ? 'Voir l’Exposition' : 'Explore Exhibition'}
-                    </a>
-                    <a
-                      href="#store"
-                      className="px-4 py-2 bg-white/90 hover:bg-white text-stone-900 text-xs font-semibold uppercase tracking-wider rounded-full shadow-md transition-all backdrop-blur-sm"
-                    >
-                      {language === 'fr' ? 'Boutique d’Art' : 'Acquire Original'}
-                    </a>
-                  </div>
-                </div>
+      {/* 2. Overlapping Second Section ("The White Stuff That Covers" - Exact Match to Reference Design) */}
+      <div className="relative z-20 -mt-14 sm:-mt-20 lg:-mt-24 bg-[#fdfbf7] rounded-t-[40px] sm:rounded-t-[60px] lg:rounded-t-[76px] shadow-[0_-20px_50px_rgba(0,0,0,0.22)] pt-12 sm:pt-16 pb-28 border-t border-white/60">
+        {/* Museum Principle Banner at the entrance of the second section */}
+        <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-12 sm:mb-16">
+          <div className="bg-white border border-amber-300/80 shadow-[0_8px_30px_rgba(217,119,6,0.08)] p-5 sm:p-6 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-3.5">
+              <div className="p-2.5 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-700 flex-shrink-0">
+                <ShieldCheck className="w-5 h-5" />
+              </div>
+              <div>
+                <p className="text-xs font-bold uppercase tracking-wider text-stone-950">
+                  {t('gal.principleTitle', '100% OF ACQUISITIONS FUND YOUTH EMPOWERMENT')}
+                </p>
+                <p className="text-xs text-stone-600 font-light mt-0.5">
+                  {t(
+                    'gal.principleDesc',
+                    'When you acquire a Kaze Collection artwork, 100% of the funds go directly into our youth development fund: art materials, education, health coverage, and daily mentorship.'
+                  )}
+                </p>
               </div>
             </div>
+            <Link
+              to="/visit"
+              className="text-xs font-semibold text-amber-800 hover:text-amber-950 uppercase tracking-wider inline-flex items-center gap-1.5 flex-shrink-0 group"
+            >
+              <span>{t('gal.principleLink', 'Schedule an Atelier Viewing')}</span>
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform text-amber-600" />
+            </Link>
+          </div>
+        </section>
+
+        {/* Masterwork Interactive Triptych Coverflow Carousel housed within a majestic museum pavilion */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+          <div className="rounded-3xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.18)] border border-stone-300/80">
+            <TriptychCoverflow onSelectArtwork={(art) => setSelectedArtwork(art)} />
           </div>
         </div>
-      </section>
-
-      {/* 2. Interactive Triptych Coverflow Carousel */}
-      <TriptychCoverflow onSelectArtwork={(art) => setSelectedArtwork(art)} />
-
-      {/* 3. Clear Museum Principle Banner: 100% Impact & Direct Youth Support */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 sm:mt-16 relative z-20">
-        <div className="bg-white border border-amber-300/80 shadow-[0_8px_30px_rgba(217,119,6,0.08)] p-5 sm:p-6 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-3.5">
-            <div className="p-2.5 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-700 flex-shrink-0">
-              <ShieldCheck className="w-5 h-5" />
-            </div>
-            <div>
-              <p className="text-xs font-bold uppercase tracking-wider text-stone-950">
-                {t('gal.principleTitle', '100% OF ACQUISITIONS FUND YOUTH EMPOWERMENT')}
-              </p>
-              <p className="text-xs text-stone-600 font-light mt-0.5">
-                {t(
-                  'gal.principleDesc',
-                  'When you acquire a Kaze Collection artwork, 100% of the funds go directly into our youth development fund: art materials, education, health coverage, and daily mentorship.'
-                )}
-              </p>
-            </div>
-          </div>
-          <Link
-            to="/visit"
-            className="text-xs font-semibold text-amber-800 hover:text-amber-950 uppercase tracking-wider inline-flex items-center gap-1.5 flex-shrink-0 group"
-          >
-            <span>{t('gal.principleLink', 'Schedule an Atelier Viewing')}</span>
-            <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform text-amber-600" />
-          </Link>
-        </div>
-      </section>
 
       {/* 3. The Gallery Experience: Transitions, Filters & Catalog */}
       <section id="gallery" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 sm:pt-20 relative z-10 scroll-mt-24">
@@ -770,6 +719,7 @@ export default function ArtGallery() {
           </div>
         </div>
       </section>
+      </div>
 
       {/* 8. Lightbox / 5-Part Story Modal (LIGHT & CLEAR LUXURY DESIGN) */}
       {selectedArtwork && (

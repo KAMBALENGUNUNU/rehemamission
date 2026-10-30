@@ -56,20 +56,26 @@ export default function KazeHeader() {
 
   return (
     <header
-      className={`sticky top-0 z-50 transition-all duration-500 ease-in-out ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
         hidden ? '-translate-y-full opacity-0 pointer-events-none' : 'translate-y-0 opacity-100'
       }`}
     >
-      {/* 1. Luminous Light Atelier Bridge Strip: Clear Connection to Rehema Mission Rwanda */}
-      <div className="bg-[#f8f5ee] border-b border-stone-200/90 text-stone-700 text-[11px] px-4 sm:px-6 lg:px-8 py-2 relative z-20">
+      {/* 1. Luminous Atelier Bridge Strip: Clear Connection to Rehema Mission Rwanda */}
+      <div
+        className={`transition-colors duration-300 text-[11px] px-4 sm:px-6 lg:px-8 py-2 relative z-20 ${
+          scrolled
+            ? 'bg-[#f8f5ee] border-b border-stone-200/90 text-stone-700'
+            : 'bg-black/35 backdrop-blur-md border-b border-white/10 text-slate-300'
+        }`}
+      >
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
           {/* Atelier Brand Tag */}
           <div className="flex items-center gap-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
-            <span className="tracking-[0.2em] uppercase font-semibold text-amber-900 hidden sm:inline">
+            <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
+            <span className={`tracking-[0.2em] uppercase font-semibold hidden sm:inline ${scrolled ? 'text-amber-900' : 'text-amber-300'}`}>
               {t('kazeNav.bridgeTag', 'Atelier Rehema · Kigali, Rwanda')}
             </span>
-            <span className="text-stone-500 text-[10px] hidden md:inline">
+            <span className={`text-[10px] hidden md:inline ${scrolled ? 'text-stone-500' : 'text-slate-400'}`}>
               · {t('kazeNav.parentSubtitle', 'An Initiative of Rehema Mission Rwanda')}
             </span>
           </div>
@@ -78,16 +84,18 @@ export default function KazeHeader() {
           <div className="flex items-center gap-4">
             <Link
               to="/"
-              className="inline-flex items-center gap-1.5 text-xs text-amber-800 hover:text-amber-950 font-medium transition-colors group"
+              className={`inline-flex items-center gap-1.5 text-xs font-medium transition-colors group ${
+                scrolled ? 'text-amber-800 hover:text-amber-950' : 'text-amber-300 hover:text-white'
+              }`}
             >
-              <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform text-amber-600" />
-              <span className="underline underline-offset-4 decoration-amber-500/50 group-hover:decoration-amber-900 font-serif tracking-wide font-normal">
+              <ArrowLeft className={`w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform ${scrolled ? 'text-amber-600' : 'text-amber-400'}`} />
+              <span className="underline underline-offset-4 decoration-amber-500/50 group-hover:decoration-amber-300 font-serif tracking-wide font-normal">
                 {t('kazeNav.returnToMission', '← Return to Rehema Mission Rwanda')}
               </span>
             </Link>
 
             {/* Quick Language Toggle Pill on Top Bar */}
-            <div className="hidden sm:flex items-center bg-stone-200/70 border border-stone-300/80 rounded-full p-0.5">
+            <div className={`hidden sm:flex items-center border rounded-full p-0.5 ${scrolled ? 'bg-stone-200/70 border-stone-300/80' : 'bg-white/10 border-white/20'}`}>
               <button
                 type="button"
                 onClick={() => setLanguage('en')}
@@ -95,7 +103,9 @@ export default function KazeHeader() {
                 className={`px-2 py-0.5 rounded-full text-[10px] font-semibold tracking-wider transition-all ${
                   language === 'en'
                     ? 'bg-amber-500 text-slate-950 font-bold shadow-sm'
-                    : 'text-stone-600 hover:text-stone-950'
+                    : scrolled
+                    ? 'text-stone-600 hover:text-stone-950'
+                    : 'text-slate-300 hover:text-white'
                 }`}
               >
                 EN
@@ -107,7 +117,9 @@ export default function KazeHeader() {
                 className={`px-2 py-0.5 rounded-full text-[10px] font-semibold tracking-wider transition-all ${
                   language === 'fr'
                     ? 'bg-amber-500 text-slate-950 font-bold shadow-sm'
-                    : 'text-stone-600 hover:text-stone-950'
+                    : scrolled
+                    ? 'text-stone-600 hover:text-stone-950'
+                    : 'text-slate-300 hover:text-white'
                 }`}
               >
                 FR
@@ -117,22 +129,22 @@ export default function KazeHeader() {
         </div>
       </div>
 
-      {/* 2. Main Gallery Navigation Bar (LIGHT, CLEAR, ELEGANT HAUTE GALERIE) */}
+      {/* 2. Main Gallery Navigation Bar (Transparent on Hero, Matching Reference Image) */}
       <nav
         className={`transition-all duration-300 ${
           scrolled
             ? 'bg-white/98 backdrop-blur-md shadow-[0_4px_24px_rgba(0,0,0,0.06)] border-b border-stone-200/90 py-3 sm:py-3.5'
-            : 'bg-[#fdfbf7]/95 backdrop-blur-md border-b border-stone-200/80 py-3.5 sm:py-4.5'
+            : 'bg-transparent border-b border-white/10 py-3.5 sm:py-4.5'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-          {/* Brand: Kaze Collection Logo in Light Variant */}
+          {/* Brand: Kaze Collection Logo in Dark Variant when not scrolled, Light Variant when scrolled */}
           <Link
             to="/gallery"
             className="flex items-center gap-3 group focus:outline-none"
             aria-label="Kaze Collection Gallery"
           >
-            <KazeLogo variant="light" size="md" />
+            <KazeLogo variant={scrolled ? 'light' : 'dark'} size="md" />
           </Link>
 
           {/* Desktop Navigation Links — Strictly focused on Kaze Collection */}
@@ -144,14 +156,18 @@ export default function KazeHeader() {
                   key={link.to}
                   href={link.to}
                   className={`text-xs tracking-[0.16em] uppercase font-sans font-medium transition-colors relative py-1.5 ${
-                    active
-                      ? 'text-amber-800 font-bold'
-                      : 'text-stone-700 hover:text-amber-800'
+                    scrolled
+                      ? active
+                        ? 'text-amber-800 font-bold'
+                        : 'text-stone-700 hover:text-amber-800'
+                      : active
+                      ? 'text-amber-300 font-bold'
+                      : 'text-white/90 hover:text-white'
                   }`}
                 >
                   <span>{link.label}</span>
                   <span
-                    className={`absolute bottom-0 left-0 h-[2px] bg-amber-500 transition-all duration-300 ${
+                    className={`absolute bottom-0 left-0 h-[2px] ${scrolled ? 'bg-amber-500' : 'bg-amber-400'} transition-all duration-300 ${
                       active ? 'w-full' : 'w-0 hover:w-full'
                     }`}
                   />
@@ -160,12 +176,16 @@ export default function KazeHeader() {
             })}
           </div>
 
-          {/* Right Controls: Favorites + Booking CTA + Mobile Toggle */}
+          {/* Right Controls: Favorites + Reference Pill Outline Button + Mobile Toggle */}
           <div className="flex items-center gap-3 sm:gap-4">
             {/* Saved Artworks Counter Pill */}
             <Link
               to="/favorites"
-              className="relative p-2 rounded-full border border-stone-200 bg-stone-50 hover:bg-stone-100 hover:border-amber-400 text-stone-700 hover:text-stone-950 transition-all group shadow-sm"
+              className={`relative p-2 rounded-full border transition-all group shadow-sm ${
+                scrolled
+                  ? 'border-stone-200 bg-stone-50 hover:bg-stone-100 hover:border-amber-400 text-stone-700 hover:text-stone-950'
+                  : 'border-white/25 bg-white/10 hover:bg-white/20 text-white'
+              }`}
               aria-label={t('kazeNav.savedArtworks', 'Saved Pieces')}
               title={t('kazeNav.savedArtworks', 'Saved Pieces')}
             >
@@ -173,7 +193,9 @@ export default function KazeHeader() {
                 className={`w-4 h-4 transition-colors ${
                   favorites.length > 0
                     ? 'fill-rose-500 text-rose-500'
-                    : 'text-stone-600 group-hover:text-amber-700'
+                    : scrolled
+                    ? 'text-stone-600 group-hover:text-amber-700'
+                    : 'text-white group-hover:text-amber-300'
                 }`}
               />
               {favorites.length > 0 && (
@@ -183,10 +205,14 @@ export default function KazeHeader() {
               )}
             </Link>
 
-            {/* Atelier Private Viewing CTA */}
+            {/* Atelier Private Viewing CTA — Exact Pill Outline Button matching Reference Design */}
             <Link
               to="/visit"
-              className="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-semibold tracking-wider uppercase shadow-sm transition-all duration-200"
+              className={`hidden sm:inline-flex items-center gap-2 px-6 py-2 rounded-full font-semibold uppercase text-xs tracking-wider transition-all duration-300 shadow-sm ${
+                scrolled
+                  ? 'border-2 border-slate-950 text-slate-950 hover:bg-slate-950 hover:text-white'
+                  : 'border-2 border-white text-white hover:bg-white hover:text-slate-950'
+              }`}
             >
               <Calendar className="w-3.5 h-3.5" />
               <span>{t('kazeNav.visitBtn', 'Private Viewing')}</span>
@@ -196,7 +222,11 @@ export default function KazeHeader() {
             <button
               type="button"
               onClick={() => setMenuOpen(!menuOpen)}
-              className="lg:hidden p-2 rounded-lg border border-stone-200 bg-white text-stone-800 hover:text-amber-800 hover:bg-stone-50 transition-colors"
+              className={`lg:hidden p-2 rounded-lg border transition-colors ${
+                scrolled
+                  ? 'border-stone-200 bg-white text-stone-800 hover:text-amber-800 hover:bg-stone-50'
+                  : 'border-white/25 bg-white/10 text-white hover:bg-white/20'
+              }`}
               aria-label="Toggle Gallery Menu"
             >
               {menuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
