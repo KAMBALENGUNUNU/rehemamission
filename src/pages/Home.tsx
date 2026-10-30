@@ -3,10 +3,6 @@ import { Link } from 'react-router-dom';
 import {
   ArrowRight,
   Heart,
-  Users,
-  Compass,
-  Palette,
-  ShieldCheck,
   Calendar,
   MessageCircle,
   Award,
@@ -17,6 +13,7 @@ import { useStore } from '@/store/StoreContext';
 import { formatPrice } from '@/lib/utils';
 import AnnouncementBar from '@/components/AnnouncementBar';
 import RotatingRingsTheme from '@/components/RotatingRingsTheme';
+import PillarStickerCards from '@/components/PillarStickerCards';
 import { TRANSLATIONS } from '@/lib/translations';
 
 export default function Home() {
@@ -27,73 +24,6 @@ export default function Home() {
   const t = (key: keyof typeof TRANSLATIONS.en) => TRANSLATIONS[language]?.[key] ?? TRANSLATIONS.en[key];
 
   const featuredArtworks = REHEMA_ARTWORKS.slice(0, 4);
-
-  const corePillars = [
-    {
-      id: 'pillar-1',
-      badge: t('pillar1.badge'),
-      title: t('pillar1.title'),
-      subtitle: t('pillar1.subtitle'),
-      icon: Compass,
-      bullets: [
-        t('pillar1.bullet1'),
-        t('pillar1.bullet2'),
-        t('pillar1.bullet3'),
-      ],
-      offeredLabel: t('pillar1.label'),
-      offeredValue: t('pillar1.value'),
-      linkText: t('pillar1.cta'),
-      href: '/our-work',
-    },
-    {
-      id: 'pillar-2',
-      badge: t('pillar2.badge'),
-      title: t('pillar2.title'),
-      subtitle: t('pillar2.subtitle'),
-      icon: ShieldCheck,
-      bullets: [
-        t('pillar2.bullet1'),
-        t('pillar2.bullet2'),
-        t('pillar2.bullet3'),
-      ],
-      offeredLabel: t('pillar2.label'),
-      offeredValue: t('pillar2.value'),
-      linkText: t('pillar2.cta'),
-      href: '/our-work',
-    },
-    {
-      id: 'pillar-3',
-      badge: t('pillar3.badge'),
-      title: t('pillar3.title'),
-      subtitle: t('pillar3.subtitle'),
-      icon: Users,
-      bullets: [
-        t('pillar3.bullet1'),
-        t('pillar3.bullet2'),
-        t('pillar3.bullet3'),
-      ],
-      offeredLabel: t('pillar3.label'),
-      offeredValue: t('pillar3.value'),
-      linkText: t('pillar3.cta'),
-      href: '/our-work',
-    },
-    {
-      id: 'pillar-4',
-      badge: t('pillar4.badge'),
-      title: t('pillar4.title'),
-      subtitle: t('pillar4.subtitle'),
-      icon: Palette,
-      bullets: [
-        t('pillar4.bullet1'),
-        t('pillar4.bullet2'),
-        t('pillar4.bullet3'),
-      ],
-      offeredLabel: t('pillar4.label'),
-      offeredValue: t('pillar4.value'),
-      linkText: t('pillar4.cta'),
-      href: '/gallery',
-    },
-  ];
 
   return (
     <div className="page-enter bg-slate-50 min-h-screen text-slate-900">
@@ -234,8 +164,8 @@ export default function Home() {
           glowClassName="w-[520px] h-[360px] translate-y-10 sm:translate-y-14"
         />
 
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-14">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
             <div className="w-[2px] h-7 sm:h-8 bg-[#C5A059] mx-auto mb-4" />
             <p className="eyebrow mb-2">{t('pillars.eyebrow')}</p>
             <h2 className="section-title">{t('pillars.title')}</h2>
@@ -244,69 +174,8 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
-            {corePillars.map((pillar) => {
-              const Icon = pillar.icon;
-              return (
-                <div
-                  key={pillar.id}
-                  className="bg-white/95 backdrop-blur-[2px] rounded-2xl border border-stone-200/80 p-5 sm:p-5 shadow-[0_4px_16px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_28px_rgba(0,0,0,0.07)] transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between group"
-                >
-                  <div>
-                    {/* Top Eyebrow & Mini Icon */}
-                    <div className="flex items-center justify-between pb-2.5 border-b border-stone-100">
-                      <span className="text-[10px] tracking-[0.24em] uppercase font-semibold text-amber-700 font-sans">
-                        {pillar.badge}
-                      </span>
-                      <Icon className="w-4 h-4 text-amber-600/80 group-hover:text-amber-600 transition-colors" />
-                    </div>
-
-                    {/* Title in Classical Luxury Serif */}
-                    <h3 className="font-serif text-lg sm:text-[1.125rem] font-medium tracking-[0.04em] uppercase text-stone-900 mt-3 leading-snug group-hover:text-amber-800 transition-colors">
-                      {pillar.title}
-                    </h3>
-
-                    {/* Subtitle / Catchphrase */}
-                    <p className="text-xs text-stone-500 font-light mt-1.5 leading-relaxed">
-                      {pillar.subtitle}
-                    </p>
-
-                    {/* Golden Bullet Points */}
-                    <ul className="space-y-1.5 mt-3.5">
-                      {pillar.bullets.map((bullet, idx) => (
-                        <li key={idx} className="flex items-start gap-2 text-xs text-stone-600 font-light leading-snug">
-                          <span className="w-1.5 h-1.5 rounded-full bg-amber-500/90 mt-1 flex-shrink-0" />
-                          <span>{bullet}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* Bottom Footer */}
-                  <div className="mt-5 pt-3.5 border-t border-stone-200/80">
-                    <div className="flex items-end justify-between">
-                      <div>
-                        <p className="text-[9px] tracking-[0.22em] uppercase font-semibold text-stone-400">
-                          {pillar.offeredLabel}
-                        </p>
-                        <p className="font-serif text-xl sm:text-[1.35rem] font-normal text-stone-900 mt-0.5 leading-tight">
-                          {pillar.offeredValue}
-                        </p>
-                      </div>
-
-                      <Link
-                        to={pillar.href}
-                        className="inline-flex items-center gap-1 text-xs font-semibold tracking-wider uppercase text-amber-700 hover:text-amber-900 transition-colors group/link pb-0.5"
-                      >
-                        <span>{pillar.linkText}</span>
-                        <ArrowRight className="w-3.5 h-3.5 group-hover/link:translate-x-1 transition-transform" />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+          {/* 4 Bespoke Color-Coded Sticker Cards Matching Reference Design */}
+          <PillarStickerCards />
         </div>
       </section>
 
