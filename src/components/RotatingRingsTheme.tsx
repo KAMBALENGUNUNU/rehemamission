@@ -31,6 +31,7 @@ export default function RotatingRingsTheme({
         className={`sg-show__rings max-w-none select-none ${className}`}
         viewBox="0 0 1000 1000"
         fill="none"
+        shapeRendering="geometricPrecision"
         aria-hidden="true"
         focusable="false"
       >
