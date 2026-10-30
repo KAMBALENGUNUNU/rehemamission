@@ -3,9 +3,12 @@ import { Heart, ArrowRight, Trash2 } from 'lucide-react';
 import { useStore } from '@/store/StoreContext';
 import { REHEMA_ARTWORKS } from '@/lib/artworks';
 import { formatPrice } from '@/lib/utils';
+import { TRANSLATIONS, type TranslationKey } from '@/lib/translations';
 
 export default function Favorites() {
-  const { favorites, toggleFavorite } = useStore();
+  const { favorites, toggleFavorite, language } = useStore();
+  const t = (key: TranslationKey, fallback?: string) =>
+    TRANSLATIONS[language]?.[key] ?? TRANSLATIONS.en[key] ?? fallback ?? key;
 
   const savedArtworks = REHEMA_ARTWORKS.filter((art) => favorites.includes(art.id));
 
@@ -14,13 +17,13 @@ export default function Favorites() {
       <div className="page-enter max-w-2xl mx-auto px-4 py-32 text-center text-slate-900">
         <Heart className="w-16 h-16 mx-auto text-slate-300 mb-8" strokeWidth={1} />
         <h1 className="font-serif text-3xl sm:text-4xl font-light text-slate-950 mb-4">
-          No Saved Artworks Yet
+          {t('fav.emptyTitle')}
         </h1>
         <p className="text-slate-600 font-light mb-8 max-w-md mx-auto text-sm sm:text-base">
-          Click the heart icon on any artwork in Kaze Collection to keep track of pieces that speak to you.
+          {t('fav.emptySubtitle')}
         </p>
         <Link to="/gallery" className="btn-accent inline-block text-xs py-3 px-8">
-          Browse Kaze Collection
+          {t('fav.browseBtn')}
         </Link>
       </div>
     );
@@ -29,9 +32,9 @@ export default function Favorites() {
   return (
     <div className="page-enter max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 text-slate-900">
       <div className="text-center mb-12">
-        <p className="eyebrow mb-2">Kaze Collection · Your Saved Pieces</p>
+        <p className="eyebrow mb-2">{t('fav.eyebrow')}</p>
         <h1 className="section-title text-3xl sm:text-4xl">
-          Saved Artworks ({savedArtworks.length})
+          {t('fav.title')} ({savedArtworks.length})
         </h1>
         <div className="w-16 h-[2px] bg-amber-500 mx-auto mt-4" />
       </div>
@@ -52,7 +55,7 @@ export default function Favorites() {
                 type="button"
                 onClick={() => toggleFavorite(art.id)}
                 className="absolute top-3 right-3 p-2 rounded-full bg-white/90 text-rose-500 hover:bg-white shadow"
-                title="Remove from saved"
+                title={t('fav.removeTitle')}
               >
                 <Trash2 className="w-4 h-4" />
               </button>
@@ -76,7 +79,7 @@ export default function Favorites() {
                 to={`/contact?reason=artwork&title=${encodeURIComponent(art.title)}&code=${art.id}`}
                 className="btn-accent w-full text-xs py-2.5 justify-center shadow"
               >
-                <span>Inquire About This Piece</span>
+                <span>{t('fav.inquireBtn')}</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>

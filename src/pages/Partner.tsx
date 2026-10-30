@@ -9,9 +9,15 @@ import {
   Check,
 } from 'lucide-react';
 import { useWebsiteSettings } from '@/lib/settings';
+import { useStore } from '@/store/StoreContext';
+import { TRANSLATIONS, type TranslationKey } from '@/lib/translations';
 
 export default function Partner() {
   const settings = useWebsiteSettings();
+  const { language } = useStore();
+  const t = (key: TranslationKey, fallback?: string) =>
+    TRANSLATIONS[language]?.[key] ?? TRANSLATIONS.en[key] ?? fallback ?? key;
+
   const [submitted, setSubmitted] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -25,34 +31,29 @@ export default function Partner() {
 
   const partnershipAreas = [
     {
-      title: 'Youth Awareness & Prevention Workshops',
+      title: t('partner.area1Title'),
       icon: GraduationCap,
-      description:
-        'Collaborations with secondary schools, universities, and youth clubs to conduct peaceful masculinity discussions, non-violent communication seminars, and substance prevention workshops.',
+      description: t('partner.area1Desc'),
     },
     {
-      title: 'Family-Strengthening Activities',
+      title: t('partner.area2Title'),
       icon: Users,
-      description:
-        'Partnerships with community leaders, faith communities, and local authorities to co-host parenthood workshops, dialogue circles, and caregiver support forums.',
+      description: t('partner.area2Desc'),
     },
     {
-      title: 'Art Exhibition & Gallery Partnerships',
+      title: t('partner.area3Title'),
       icon: Palette,
-      description:
-        'Working with independent art galleries, cultural centers, and exhibition spaces to showcase youth creations, promote ethical art sales, and amplify artist voices.',
+      description: t('partner.area3Desc'),
     },
     {
-      title: 'Talent & Skills Opportunities',
+      title: t('partner.area4Title'),
       icon: Briefcase,
-      description:
-        'Engaging artisan workshops, vocational trainers, and private enterprises to create apprenticeship pathways, studio access, and market exposure for young artists.',
+      description: t('partner.area4Desc'),
     },
     {
-      title: 'Professional Guidance & Social-Work Collaboration',
+      title: t('partner.area5Title'),
       icon: HeartHandshake,
-      description:
-        'Coordinating with healthcare practitioners, accredited detoxification centers, and social workers to ensure seamless, dignified referral networks for specialized care.',
+      description: t('partner.area5Desc'),
     },
   ];
 
@@ -79,13 +80,13 @@ export default function Partner() {
       <section className="bg-gradient-to-b from-amber-50/80 via-white to-slate-50 text-slate-900 py-16 sm:py-20 px-4 sm:px-6 lg:px-8 border-b border-slate-200 relative">
         <div className="max-w-4xl mx-auto text-center">
           <p className="text-xs font-bold tracking-[0.25em] uppercase text-amber-800 mb-3">
-            Collaboration & Community Alliances
+            {t('partner.badge')}
           </p>
           <h1 className="font-serif text-3xl sm:text-5xl md:text-6xl font-light text-slate-950 tracking-tight leading-tight">
-            Let’s create stronger futures together.
+            {t('partner.headline')}
           </h1>
           <p className="mt-6 text-base sm:text-lg text-slate-700 font-light max-w-2xl mx-auto leading-relaxed">
-            Rehema Mission Rwanda welcomes conversations with schools, community organizations, public institutions, private organizations, galleries, social workers, and individuals who share a commitment to young people and stronger families. Partnerships can help make prevention, family engagement, creative expression, and practical support more accessible.
+            {t('partner.subtitle')}
           </p>
         </div>
       </section>
@@ -93,9 +94,9 @@ export default function Partner() {
       {/* 5 Partnership Areas Grid */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-16">
         <div className="text-center max-w-2xl mx-auto mb-14">
-          <p className="eyebrow mb-2">How We Collaborate</p>
+          <p className="eyebrow mb-2">{t('partner.howWeCollab')}</p>
           <h2 className="section-title text-2xl sm:text-3xl md:text-4xl">
-            Possible Partnership Areas
+            {t('partner.areasTitle')}
           </h2>
           <div className="w-16 h-[2px] bg-amber-500 mx-auto mt-4" />
         </div>
@@ -130,10 +131,10 @@ export default function Partner() {
         <div className="bg-white border border-slate-200 p-8 sm:p-12 shadow-sm rounded-sm">
           <div className="text-center max-w-xl mx-auto mb-10">
             <h2 className="font-serif text-2xl sm:text-3xl font-light text-slate-950 mb-2">
-              Start a Partnership Conversation
+              {t('partner.formTitle')}
             </h2>
             <p className="text-xs sm:text-sm text-slate-600 font-light leading-relaxed">
-              Tell us about your organization and how we can work together to serve young people and families in Rwanda.
+              {t('partner.formDesc')}
             </p>
           </div>
 
@@ -143,10 +144,10 @@ export default function Partner() {
                 <Check className="w-6 h-6" />
               </div>
               <h3 className="font-serif text-xl font-medium text-emerald-950">
-                Message Received with Gratitude
+                {t('partner.successTitle')}
               </h3>
               <p className="text-xs sm:text-sm text-emerald-800 font-light max-w-md mx-auto">
-                Thank you, {formData.name}. Our mission leadership will review your collaboration proposal and reply to {formData.email} promptly.
+                {t('partner.successDesc')}
               </p>
             </div>
           ) : (
@@ -154,27 +155,27 @@ export default function Partner() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">
-                    Your Name *
+                    {t('partner.nameLabel')}
                   </label>
                   <input
                     type="text"
                     required
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    placeholder="e.g. Marie Claire Uwera"
+                    placeholder={t('partner.namePlaceholder')}
                     className="input-field"
                   />
                 </div>
                 <div>
                   <label className="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">
-                    Organization / Institution *
+                    {t('partner.orgLabel')}
                   </label>
                   <input
                     type="text"
                     required
                     value={formData.organization}
                     onChange={(e) => setFormData({ ...formData, organization: e.target.value })}
-                    placeholder="e.g. Kigali Youth Initiative / School"
+                    placeholder={t('partner.orgPlaceholder')}
                     className="input-field"
                   />
                 </div>
@@ -183,7 +184,7 @@ export default function Partner() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">
-                    Work Email *
+                    {t('partner.emailLabel')}
                   </label>
                   <input
                     type="email"
@@ -196,7 +197,7 @@ export default function Partner() {
                 </div>
                 <div>
                   <label className="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">
-                    Phone / WhatsApp *
+                    {t('partner.phoneLabel')}
                   </label>
                   <input
                     type="tel"
@@ -211,38 +212,38 @@ export default function Partner() {
 
               <div>
                 <label className="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">
-                  Primary Area of Collaboration
+                  {t('partner.areaLabel')}
                 </label>
                 <select
                   value={formData.area}
                   onChange={(e) => setFormData({ ...formData, area: e.target.value })}
                   className="input-field cursor-pointer"
                 >
-                  <option value="Youth awareness and prevention workshops">Youth Awareness & Prevention Workshops</option>
-                  <option value="Family-strengthening activities">Family-Strengthening Activities</option>
-                  <option value="Art exhibition and gallery partnerships">Art Exhibition & Gallery Collaborations</option>
-                  <option value="Talent and skills opportunities">Talent, Vocation & Skills Opportunities</option>
-                  <option value="Professional guidance and social-work collaboration">Professional Guidance & Social-Work Network</option>
-                  <option value="Other collaborative proposal">Other Collaborative Initiative</option>
+                  <option value="Youth awareness and prevention workshops">{t('partner.optArea1')}</option>
+                  <option value="Family-strengthening activities">{t('partner.optArea2')}</option>
+                  <option value="Art exhibition and gallery partnerships">{t('partner.optArea3')}</option>
+                  <option value="Talent and skills opportunities">{t('partner.optArea4')}</option>
+                  <option value="Professional guidance and social-work collaboration">{t('partner.optArea5')}</option>
+                  <option value="Other collaborative proposal">{t('partner.optArea6')}</option>
                 </select>
               </div>
 
               <div>
                 <label className="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">
-                  Brief Overview of What You Have in Mind *
+                  {t('partner.messageLabel')}
                 </label>
                 <textarea
                   rows={5}
                   required
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  placeholder="Share a short summary of the people you serve, your location, and the collaborative initiative you would like to explore with Rehema..."
+                  placeholder={t('partner.messagePlaceholder')}
                   className="input-field resize-none"
                 />
               </div>
 
               <button type="submit" className="btn-accent w-full text-xs py-3.5 justify-center shadow">
-                <span>Send Partnership Inquiry</span>
+                <span>{t('partner.submitBtn')}</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
             </form>
