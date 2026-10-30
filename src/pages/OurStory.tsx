@@ -1,64 +1,76 @@
-import { Link } from 'react-router-dom';
+﻿import { Link } from 'react-router-dom';
 import { ArrowRight, Shield, HeartHandshake, Eye, Sparkles, CheckCircle2 } from 'lucide-react';
 import { useWebsiteSettings } from '@/lib/settings';
+import { useStore } from '@/store/StoreContext';
+import { TRANSLATIONS, type TranslationKey } from '@/lib/translations';
+import RotatingRingsTheme from '@/components/RotatingRingsTheme';
 
 export default function OurStory() {
   const settings = useWebsiteSettings();
+  const { language } = useStore();
+  const t = (key: TranslationKey, fallback?: string) =>
+    TRANSLATIONS[language]?.[key] ?? TRANSLATIONS.en[key] ?? fallback ?? key;
 
   const values = [
     {
-      title: 'Empowerment',
-      description: 'We help people recognize their strengths and take meaningful steps forward.',
+      title: t('story.val1Title'),
+      description: t('story.val1Desc'),
       icon: Sparkles,
     },
     {
-      title: 'Respect and Dignity',
-      description: 'We treat every person with compassion, without reducing them to their past.',
+      title: t('story.val2Title'),
+      description: t('story.val2Desc'),
       icon: HeartHandshake,
     },
     {
-      title: 'Integrity and Decency',
-      description: 'We communicate honestly, act responsibly, and protect trust.',
+      title: t('story.val3Title'),
+      description: t('story.val3Desc'),
       icon: Shield,
     },
     {
-      title: 'Faith-Driven Success',
-      description: 'Our faith in Jesus Christ informs our purpose, choices, and commitment to serving others.',
+      title: t('story.val4Title'),
+      description: t('story.val4Desc'),
       icon: Eye,
     },
   ];
 
   return (
     <div className="page-enter bg-slate-50 min-h-screen text-slate-900 pb-24">
-      {/* Page Header — CLEAR & LIGHT */}
-      <section className="bg-gradient-to-b from-amber-50/80 via-white to-slate-50 text-slate-900 py-16 sm:py-20 px-4 sm:px-6 lg:px-8 border-b border-slate-200 relative overflow-hidden">
-        <div className="max-w-4xl mx-auto text-center relative z-10">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-100 border border-amber-300 text-amber-900 text-xs tracking-[0.2em] uppercase font-semibold font-sans mb-4 shadow-sm">
-            <span>Our Foundation · Est. 1998</span>
+      {/* 1. Page Header Hero Section */}
+      <section className="relative bg-[#FAF7F2] min-h-[560px] sm:min-h-[660px] lg:min-h-[740px] flex flex-col items-center justify-center py-24 sm:py-32 md:py-40 px-4 sm:px-6 lg:px-8 border-b border-stone-200/60 overflow-hidden">
+        {/* Luxury Rotating Rings SVG Theme (The Signature Gallery) in Background */}
+        <RotatingRingsTheme
+          className="w-[660px] h-[660px] sm:w-[840px] sm:h-[840px] lg:w-[1000px] lg:h-[1000px]"
+          glowClassName="w-[480px] h-[350px]"
+        />
+
+        <div className="max-w-4xl mx-auto text-center relative z-10 w-full my-auto">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-100/90 border border-amber-300 text-amber-900 text-xs tracking-[0.2em] uppercase font-semibold font-sans mb-5 shadow-sm backdrop-blur-sm">
+            <span>{t('story.badge')}</span>
           </div>
-          <h1 className="font-serif text-3xl sm:text-5xl md:text-6xl font-light text-slate-950 tracking-tight leading-tight">
-            {settings.about_headline || 'A place to be heard. A path toward possibility.'}
+          <h1 className="font-serif text-3xl sm:text-5xl md:text-6xl lg:text-[4rem] font-bold text-slate-950 tracking-[-0.015em] leading-[1.12]">
+            {language === 'fr' ? t('story.headline') : (settings.about_headline || t('story.headline'))}
           </h1>
-          <p className="mt-6 text-base sm:text-lg text-slate-700 font-light max-w-2xl mx-auto leading-relaxed">
-            Rehema Mission Rwanda began with a belief: when young people are listened to, respected, and supported, they can begin to see beyond the challenges in front of them.
+          <p className="mt-6 text-base sm:text-lg md:text-xl text-slate-700 font-light max-w-2xl mx-auto leading-relaxed">
+            {t('story.subtitle')}
           </p>
         </div>
       </section>
 
-      {/* Main Narrative Section */}
+      {/* 2. Main Narrative Section — Origins & Foundation */}
       <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 md:pt-16">
-        <div className="bg-white border border-slate-200 p-8 sm:p-12 md:p-16 shadow-sm space-y-8">
+        <div className="bg-white border border-slate-200 rounded-2xl p-8 sm:p-12 md:p-16 shadow-sm space-y-8">
           <div>
-            <p className="eyebrow mb-2">Our Origins</p>
+            <p className="eyebrow mb-2">{t('story.originsEyebrow')}</p>
             <h2 className="section-title text-2xl sm:text-3xl md:text-4xl">
-              From Listening to New Beginnings
+              {t('story.originsTitle')}
             </h2>
             <div className="w-16 h-[2px] bg-amber-500 mt-4" />
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             <div className="lg:col-span-5">
-              <div className="relative aspect-[3/4] overflow-hidden shadow-lg border border-slate-200">
+              <div className="relative aspect-[3/4] overflow-hidden rounded-xl shadow-lg border border-slate-200">
                 <img
                   src="/artworks/founder-portrait.jpg"
                   alt="Assumpta Kayiranga — Founder of Rehema Mission Rwanda"
@@ -66,58 +78,54 @@ export default function OurStory() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-transparent to-transparent" />
                 <div className="absolute bottom-5 left-5 right-5 text-white">
-                  <p className="font-serif text-lg font-medium text-amber-200">Assumpta Kayiranga</p>
-                  <p className="text-xs text-slate-200 font-light">Founder, Rehema Mission Rwanda (Est. 1998)</p>
-                  <p className="text-[11px] text-amber-300/90 mt-0.5 font-light">Original portrait by Kaze Collection youth</p>
+                  <p className="font-serif text-lg font-medium text-amber-200">{t('story.founderName')}</p>
+                  <p className="text-xs text-slate-200 font-light">{t('story.founderRole')}</p>
+                  <p className="text-[11px] text-amber-300/90 mt-0.5 font-light">{t('story.founderPortraitDesc')}</p>
                 </div>
               </div>
             </div>
             <div className="lg:col-span-7 space-y-5 text-slate-700 font-light text-base leading-relaxed">
-              <p>
-                Founded by <strong>Assumpta Kayiranga</strong> in 1998, in the years following the 1994 genocide against the Tutsi in Rwanda, Rehema Mission Rwanda grew from a commitment to listen to young people and respond to their needs. Many young people carry difficult questions about identity, belonging, relationships, and their future. They need more than judgment; they need space to speak, caring guidance, and adults who take their experiences seriously.
-              </p>
-              <p>
-                Our work focuses on young people and families facing substance use and related challenges. We support individuals as they navigate recovery, help connect them with specialized services when needed, encourage healthier relationships, and strengthen the role of parents and communities. We also believe that every person has talents worth discovering and a future worth working toward.
-              </p>
+              <p>{t('story.originsP1')}</p>
+              <p>{t('story.originsP2')}</p>
             </div>
           </div>
 
           {/* Ebenezer Faith Callout — CLEAR, WARM AMBER CARD */}
-          <div className="bg-gradient-to-r from-amber-50 via-yellow-50/70 to-amber-50 border border-amber-300 p-8 sm:p-10 rounded-sm space-y-4 my-8 shadow-sm">
+          <div className="bg-gradient-to-r from-amber-50 via-yellow-50/70 to-amber-50 border border-amber-300/80 p-8 sm:p-10 rounded-xl space-y-4 my-8 shadow-sm">
             <div className="flex items-center gap-2 text-amber-800 text-xs tracking-[0.2em] uppercase font-bold">
               <Sparkles className="w-4 h-4 text-amber-600" />
-              <span>Faith & The Meaning of Ebenezer</span>
+              <span>{t('story.faithTitle')}</span>
             </div>
             <p className="font-serif italic text-2xl sm:text-3xl text-amber-950 font-normal">
-              “Thus far the Lord has helped us”
+              {t('story.ebenezerQuote')}
             </p>
             <p className="text-xs uppercase tracking-widest text-slate-500 font-medium">
-              1 Samuel 7:12
+              {t('story.ebenezerVerse')}
             </p>
             <p className="text-sm sm:text-base text-slate-700 font-light leading-relaxed pt-2 border-t border-amber-200">
-              Our mission is rooted in faith in Jesus Christ and inspired by this biblical reminder. For us, Ebenezer is a living testament that the past does not have to be the end of the story. With supportive community, personal responsibility, and God-given purpose, a brand new chapter can begin.
+              {t('story.ebenezerBody')}
             </p>
           </div>
 
           {/* Vision & Mission Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-6">
-            <div className="p-6 bg-slate-50 border border-slate-200 rounded-sm">
+            <div className="p-6 bg-slate-50/90 border border-slate-200 rounded-xl">
               <h3 className="font-serif text-xl font-medium text-slate-900 mb-3 flex items-center gap-2">
                 <CheckCircle2 className="w-5 h-5 text-amber-600" />
-                <span>Our Vision</span>
+                <span>{t('story.visionTitle')}</span>
               </h3>
               <p className="text-sm text-slate-600 font-light leading-relaxed">
-                Young people and families strengthened by hope, trust, and purpose — able to build healthier relationships and contribute positively to their communities.
+                {t('story.visionText')}
               </p>
             </div>
 
-            <div className="p-6 bg-slate-50 border border-slate-200 rounded-sm">
+            <div className="p-6 bg-slate-50/90 border border-slate-200 rounded-xl">
               <h3 className="font-serif text-xl font-medium text-slate-900 mb-3 flex items-center gap-2">
                 <CheckCircle2 className="w-5 h-5 text-amber-600" />
-                <span>Our Mission</span>
+                <span>{t('story.missionTitle')}</span>
               </h3>
               <p className="text-sm text-slate-600 font-light leading-relaxed">
-                To inspire hope by helping individuals in Rwanda navigate addiction and related challenges, rebuild confidence and relationships, discover their strengths, and move toward sustainable personal and community well-being.
+                {t('story.missionText')}
               </p>
             </div>
           </div>
@@ -127,8 +135,8 @@ export default function OurStory() {
       {/* Values Section */}
       <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-16">
         <div className="text-center mb-12">
-          <p className="eyebrow mb-2">Guiding Principles</p>
-          <h2 className="section-title text-2xl sm:text-3xl md:text-4xl">Our Core Values</h2>
+          <p className="eyebrow mb-2">{t('story.valuesEyebrow')}</p>
+          <h2 className="section-title text-2xl sm:text-3xl md:text-4xl">{t('story.valuesTitle')}</h2>
           <div className="w-16 h-[2px] bg-amber-500 mx-auto mt-4" />
         </div>
 
@@ -138,7 +146,7 @@ export default function OurStory() {
             return (
               <div
                 key={v.title}
-                className="bg-white border border-slate-200 p-8 hover:border-amber-500 hover:shadow-md transition-all duration-300 rounded-sm"
+                className="bg-white border border-stone-200/80 p-8 hover:border-amber-500/80 hover:shadow-lg transition-all duration-300 rounded-2xl"
               >
                 <div className="w-12 h-12 rounded-lg bg-amber-100 text-amber-800 flex items-center justify-center mb-5">
                   <Icon className="w-6 h-6" />
@@ -159,18 +167,18 @@ export default function OurStory() {
       <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-16">
         <div className="bg-gradient-to-r from-amber-100/80 via-yellow-50 to-amber-100/80 border border-amber-200 p-8 sm:p-12 text-center rounded-sm flex flex-col items-center justify-center space-y-4 shadow-sm">
           <h3 className="font-serif text-2xl sm:text-3xl font-light text-slate-950">
-            Want to see how these values translate into everyday practice?
+            {t('story.ctaQuestion')}
           </h3>
           <p className="text-sm sm:text-base font-light max-w-xl text-slate-700 leading-relaxed">
-            Explore our active community programmes, family workshops, and youth support initiatives.
+            {t('story.ctaDesc')}
           </p>
           <div className="pt-2 flex flex-col sm:flex-row gap-4">
             <Link to="/our-work" className="btn-primary text-xs py-3 px-8">
-              <span>Explore Our Programmes</span>
+              <span>{t('story.ctaProgrammes')}</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
             <Link to="/gallery" className="btn-outline text-xs py-3 px-8 bg-white/80">
-              <span>View The Art Gallery</span>
+              <span>{t('story.ctaGallery')}</span>
             </Link>
           </div>
         </div>
