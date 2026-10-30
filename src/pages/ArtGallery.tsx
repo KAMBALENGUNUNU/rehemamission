@@ -22,7 +22,7 @@ import { useStore } from '@/store/StoreContext';
 import { formatPrice } from '@/lib/utils';
 import { TRANSLATIONS, type TranslationKey } from '@/lib/translations';
 import KazeLogo from '@/components/logos/KazeLogo';
-import KazeScrollGallery from '@/components/KazeScrollGallery';
+import TriptychCoverflow from '@/components/TriptychCoverflow';
 
 export default function ArtGallery() {
   const { toggleFavorite, isFavorite, language } = useStore();
@@ -197,8 +197,8 @@ export default function ArtGallery() {
         </div>
       </section>
 
-      {/* 2. Interactive Pinned 3-Card Scroll Gallery (Center, Left, Right Carousel) */}
-      <KazeScrollGallery onSelectArtwork={(art) => setSelectedArtwork(art)} />
+      {/* 2. Interactive Triptych Coverflow Carousel */}
+      <TriptychCoverflow onSelectArtwork={(art) => setSelectedArtwork(art)} />
 
       {/* 3. Clear Museum Principle Banner: 100% Impact & Direct Youth Support */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 sm:mt-16 relative z-20">

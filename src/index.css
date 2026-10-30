@@ -149,4 +149,25 @@
   }
 }
 
+/* Triptych Coverflow Carousel Caption Sync Animation */
+@keyframes triptychCaptionSync {
+  0% {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-caption-sync {
+  animation: triptychCaptionSync 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Radial dark vignette overlay for coverflow background contrast */
+.bg-radial-vignette {
+  background: radial-gradient(circle at center, rgba(10, 10, 12, 0.2) 0%, rgba(10, 10, 12, 0.68) 70%, rgba(10, 10, 12, 0.9) 100%);
+}
+
 
