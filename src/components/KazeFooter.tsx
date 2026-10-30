@@ -15,7 +15,7 @@ export default function KazeFooter() {
   };
 
   return (
-    <footer className="relative bg-[#faf7f2] text-stone-700 overflow-hidden border-t border-stone-200/90">
+    <footer className="kaze-footer relative bg-[#faf7f2] text-stone-700 overflow-hidden border-t border-stone-200/90">
       {/* Background wireframe texture with soft clear luminosity */}
       <div className="absolute inset-0 z-0 pointer-events-none select-none">
         <img
@@ -160,10 +160,10 @@ export default function KazeFooter() {
           </div>
         </div>
 
-        {/* Luminous Signature Brand Typography */}
+        {/* Outlined Signature Brand Typography (Same style as Rehema Mission footer for Kaze Collection) */}
         <div className="pt-8 sm:pt-10 pb-6 sm:pb-8 text-center select-none overflow-hidden">
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-[4.75rem] font-light tracking-tight text-stone-300 hover:text-amber-700/60 leading-none cursor-default transition-all duration-500">
-            Rehema Mission Rwanda
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-[4.75rem] font-light tracking-tight text-outline-signature leading-none cursor-default transition-all duration-500">
+            Kaze Collection
           </h2>
         </div>
 
