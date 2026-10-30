@@ -134,7 +134,7 @@ export const TRANSLATIONS = {
 
     // Kaze Footer
     'kazeFooter.atelierTag': 'Atelier Rehema · Kigali',
-    'kazeFooter.title': 'Kaze Collection',
+    'kazeFooter.title': 'Kaze Collections',
     'kazeFooter.desc':
       'Where artistic mastery meets human restoration. Every original painting, drawing, and mixed-media piece in Kaze Collection has been created by young people rebuilding their lives with hope and dignity.',
     'kazeFooter.parentLink': 'An initiative of Rehema Mission Rwanda · Learn Our Story',
@@ -152,7 +152,7 @@ export const TRANSLATIONS = {
     'kazeFooter.atelier': 'Kicukiro Atelier',
     'kazeFooter.assurance': 'Ethical acquisition · Direct youth support',
     'kazeFooter.homeLink': 'Rehema Mission Home',
-    'kazeFooter.copyright': 'Kaze Collection. All artworks created under Rehema Mission Rwanda.',
+    'kazeFooter.copyright': 'Kaze Collections. All artworks created under Rehema Mission Rwanda.',
     'kazeFooter.adminPortal': 'Kaze Admin',
 
     // Kaze Header Navigation

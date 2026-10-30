@@ -40,7 +40,7 @@ export default function KazeFooter() {
                 <span>{t('kazeFooter.atelierTag', 'Ebenezer Vocational Atelier · Kigali')}</span>
               </div>
               <h3 className="font-serif text-3xl sm:text-4xl font-normal text-stone-900 tracking-tight">
-                {t('kazeFooter.title', 'Kaze Collection')}
+                {t('kazeFooter.title', 'Kaze Collections')}
               </h3>
             </div>
 
@@ -160,10 +160,10 @@ export default function KazeFooter() {
           </div>
         </div>
 
-        {/* Outlined Signature Brand Typography (Same style as Rehema Mission footer for Kaze Collection) */}
+        {/* Outlined Signature Brand Typography (Same style as Rehema Mission footer for Kaze Collections) */}
         <div className="pt-8 sm:pt-10 pb-6 sm:pb-8 text-center select-none overflow-hidden">
           <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-[4.75rem] font-light tracking-tight text-outline-signature leading-none cursor-default transition-all duration-500">
-            Kaze Collection
+            Kaze Collections
           </h2>
         </div>
 
@@ -173,7 +173,7 @@ export default function KazeFooter() {
         {/* Bottom Sub-Footer Bar */}
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-[13px] sm:text-sm text-stone-500">
           <p>
-            © {new Date().getFullYear()} {t('kazeFooter.copyright', 'Kaze Collection. All artworks created under Rehema Mission Rwanda.')}
+            © {new Date().getFullYear()} {t('kazeFooter.copyright', 'Kaze Collections. All artworks created under Rehema Mission Rwanda.')}
           </p>
           <div className="flex items-center gap-6 sm:gap-8">
             <Link to="/" className="hover:text-stone-900 transition-colors">
