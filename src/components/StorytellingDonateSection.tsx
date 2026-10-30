@@ -4,13 +4,7 @@ import {
   Heart,
   Palette,
   ArrowRight,
-  ShieldCheck,
   Check,
-  X,
-  CreditCard,
-  Smartphone,
-  Gift,
-  Sparkles,
 } from 'lucide-react';
 import { useStore } from '@/store/StoreContext';
 
@@ -18,16 +12,9 @@ export default function StorytellingDonateSection() {
   const { language } = useStore();
   const navigate = useNavigate();
 
-  // Donation state for Path 2 (Direct Financial Gift)
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  // Selected donation preset for preview
   const [selectedAmount, setSelectedAmount] = useState<number>(50);
-  const [customAmount, setCustomAmount] = useState<string>('');
   const [currency, setCurrency] = useState<'USD' | 'RWF'>('USD');
-  const [paymentMethod, setPaymentMethod] = useState<'momo' | 'card' | 'paypal'>('momo');
-  const [donorName, setDonorName] = useState('');
-  const [donorEmail, setDonorEmail] = useState('');
-  const [donorPhone, setDonorPhone] = useState('');
-  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const presets = [
     {
@@ -62,27 +49,13 @@ export default function StorytellingDonateSection() {
       impactFr: 'Contribution directe aux programmes de réhabilitation clinique et artistique de Rehema',
     };
 
-  const activeAmountDisplay =
-    currency === 'USD'
-      ? `$${customAmount || selectedAmount}`
-      : `${((customAmount ? Number(customAmount) : selectedAmount) * 1300).toLocaleString()} RWF`;
-
-  const handleOpenDonateModal = (amount?: number) => {
-    if (amount) {
-      setSelectedAmount(amount);
-      setCustomAmount('');
-    }
-    setIsSubmitted(false);
-    setIsModalOpen(true);
-  };
-
-  const handleDonateSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitted(true);
-  };
-
   const handleArtworkCardClick = () => {
     navigate('/gallery');
+  };
+
+  const handleDonateClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    navigate('/contact?reason=support');
   };
 
   return (
@@ -130,14 +103,14 @@ export default function StorytellingDonateSection() {
           </div>
         </div>
 
-        {/* 2. The Two Support Cards Grid (Using cohesive mirror gradient rim & corner glow design) */}
+        {/* 2. The Two Support Cards Grid (Inside: pure dot grains, NO lines) */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-7 items-stretch">
           {/* CARD 1: Support by Buying Artwork (KAZE Collections) */}
           <div
             onClick={handleArtworkCardClick}
             className="relative group transition-transform duration-300 hover:-translate-y-2 cursor-pointer"
           >
-            {/* Ambient Corner Dégradé Glow (Sage-teal neon bloom radiating outside corners) */}
+            {/* Ambient Corner Dégradé Glow */}
             <div
               className="absolute -inset-[3px] rounded-[30px] opacity-70 group-hover:opacity-100 blur-[10px] transition-all duration-500 pointer-events-none z-0"
               style={{
@@ -147,7 +120,7 @@ export default function StorytellingDonateSection() {
               aria-hidden="true"
             />
 
-            {/* Precision Mirror Gradient Rim Frame (2px rounded stroke with specular reflection) */}
+            {/* Precision Mirror Gradient Rim Frame (2px rounded stroke) */}
             <div
               className="relative p-[2px] rounded-[26px] z-10 transition-shadow duration-300 h-full"
               style={{
@@ -157,42 +130,36 @@ export default function StorytellingDonateSection() {
                   '0 14px 32px -4px rgba(0,0,0,0.22), 0 0 24px 2px rgba(52, 211, 153, 0.45), 0 0 46px 6px rgba(69, 99, 94, 0.26)',
               }}
             >
-              {/* Solid Inner Card Surface (Dark Forest Sage-Teal: #45635E) */}
+              {/* Solid Inner Card Surface (Dark Forest Sage-Teal: #45635E) with PURE DOT GRAINS (NO LINES) */}
               <div className="w-full h-full rounded-[24px] bg-[#45635E] text-white flex flex-col justify-between p-6 sm:p-7 relative overflow-hidden select-none min-h-[380px]">
-                {/* Tactile Risograph / Film Grain Fractal Noise Overlay */}
+                {/* Layer 1: Dense Stipple Dot Grains Pattern */}
+                <div
+                  className="absolute inset-0 pointer-events-none opacity-40 mix-blend-soft-light z-[1]"
+                  style={{
+                    backgroundImage: `radial-gradient(circle, rgba(255, 255, 255, 0.5) 1px, transparent 1px), radial-gradient(circle, rgba(0, 0, 0, 0.4) 1px, transparent 1px)`,
+                    backgroundSize: '5px 5px, 5px 5px',
+                    backgroundPosition: '0 0, 2.5px 2.5px',
+                  }}
+                  aria-hidden="true"
+                />
+
+                {/* Layer 2: Micro Dot Grains Texture */}
                 <div
                   className="absolute inset-0 pointer-events-none opacity-45 mix-blend-overlay z-[1]"
                   style={{
-                    backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise1'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise1)'/%3E%3C/svg%3E")`,
-                    backgroundSize: '120px 120px',
+                    backgroundImage: `radial-gradient(circle, rgba(255, 255, 255, 0.35) 0.8px, transparent 0.8px)`,
+                    backgroundSize: '3px 3px',
                   }}
                   aria-hidden="true"
                 />
 
-                {/* Secondary Fine Paper Stipple Grain Texture */}
+                {/* Layer 3: Inner Vignette Depth for Tactile Canvas Feel */}
                 <div
-                  className="absolute inset-0 pointer-events-none opacity-30 mix-blend-soft-light z-[1]"
-                  style={{
-                    backgroundImage: `radial-gradient(rgba(255,255,255,0.25) 1px, transparent 1px), radial-gradient(rgba(0,0,0,0.3) 1px, transparent 1px)`,
-                    backgroundSize: '4px 4px',
-                    backgroundPosition: '0 0, 2px 2px',
-                  }}
+                  className="absolute inset-0 pointer-events-none shadow-[inset_0_0_32px_rgba(0,0,0,0.25)] rounded-[inherit] z-[1]"
                   aria-hidden="true"
                 />
 
-                {/* Inner Vignette Depth */}
-                <div
-                  className="absolute inset-0 pointer-events-none shadow-[inset_0_0_28px_rgba(0,0,0,0.25)] rounded-[inherit] z-[1]"
-                  aria-hidden="true"
-                />
-
-                {/* Top Inset Hairline */}
-                <div className="absolute top-3 left-4 right-4 h-[1px] bg-white/20 pointer-events-none z-[2]" />
-
-                {/* Bottom Inset Hairline */}
-                <div className="absolute bottom-3 left-4 right-4 h-[1px] bg-white/20 pointer-events-none z-[2]" />
-
-                {/* Upper Content: Brand Tag & Curatorial Texts (No Image, Text Preserved) */}
+                {/* Upper Content: Brand Tag & Curatorial Texts (No Image, No Inset Lines) */}
                 <div className="relative z-10">
                   {/* Brand Tag with Palette Icon */}
                   <div className="flex items-center justify-between gap-3 mb-3">
@@ -221,7 +188,7 @@ export default function StorytellingDonateSection() {
                       : 'When people leave rehab, isolation can pull them back. At Kaze Collections, young artisans work and heal together by creating masterworks. 100% of every artwork sale directly funds their personal livelihood, studio pigments, and sustained recovery support.'}
                   </p>
 
-                  {/* Curatorial Highlight Box (Text Preserved) */}
+                  {/* Curatorial Highlight Box with Dotted Texture Framing */}
                   <div className="mt-4 p-3.5 rounded-xl bg-white/10 border border-white/20 backdrop-blur-sm space-y-1">
                     <p className="text-[10px] font-sans font-bold tracking-widest uppercase text-emerald-200">
                       {language === 'fr' ? 'CRÉATION ORIGINALE RWANDAISE' : 'AUTHENTIC RWANDAN CONTEMPORARY ART'}
@@ -239,8 +206,8 @@ export default function StorytellingDonateSection() {
                   </div>
                 </div>
 
-                {/* Bottom CTA Link (Routes to Kaze Collections /gallery) */}
-                <div className="mt-6 pt-3.5 border-t border-white/25 flex items-center justify-between relative z-10">
+                {/* Bottom CTA Link (Directly routes to Kaze Collections /gallery) */}
+                <div className="mt-6 pt-4 border-t border-dotted border-white/30 flex items-center justify-between relative z-10">
                   <span className="text-xs text-white/80 font-light">
                     {language === 'fr' ? 'Expédition sécurisée mondiale' : 'Worldwide secure art delivery'}
                   </span>
@@ -259,7 +226,7 @@ export default function StorytellingDonateSection() {
 
           {/* CARD 2: Support by Giving Us Money (Direct Financial Donation) */}
           <div className="relative group transition-transform duration-300 hover:-translate-y-2">
-            {/* Ambient Corner Dégradé Glow (Slate-blue neon bloom radiating outside corners) */}
+            {/* Ambient Corner Dégradé Glow */}
             <div
               className="absolute -inset-[3px] rounded-[30px] opacity-70 group-hover:opacity-100 blur-[10px] transition-all duration-500 pointer-events-none z-0"
               style={{
@@ -269,7 +236,7 @@ export default function StorytellingDonateSection() {
               aria-hidden="true"
             />
 
-            {/* Precision Mirror Gradient Rim Frame (2px rounded stroke with specular reflection) */}
+            {/* Precision Mirror Gradient Rim Frame (2px rounded stroke) */}
             <div
               className="relative p-[2px] rounded-[26px] z-10 transition-shadow duration-300 h-full"
               style={{
@@ -279,42 +246,36 @@ export default function StorytellingDonateSection() {
                   '0 14px 32px -4px rgba(0,0,0,0.22), 0 0 22px 2px rgba(96, 165, 250, 0.45), 0 0 46px 6px rgba(44, 62, 85, 0.28)',
               }}
             >
-              {/* Solid Inner Card Surface (Deep Slate Navy: #2C3E55) */}
+              {/* Solid Inner Card Surface (Deep Slate Navy: #2C3E55) with PURE DOT GRAINS (NO LINES) */}
               <div className="w-full h-full rounded-[24px] bg-[#2C3E55] text-white flex flex-col justify-between p-6 sm:p-7 relative overflow-hidden select-none min-h-[380px]">
-                {/* Tactile Risograph / Film Grain Fractal Noise Overlay */}
+                {/* Layer 1: Dense Stipple Dot Grains Pattern */}
+                <div
+                  className="absolute inset-0 pointer-events-none opacity-40 mix-blend-soft-light z-[1]"
+                  style={{
+                    backgroundImage: `radial-gradient(circle, rgba(255, 255, 255, 0.5) 1px, transparent 1px), radial-gradient(circle, rgba(0, 0, 0, 0.4) 1px, transparent 1px)`,
+                    backgroundSize: '5px 5px, 5px 5px',
+                    backgroundPosition: '0 0, 2.5px 2.5px',
+                  }}
+                  aria-hidden="true"
+                />
+
+                {/* Layer 2: Micro Dot Grains Texture */}
                 <div
                   className="absolute inset-0 pointer-events-none opacity-45 mix-blend-overlay z-[1]"
                   style={{
-                    backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise2'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise2)'/%3E%3C/svg%3E")`,
-                    backgroundSize: '120px 120px',
+                    backgroundImage: `radial-gradient(circle, rgba(255, 255, 255, 0.35) 0.8px, transparent 0.8px)`,
+                    backgroundSize: '3px 3px',
                   }}
                   aria-hidden="true"
                 />
 
-                {/* Secondary Fine Paper Stipple Grain Texture */}
+                {/* Layer 3: Inner Vignette Depth for Tactile Canvas Feel */}
                 <div
-                  className="absolute inset-0 pointer-events-none opacity-30 mix-blend-soft-light z-[1]"
-                  style={{
-                    backgroundImage: `radial-gradient(rgba(255,255,255,0.25) 1px, transparent 1px), radial-gradient(rgba(0,0,0,0.3) 1px, transparent 1px)`,
-                    backgroundSize: '4px 4px',
-                    backgroundPosition: '0 0, 2px 2px',
-                  }}
+                  className="absolute inset-0 pointer-events-none shadow-[inset_0_0_32px_rgba(0,0,0,0.25)] rounded-[inherit] z-[1]"
                   aria-hidden="true"
                 />
 
-                {/* Inner Vignette Depth */}
-                <div
-                  className="absolute inset-0 pointer-events-none shadow-[inset_0_0_28px_rgba(0,0,0,0.25)] rounded-[inherit] z-[1]"
-                  aria-hidden="true"
-                />
-
-                {/* Top Inset Hairline */}
-                <div className="absolute top-3 left-4 right-4 h-[1px] bg-white/20 pointer-events-none z-[2]" />
-
-                {/* Bottom Inset Hairline */}
-                <div className="absolute bottom-3 left-4 right-4 h-[1px] bg-white/20 pointer-events-none z-[2]" />
-
-                {/* Upper Content: Brand Tag & Donation Narrative */}
+                {/* Upper Content: Brand Tag & Donation Narrative (No Inset Lines) */}
                 <div className="relative z-10">
                   {/* Brand Tag with Heart Icon */}
                   <div className="flex items-center justify-between gap-3 mb-3">
@@ -372,17 +333,14 @@ export default function StorytellingDonateSection() {
                     {/* Presets */}
                     <div className="grid grid-cols-4 gap-2">
                       {presets.map((preset) => {
-                        const isSelected = selectedAmount === preset.usd && !customAmount;
+                        const isSelected = selectedAmount === preset.usd;
                         const label = currency === 'USD' ? `$${preset.usd}` : `${preset.rwf.toLocaleString()} F`;
 
                         return (
                           <button
                             key={preset.usd}
                             type="button"
-                            onClick={() => {
-                              setSelectedAmount(preset.usd);
-                              setCustomAmount('');
-                            }}
+                            onClick={() => setSelectedAmount(preset.usd)}
                             className={`py-1.5 px-1 text-center rounded-lg font-sans text-xs font-bold transition-all ${
                               isSelected
                                 ? 'bg-white text-slate-950 shadow-md font-black scale-105'
@@ -408,18 +366,18 @@ export default function StorytellingDonateSection() {
                   </div>
                 </div>
 
-                {/* Bottom Direct Donate CTA Button (Opens Donation Modal on This Page) */}
-                <div className="mt-6 pt-3.5 border-t border-white/25 flex items-center justify-between relative z-10">
+                {/* Bottom Direct Donate CTA Button (Redirects directly to /contact?reason=support) */}
+                <div className="mt-6 pt-4 border-t border-dotted border-white/30 flex items-center justify-between relative z-10">
                   <span className="text-xs text-white/80 font-light">
-                    {language === 'fr' ? 'MoMo, Airtel & Carte bancaire' : 'MoMo, Airtel & Credit Card'}
+                    {language === 'fr' ? 'MoMo, Airtel, Virement & Carte' : 'MoMo, Airtel, Bank & Card'}
                   </span>
                   <button
                     type="button"
-                    onClick={() => handleOpenDonateModal(selectedAmount)}
-                    className="text-xs sm:text-[13px] font-sans font-semibold text-white inline-flex items-center gap-1.5 py-1 px-3.5 rounded-full bg-white/20 hover:bg-white/30 transition-all shadow-sm"
+                    onClick={handleDonateClick}
+                    className="text-xs sm:text-[13px] font-sans font-semibold text-white inline-flex items-center gap-1.5 py-1 px-3.5 rounded-full bg-white/20 hover:bg-white/30 transition-all shadow-sm group/link"
                   >
                     <span>{language === 'fr' ? 'faire un don' : 'donate now'}</span>
-                    <span className="font-bold text-white">&gt;</span>
+                    <span className="group-hover/link:translate-x-1 transition-transform font-bold text-white">&gt;</span>
                   </button>
                 </div>
               </div>
@@ -427,205 +385,6 @@ export default function StorytellingDonateSection() {
           </div>
         </div>
       </div>
-
-      {/* 3. Interactive Donation Modal (Direct On-Page Donation Experience) */}
-      {isModalOpen && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-sm animate-fade-in"
-          onClick={() => setIsModalOpen(false)}
-        >
-          <div
-            onClick={(e) => e.stopPropagation()}
-            className="bg-white rounded-[28px] max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-stone-200 relative overflow-hidden max-h-[92vh] overflow-y-auto"
-          >
-            {/* Modal Header */}
-            <div className="flex items-start justify-between pb-4 border-b border-stone-100">
-              <div>
-                <p className="text-[10px] tracking-[0.2em] font-sans font-bold uppercase text-amber-700">
-                  REHEMA MISSION RWANDA
-                </p>
-                <h3 className="font-serif text-2xl text-slate-900 mt-0.5">
-                  {language === 'fr' ? 'Soutenez la Guérison' : 'Support Holistic Recovery'}
-                </h3>
-              </div>
-              <button
-                type="button"
-                onClick={() => setIsModalOpen(false)}
-                className="w-8 h-8 rounded-full bg-stone-100 hover:bg-stone-200 flex items-center justify-center text-slate-600 transition-colors"
-                aria-label="Close modal"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            </div>
-
-            {/* Modal Body */}
-            {isSubmitted ? (
-              // Confirmation Thank You Screen
-              <div className="py-8 text-center space-y-4">
-                <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto shadow-inner">
-                  <Check className="w-8 h-8 stroke-[2.5]" />
-                </div>
-                <h4 className="font-serif text-2xl text-slate-900">
-                  {language === 'fr' ? 'Murakoze Cyane ! Merci de tout cœur !' : 'Thank You for Your Generosity!'}
-                </h4>
-                <p className="text-sm text-stone-600 max-w-sm mx-auto font-light leading-relaxed">
-                  {language === 'fr'
-                    ? `Votre don de ${activeAmountDisplay} apporte un accompagnement direct aux jeunes et familles en chemin vers la réhabilitation.`
-                    : `Your generous contribution of ${activeAmountDisplay} brings direct clinical care and genuine hope to young lives walking the road of recovery.`}
-                </p>
-                <div className="pt-4">
-                  <button
-                    type="button"
-                    onClick={() => setIsModalOpen(false)}
-                    className="py-2.5 px-6 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-sans text-xs font-semibold tracking-wider uppercase transition-colors"
-                  >
-                    {language === 'fr' ? 'Fermer' : 'Return to Website'}
-                  </button>
-                </div>
-              </div>
-            ) : (
-              // Donation Form
-              <form onSubmit={handleDonateSubmit} className="mt-5 space-y-5">
-                {/* Selected Amount Confirmation */}
-                <div className="bg-amber-50/70 border border-amber-200/70 rounded-2xl p-4 flex items-center justify-between">
-                  <div>
-                    <span className="text-[11px] font-sans text-stone-500 uppercase tracking-wider block">
-                      {language === 'fr' ? 'Montant sélectionné' : 'Selected Contribution'}
-                    </span>
-                    <span className="font-serif text-2xl text-amber-900 font-bold">
-                      {activeAmountDisplay}
-                    </span>
-                  </div>
-                  <div className="text-right">
-                    <span className="text-xs text-stone-600 font-light block max-w-[200px] leading-tight">
-                      {language === 'fr' ? currentImpact.impactFr : currentImpact.impactEn}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Payment Method Selector (MTN Mobile Money, Card, PayPal) */}
-                <div>
-                  <label className="block text-xs font-sans font-bold text-slate-800 uppercase tracking-wider mb-2">
-                    {language === 'fr' ? 'Moyen de paiement :' : 'Payment Method:'}
-                  </label>
-                  <div className="grid grid-cols-3 gap-2">
-                    <button
-                      type="button"
-                      onClick={() => setPaymentMethod('momo')}
-                      className={`p-2.5 rounded-xl border flex flex-col items-center gap-1 font-sans text-xs transition-all ${
-                        paymentMethod === 'momo'
-                          ? 'border-amber-600 bg-amber-50/50 text-amber-900 font-bold shadow-sm'
-                          : 'border-stone-200 text-stone-600 hover:bg-stone-50'
-                      }`}
-                    >
-                      <Smartphone className="w-4 h-4 text-amber-600" />
-                      <span>MoMo / Airtel</span>
-                    </button>
-
-                    <button
-                      type="button"
-                      onClick={() => setPaymentMethod('card')}
-                      className={`p-2.5 rounded-xl border flex flex-col items-center gap-1 font-sans text-xs transition-all ${
-                        paymentMethod === 'card'
-                          ? 'border-amber-600 bg-amber-50/50 text-amber-900 font-bold shadow-sm'
-                          : 'border-stone-200 text-stone-600 hover:bg-stone-50'
-                      }`}
-                    >
-                      <CreditCard className="w-4 h-4 text-amber-600" />
-                      <span>Visa / Card</span>
-                    </button>
-
-                    <button
-                      type="button"
-                      onClick={() => setPaymentMethod('paypal')}
-                      className={`p-2.5 rounded-xl border flex flex-col items-center gap-1 font-sans text-xs transition-all ${
-                        paymentMethod === 'paypal'
-                          ? 'border-amber-600 bg-amber-50/50 text-amber-900 font-bold shadow-sm'
-                          : 'border-stone-200 text-stone-600 hover:bg-stone-50'
-                      }`}
-                    >
-                      <Gift className="w-4 h-4 text-amber-600" />
-                      <span>PayPal</span>
-                    </button>
-                  </div>
-                </div>
-
-                {/* Donor Fields */}
-                <div className="space-y-3">
-                  <div>
-                    <label className="block text-xs font-sans font-medium text-stone-700 mb-1">
-                      {language === 'fr' ? 'Votre Nom Complet' : 'Full Name'}
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={donorName}
-                      onChange={(e) => setDonorName(e.target.value)}
-                      placeholder={language === 'fr' ? 'Ex: Claire Uwera' : 'e.g. John Doe'}
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 bg-stone-50/50 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-sans font-medium text-stone-700 mb-1">
-                      {language === 'fr' ? 'Adresse E-mail' : 'Email Address'}
-                    </label>
-                    <input
-                      type="email"
-                      required
-                      value={donorEmail}
-                      onChange={(e) => setDonorEmail(e.target.value)}
-                      placeholder="name@example.com"
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 bg-stone-50/50 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
-                    />
-                  </div>
-
-                  {paymentMethod === 'momo' && (
-                    <div>
-                      <label className="block text-xs font-sans font-medium text-stone-700 mb-1">
-                        {language === 'fr' ? 'Numéro de Téléphone (MTN / Airtel)' : 'Mobile Money Phone Number'}
-                      </label>
-                      <input
-                        type="tel"
-                        required
-                        value={donorPhone}
-                        onChange={(e) => setDonorPhone(e.target.value)}
-                        placeholder="+250 78X XXX XXX"
-                        className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 bg-stone-50/50 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
-                      />
-                    </div>
-                  )}
-                </div>
-
-                {/* Security Guarantee */}
-                <div className="flex items-center gap-2 text-[11px] text-stone-500">
-                  <ShieldCheck className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                  <span>
-                    {language === 'fr'
-                      ? 'Paiement chiffré et sécurisé. 100% alloué aux programmes Rehema Mission.'
-                      : 'Encrypted & secure. 100% allocated to Rehema Mission programs.'}
-                  </span>
-                </div>
-
-                {/* Submit Button */}
-                <button
-                  type="submit"
-                  className="w-full py-3.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-sans text-xs font-semibold tracking-wider uppercase transition-all duration-300 shadow-md shadow-amber-600/30 flex items-center justify-center gap-2"
-                >
-                  <span>
-                    {language === 'fr'
-                      ? `Confirmer le Don de ${activeAmountDisplay}`
-                      : `Complete Donation of ${activeAmountDisplay}`}
-                  </span>
-                  <ArrowRight className="w-4 h-4" />
-                </button>
-              </form>
-            )}
-          </div>
-        </div>
-      )}
     </section>
   );
 }
