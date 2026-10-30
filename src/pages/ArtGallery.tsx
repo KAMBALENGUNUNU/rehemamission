@@ -75,14 +75,14 @@ export default function ArtGallery() {
   };
 
   return (
-    <div className="page-enter bg-[#F5B324] min-h-screen text-stone-900 pb-0 relative overflow-hidden">
-      {/* 1. Kaze Collection Hero Section with Bespoke Fine Art SVG Theme Pattern in Brand Yellow (Matching Reference) */}
-      <section className="relative z-10 pt-28 sm:pt-36 lg:pt-44 pb-28 sm:pb-36 lg:pb-44 px-4 sm:px-6 lg:px-8 overflow-hidden bg-gradient-to-b from-[#F5B82E] via-[#F3A81A] to-[#E6990C] text-slate-950">
-        {/* Tone-on-tone Fine Art Studio Vector Pattern in Warm Amber on Yellow */}
-        <ArtGalleryThemePattern opacity={0.16} className="text-amber-950" />
+    <div className="page-enter bg-[#F9EB9A] min-h-screen text-stone-900 pb-0 relative overflow-hidden">
+      {/* 1. Kaze Collection Hero Section with Bespoke Fine Art SVG Theme Pattern in Soft Muted Yellow */}
+      <section className="relative z-10 pt-28 sm:pt-36 lg:pt-44 pb-28 sm:pb-36 lg:pb-44 px-4 sm:px-6 lg:px-8 overflow-hidden bg-gradient-to-b from-[#FEF2B8] via-[#F9E68C] to-[#F2D668] text-slate-950">
+        {/* Delicate, subtle watermark Fine Art Studio Vector Pattern in background */}
+        <ArtGalleryThemePattern opacity={0.09} className="text-stone-900" />
 
-        {/* Ambient atmospheric lighting for rich golden warmth */}
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[360px] bg-gradient-radial from-amber-200/40 via-yellow-200/20 to-transparent rounded-full blur-3xl pointer-events-none z-0" />
+        {/* Ambient atmospheric lighting for soft luminous warmth without overpowering vision */}
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[360px] bg-gradient-radial from-white/45 via-amber-100/25 to-transparent rounded-full blur-3xl pointer-events-none z-0" />
 
         <div className="max-w-5xl mx-auto text-center relative z-10">
           {/* Bold Impactful Headline (Styled exactly like "Our Work" in the reference image) */}
