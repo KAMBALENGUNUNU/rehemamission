@@ -519,7 +519,7 @@ export default function OurWork() {
           <p className="text-xs font-bold tracking-[0.25em] uppercase text-amber-800 mb-3">
             {t('work.eyebrow')}
           </p>
-          <h1 className="font-serif text-3xl sm:text-5xl md:text-6xl font-light text-slate-950 tracking-tight leading-tight">
+          <h1 className="font-serif text-3xl sm:text-5xl md:text-6xl lg:text-[4rem] font-bold text-slate-950 tracking-[-0.015em] leading-[1.12]">
             {t('work.headline')}
           </h1>
           <p className="mt-6 text-base sm:text-lg text-slate-700 font-light max-w-2xl mx-auto leading-relaxed">
