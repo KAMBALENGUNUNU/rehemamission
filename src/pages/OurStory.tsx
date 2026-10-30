@@ -40,7 +40,7 @@ export default function OurStory() {
       <section className="relative bg-[#FAF7F2] min-h-[560px] sm:min-h-[660px] lg:min-h-[740px] flex flex-col items-center justify-center py-24 sm:py-32 md:py-40 px-4 sm:px-6 lg:px-8 border-b border-stone-200/60 overflow-hidden">
         {/* Luxury Rotating Rings SVG Theme (The Signature Gallery) in Background */}
         <RotatingRingsTheme
-          className="w-[660px] h-[660px] sm:w-[840px] sm:h-[840px] lg:w-[1000px] lg:h-[1000px]"
+          className="w-[580px] h-[580px] sm:w-[720px] sm:h-[720px] lg:w-[860px] lg:h-[860px]"
           glowClassName="w-[480px] h-[350px]"
         />
 
