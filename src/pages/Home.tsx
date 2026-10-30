@@ -1,11 +1,8 @@
-﻿import RotatingRingsTheme from '@/components/RotatingRingsTheme';
-import { TRANSLATIONS } from '@/lib/translations';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   ArrowRight,
   Heart,
-  Sparkles,
   Users,
   Compass,
   Palette,
@@ -19,13 +16,84 @@ import { REHEMA_ARTWORKS, type Artwork } from '@/lib/artworks';
 import { useStore } from '@/store/StoreContext';
 import { formatPrice } from '@/lib/utils';
 import AnnouncementBar from '@/components/AnnouncementBar';
+import RotatingRingsTheme from '@/components/RotatingRingsTheme';
+import { TRANSLATIONS } from '@/lib/translations';
 
 export default function Home() {
   const settings = useWebsiteSettings();
-  const { toggleFavorite, isFavorite } = useStore();
+  const { toggleFavorite, isFavorite, language } = useStore();
   const [selectedArtwork, setSelectedArtwork] = useState<Artwork | null>(null);
 
+  const t = (key: keyof typeof TRANSLATIONS.en) => TRANSLATIONS[language]?.[key] ?? TRANSLATIONS.en[key];
+
   const featuredArtworks = REHEMA_ARTWORKS.slice(0, 4);
+
+  const corePillars = [
+    {
+      id: 'pillar-1',
+      badge: t('pillar1.badge'),
+      title: t('pillar1.title'),
+      subtitle: t('pillar1.subtitle'),
+      icon: Compass,
+      bullets: [
+        t('pillar1.bullet1'),
+        t('pillar1.bullet2'),
+        t('pillar1.bullet3'),
+      ],
+      offeredLabel: t('pillar1.label'),
+      offeredValue: t('pillar1.value'),
+      linkText: t('pillar1.cta'),
+      href: '/our-work',
+    },
+    {
+      id: 'pillar-2',
+      badge: t('pillar2.badge'),
+      title: t('pillar2.title'),
+      subtitle: t('pillar2.subtitle'),
+      icon: ShieldCheck,
+      bullets: [
+        t('pillar2.bullet1'),
+        t('pillar2.bullet2'),
+        t('pillar2.bullet3'),
+      ],
+      offeredLabel: t('pillar2.label'),
+      offeredValue: t('pillar2.value'),
+      linkText: t('pillar2.cta'),
+      href: '/our-work',
+    },
+    {
+      id: 'pillar-3',
+      badge: t('pillar3.badge'),
+      title: t('pillar3.title'),
+      subtitle: t('pillar3.subtitle'),
+      icon: Users,
+      bullets: [
+        t('pillar3.bullet1'),
+        t('pillar3.bullet2'),
+        t('pillar3.bullet3'),
+      ],
+      offeredLabel: t('pillar3.label'),
+      offeredValue: t('pillar3.value'),
+      linkText: t('pillar3.cta'),
+      href: '/our-work',
+    },
+    {
+      id: 'pillar-4',
+      badge: t('pillar4.badge'),
+      title: t('pillar4.title'),
+      subtitle: t('pillar4.subtitle'),
+      icon: Palette,
+      bullets: [
+        t('pillar4.bullet1'),
+        t('pillar4.bullet2'),
+        t('pillar4.bullet3'),
+      ],
+      offeredLabel: t('pillar4.label'),
+      offeredValue: t('pillar4.value'),
+      linkText: t('pillar4.cta'),
+      href: '/gallery',
+    },
+  ];
 
   return (
     <div className="page-enter bg-slate-50 min-h-screen text-slate-900">
@@ -44,19 +112,18 @@ export default function Home() {
         </div>
 
         {/* Centered Content Directly on the Image (No Container Box) */}
-        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28 text-center flex flex-col items-center">
-          {/* Scripture badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/15 backdrop-blur-md border border-white/25 text-amber-300 text-xs tracking-[0.2em] uppercase font-semibold font-sans mb-6 shadow-md animate-fade-up">
-            <Sparkles className="w-3.5 h-3.5 text-amber-300" />
-            <span>1 Samuel 7:12 · Ebenezer</span>
-          </div>
+        <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28 text-center flex flex-col items-center">
+          {/* Scripture Eyebrow (Unboxed, No Emoji) */}
+          <p className="text-xs sm:text-sm tracking-[0.28em] uppercase font-semibold text-amber-300 font-sans mb-5 sm:mb-6 drop-shadow-sm animate-fade-up">
+            {t('hero.scripture')}
+          </p>
 
           {/* Centered Main Title */}
-          <h1 className="font-serif text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-light text-white tracking-tight leading-[1.08] drop-shadow-md animate-fade-up">
-            {settings.hero_title_line1 || 'A difficult chapter'}
+          <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5rem] 2xl:text-[5.5rem] font-semibold sm:font-bold text-white tracking-[-0.02em] leading-[1.06] drop-shadow-lg animate-fade-up">
+            {language === 'fr' ? t('hero.titleLine1') : (settings.hero_title_line1 || t('hero.titleLine1'))}
             <br />
-            <span className="italic font-normal text-amber-300">
-              {settings.hero_title_line2 || 'does not define a whole life.'}
+            <span className="font-semibold sm:font-bold text-amber-300">
+              {language === 'fr' ? t('hero.titleLine2') : (settings.hero_title_line2 || t('hero.titleLine2'))}
             </span>
           </h1>
 
@@ -65,8 +132,7 @@ export default function Home() {
             className="mt-6 text-base sm:text-lg md:text-xl text-slate-100 font-light leading-relaxed max-w-2xl mx-auto drop-shadow animate-fade-up"
             style={{ animationDelay: '0.12s' }}
           >
-            {settings.hero_subtitle ||
-              'Rehema Mission Rwanda walks alongside young people and families facing addiction and life challenges. Through listening, restorative care, and creative mastery in Kaze Collection, we help youth rediscover purpose and self-worth.'}
+            {language === 'fr' ? t('hero.subtitle') : (settings.hero_subtitle || t('hero.subtitle'))}
           </p>
 
           {/* Centered CTAs */}
@@ -78,24 +144,24 @@ export default function Home() {
               to="/gallery"
               className="btn-accent shadow-lg text-xs sm:text-sm px-8 py-3.5 text-center font-semibold uppercase tracking-wider"
             >
-              <span>Explore Kaze Collection</span>
+              <span>{t('hero.ctaGallery')}</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
             <Link
               to="/our-story"
               className="px-8 py-3.5 rounded text-xs sm:text-sm font-semibold tracking-wider uppercase text-white border border-white/40 hover:bg-white/15 hover:border-white transition-all backdrop-blur-sm"
             >
-              <span>Discover Our Mission</span>
+              <span>{t('hero.ctaMission')}</span>
             </Link>
           </div>
 
           {/* Centered Trust Subtext */}
           <div className="mt-8 pt-6 border-t border-white/20 flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs text-slate-200 font-sans">
-            <span className="font-semibold text-white">Est. 1998</span>
+            <span className="font-semibold text-white">{t('hero.trustEst')}</span>
             <span>•</span>
-            <span>Kicukiro, Kigali</span>
+            <span>{t('hero.trustLocation')}</span>
             <span>•</span>
-            <span className="font-medium text-amber-300">Kaze Collection Art Atelier</span>
+            <span className="font-medium text-amber-300">{t('hero.trustVocational')}</span>
           </div>
         </div>
       </section>
@@ -117,13 +183,13 @@ export default function Home() {
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
               <div className="absolute bottom-6 left-6 right-6 text-white">
                 <p className="font-serif text-xl italic text-amber-200">
-                  “Listening comes before advice.”
+                  {language === 'fr' ? '« L’écoute précède le conseil. »' : '“Listening comes before advice.”'}
                 </p>
                 <p className="text-xs uppercase tracking-wider text-slate-200 mt-1 font-medium">
-                  Mama Assumpta Kayiranga · Founder (Est. 1998)
+                  {t('philosophy.founderName')}
                 </p>
                 <p className="text-[11px] text-amber-300/90 font-light">
-                  Original portrait painted by Kaze Collection youth
+                  {t('philosophy.founderSub')}
                 </p>
               </div>
             </div>
@@ -133,16 +199,18 @@ export default function Home() {
 
           {/* Copy block */}
           <div className="lg:col-span-7 space-y-6">
-            <p className="eyebrow">Our Philosophy</p>
-            <h2 className="section-title">
-              Everyone deserves to be heard.
-            </h2>
-            <div className="w-16 h-[2px] bg-amber-500" />
+            <div className="space-y-3">
+              <div className="w-[2px] h-7 sm:h-8 bg-[#C5A059]" />
+              <p className="eyebrow">{t('philosophy.eyebrow')}</p>
+              <h2 className="section-title">
+                {t('philosophy.title')}
+              </h2>
+            </div>
             <p className="text-base sm:text-lg text-slate-700 font-light leading-relaxed">
-              A young person is more than a struggle, a mistake, or a difficult season. We create space for honest conversations, supportive relationships, and practical next steps — helping young people and families rebuild trust and see new possibilities.
+              {t('philosophy.p1')}
             </p>
             <p className="text-sm sm:text-base text-slate-600 font-light leading-relaxed">
-              Founded in 1998 by Assumpta Kayiranga in the aftermath of the 1994 genocide against the Tutsi in Rwanda, Rehema Mission Rwanda grew from a fundamental conviction: when people are met with genuine respect and listened to without condemnation, healing begins.
+              {t('philosophy.p2')}
             </p>
 
             <div className="pt-4">
@@ -150,7 +218,7 @@ export default function Home() {
                 to="/our-story"
                 className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold tracking-[0.16em] uppercase text-slate-900 hover:text-amber-700 transition-colors group"
               >
-                <span>Meet Rehema Mission Rwanda</span>
+                <span>{t('philosophy.cta')}</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform" />
               </Link>
             </div>
@@ -159,170 +227,124 @@ export default function Home() {
       </section>
 
       {/* 4. SECTION 2: WHAT WE DO (4 PILLARS) */}
-      <section className="py-20 md:py-28 bg-white border-y border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-16">
-            <p className="eyebrow mb-3">Our Core Pillars</p>
-            <h2 className="section-title">What We Do</h2>
-            <p className="text-sm sm:text-base text-slate-600 font-light mt-4">
-              Holistic support designed to strengthen individuals, rebuild family relationships, and open sustainable paths forward.
+      <section className="relative py-20 md:py-28 bg-[#FAF7F2] border-y border-stone-200/60 overflow-hidden">
+        {/* Luxury Rotating Rings SVG Theme (The Signature Gallery) in Background & Behind 4 Cards */}
+        <RotatingRingsTheme
+          className="w-[640px] h-[640px] sm:w-[780px] sm:h-[780px] lg:w-[940px] lg:h-[940px] translate-y-10 sm:translate-y-14"
+          glowClassName="w-[520px] h-[360px] translate-y-10 sm:translate-y-14"
+        />
+
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-14">
+            <div className="w-[2px] h-7 sm:h-8 bg-[#C5A059] mx-auto mb-4" />
+            <p className="eyebrow mb-2">{t('pillars.eyebrow')}</p>
+            <h2 className="section-title">{t('pillars.title')}</h2>
+            <p className="text-sm sm:text-base text-stone-600 font-light mt-3 leading-relaxed max-w-xl mx-auto">
+              {t('pillars.subtitle')}
             </p>
-            <div className="w-16 h-[2px] bg-amber-500 mx-auto mt-6" />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-            {/* Card 1 */}
-            <div className="p-8 bg-slate-50 border border-slate-200 hover:border-amber-500 hover:shadow-lg transition-all duration-300 flex flex-col justify-between group rounded-sm">
-              <div>
-                <div className="w-12 h-12 rounded-lg bg-amber-100 text-amber-800 flex items-center justify-center mb-6 group-hover:bg-amber-500 group-hover:text-slate-950 transition-colors">
-                  <Compass className="w-6 h-6" />
-                </div>
-                <h3 className="font-serif text-xl font-medium text-slate-900 mb-3">
-                  Support & Follow-Up
-                </h3>
-                <p className="text-sm text-slate-600 font-light leading-relaxed">
-                  Guidance for individuals navigating addiction and the steps that follow specialized care.
-                </p>
-              </div>
-              <div className="pt-6 mt-6 border-t border-slate-200/80">
-                <Link
-                  to="/our-work"
-                  className="text-xs font-semibold tracking-wider uppercase text-slate-900 hover:text-amber-700 inline-flex items-center gap-1.5"
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
+            {corePillars.map((pillar) => {
+              const Icon = pillar.icon;
+              return (
+                <div
+                  key={pillar.id}
+                  className="bg-white/95 backdrop-blur-[2px] rounded-2xl border border-stone-200/80 p-5 sm:p-5 shadow-[0_4px_16px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_28px_rgba(0,0,0,0.07)] transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between group"
                 >
-                  <span>Explore Support</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
-              </div>
-            </div>
+                  <div>
+                    {/* Top Eyebrow & Mini Icon */}
+                    <div className="flex items-center justify-between pb-2.5 border-b border-stone-100">
+                      <span className="text-[10px] tracking-[0.24em] uppercase font-semibold text-amber-700 font-sans">
+                        {pillar.badge}
+                      </span>
+                      <Icon className="w-4 h-4 text-amber-600/80 group-hover:text-amber-600 transition-colors" />
+                    </div>
 
-            {/* Card 2 */}
-            <div className="p-8 bg-slate-50 border border-slate-200 hover:border-amber-500 hover:shadow-lg transition-all duration-300 flex flex-col justify-between group rounded-sm">
-              <div>
-                <div className="w-12 h-12 rounded-lg bg-amber-100 text-amber-800 flex items-center justify-center mb-6 group-hover:bg-amber-500 group-hover:text-slate-950 transition-colors">
-                  <ShieldCheck className="w-6 h-6" />
-                </div>
-                <h3 className="font-serif text-xl font-medium text-slate-900 mb-3">
-                  Prevention & Relationships
-                </h3>
-                <p className="text-sm text-slate-600 font-light leading-relaxed">
-                  Awareness, peaceful masculinity, and healthier ways for young people to relate to one another.
-                </p>
-              </div>
-              <div className="pt-6 mt-6 border-t border-slate-200/80">
-                <Link
-                  to="/our-work"
-                  className="text-xs font-semibold tracking-wider uppercase text-slate-900 hover:text-amber-700 inline-flex items-center gap-1.5"
-                >
-                  <span>Explore Prevention</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
-              </div>
-            </div>
+                    {/* Title in Classical Luxury Serif */}
+                    <h3 className="font-serif text-lg sm:text-[1.125rem] font-medium tracking-[0.04em] uppercase text-stone-900 mt-3 leading-snug group-hover:text-amber-800 transition-colors">
+                      {pillar.title}
+                    </h3>
 
-            {/* Card 3 */}
-            <div className="p-8 bg-slate-50 border border-slate-200 hover:border-amber-500 hover:shadow-lg transition-all duration-300 flex flex-col justify-between group rounded-sm">
-              <div>
-                <div className="w-12 h-12 rounded-lg bg-amber-100 text-amber-800 flex items-center justify-center mb-6 group-hover:bg-amber-500 group-hover:text-slate-950 transition-colors">
-                  <Users className="w-6 h-6" />
-                </div>
-                <h3 className="font-serif text-xl font-medium text-slate-900 mb-3">
-                  Family Engagement
-                </h3>
-                <p className="text-sm text-slate-600 font-light leading-relaxed">
-                  Workshops and conversations that help parents and caregivers strengthen family relationships.
-                </p>
-              </div>
-              <div className="pt-6 mt-6 border-t border-slate-200/80">
-                <Link
-                  to="/our-work"
-                  className="text-xs font-semibold tracking-wider uppercase text-slate-900 hover:text-amber-700 inline-flex items-center gap-1.5"
-                >
-                  <span>Explore Family Work</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
-              </div>
-            </div>
+                    {/* Subtitle / Catchphrase */}
+                    <p className="text-xs text-stone-500 font-light mt-1.5 leading-relaxed">
+                      {pillar.subtitle}
+                    </p>
 
-            {/* Card 4 */}
-            <div className="p-8 bg-slate-50 border border-slate-200 hover:border-amber-500 hover:shadow-lg transition-all duration-300 flex flex-col justify-between group rounded-sm">
-              <div>
-                <div className="w-12 h-12 rounded-lg bg-amber-100 text-amber-800 flex items-center justify-center mb-6 group-hover:bg-amber-500 group-hover:text-slate-950 transition-colors">
-                  <Palette className="w-6 h-6" />
+                    {/* Golden Bullet Points */}
+                    <ul className="space-y-1.5 mt-3.5">
+                      {pillar.bullets.map((bullet, idx) => (
+                        <li key={idx} className="flex items-start gap-2 text-xs text-stone-600 font-light leading-snug">
+                          <span className="w-1.5 h-1.5 rounded-full bg-amber-500/90 mt-1 flex-shrink-0" />
+                          <span>{bullet}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Bottom Footer */}
+                  <div className="mt-5 pt-3.5 border-t border-stone-200/80">
+                    <div className="flex items-end justify-between">
+                      <div>
+                        <p className="text-[9px] tracking-[0.22em] uppercase font-semibold text-stone-400">
+                          {pillar.offeredLabel}
+                        </p>
+                        <p className="font-serif text-xl sm:text-[1.35rem] font-normal text-stone-900 mt-0.5 leading-tight">
+                          {pillar.offeredValue}
+                        </p>
+                      </div>
+
+                      <Link
+                        to={pillar.href}
+                        className="inline-flex items-center gap-1 text-xs font-semibold tracking-wider uppercase text-amber-700 hover:text-amber-900 transition-colors group/link pb-0.5"
+                      >
+                        <span>{pillar.linkText}</span>
+                        <ArrowRight className="w-3.5 h-3.5 group-hover/link:translate-x-1 transition-transform" />
+                      </Link>
+                    </div>
+                  </div>
                 </div>
-                <h3 className="font-serif text-xl font-medium text-slate-900 mb-3">
-                  Talent & Expression
-                </h3>
-                <p className="text-sm text-slate-600 font-light leading-relaxed">
-                  Opportunities to recognize strengths, explore talents, and communicate through creative work.
-                </p>
-              </div>
-              <div className="pt-6 mt-6 border-t border-slate-200/80">
-                <Link
-                  to="/gallery"
-                  className="text-xs font-semibold tracking-wider uppercase text-slate-900 hover:text-amber-700 inline-flex items-center gap-1.5"
-                >
-                  <span>Discover the Art</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
-              </div>
-            </div>
+              );
+            })}
           </div>
         </div>
       </section>
 
       {/* 5. SECTION 3: THE ART GALLERY SHOWCASE */}
       <section className="py-20 md:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
-          <div className="max-w-2xl">
-            <p className="eyebrow mb-3">Kaze Collection · Art by Rehema Youth</p>
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 sm:mb-14">
+          <div className="max-w-2xl space-y-3">
+            <div className="w-[2px] h-7 sm:h-8 bg-[#C5A059]" />
+            <p className="eyebrow">{t('gallery.eyebrow')}</p>
             <h2 className="section-title">
-              Art holds stories words cannot always tell.
+              {t('gallery.title')}
             </h2>
-            <div className="w-16 h-[2px] bg-amber-500 mt-4 mb-4" />
-            <p className="text-base text-slate-600 font-light leading-relaxed">
-              <strong>Kaze Collection</strong> is the dedicated art gallery operating under Rehema Mission Rwanda. Every original painting and mixed-media piece has been created by young people rebuilding their lives through creative expression in our Kigali atelier. Every purchase honors their craft and directly sustains their path forward.
+            <p className="text-base text-slate-600 font-light leading-relaxed pt-1">
+              {t('gallery.description')}
             </p>
           </div>
-          <Link to="/gallery" className="btn-primary text-xs flex-shrink-0 self-start md:self-auto">
-            <span>Explore Kaze Collection</span>
+          <Link to="/gallery" className="btn-primary text-xs flex-shrink-0 self-start md:self-auto rounded-xl">
+            <span>{t('gallery.cta')}</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
 
         {/* Artwork Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-7">
           {featuredArtworks.map((art) => {
             const fav = isFavorite(art.id);
             return (
               <div
                 key={art.id}
-                className="bg-white border border-slate-200 overflow-hidden group hover:border-amber-500 hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+                className="bg-white rounded-2xl border border-stone-200/80 overflow-hidden group hover:border-amber-400 hover:shadow-[0_12px_28px_rgba(0,0,0,0.07)] transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between"
               >
                 {/* Artwork Image */}
-                <div className="relative aspect-[3/4] bg-slate-100 overflow-hidden cursor-pointer" onClick={() => setSelectedArtwork(art)}>
+                <div className="relative aspect-[3/4] bg-stone-100 overflow-hidden cursor-pointer" onClick={() => setSelectedArtwork(art)}>
                   <img
                     src={art.image}
                     alt={art.title}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
-                  {/* Status badge */}
-                  <div className="absolute top-3 left-3">
-                    <span
-                      className={`text-[10px] tracking-wider uppercase font-semibold px-2.5 py-1 rounded shadow-sm ${
-                        art.status === 'available'
-                          ? 'bg-emerald-600 text-white'
-                          : art.status === 'showroom'
-                          ? 'bg-amber-600 text-white'
-                          : 'bg-slate-700 text-white'
-                      }`}
-                    >
-                      {art.status === 'available'
-                        ? 'Available'
-                        : art.status === 'showroom'
-                        ? 'In Showroom'
-                        : 'Reserved'}
-                    </span>
-                  </div>
 
                   {/* Favorite button */}
                   <button
@@ -331,7 +353,7 @@ export default function Home() {
                       e.stopPropagation();
                       toggleFavorite(art.id);
                     }}
-                    className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/95 backdrop-blur-sm flex items-center justify-center hover:bg-white text-slate-800 shadow-sm transition-all"
+                    className="absolute top-3.5 right-3.5 w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center hover:bg-white text-slate-800 shadow-sm transition-all"
                     aria-label="Save artwork"
                   >
                     <Heart
@@ -340,54 +362,33 @@ export default function Home() {
                       }`}
                     />
                   </button>
-
-                  <div className="absolute inset-0 bg-slate-900/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                    <span className="btn-accent text-[11px] py-2 px-4 shadow">
-                      View Story & Details
-                    </span>
-                  </div>
                 </div>
 
                 {/* Card Info */}
-                <div className="p-5 flex-1 flex flex-col justify-between">
+                <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
                   <div>
-                    <div className="flex items-center justify-between gap-2 mb-1.5 flex-wrap">
-                      <p className="text-[10px] tracking-[0.2em] uppercase font-semibold text-amber-700">
-                        {art.categoryLabel}
-                      </p>
-                      {art.emotionalTheme && (
-                        <span className="text-[9px] font-medium tracking-wide uppercase px-2 py-0.5 rounded-full bg-amber-50 text-amber-900 border border-amber-200">
-                          {art.emotionalTheme}
-                        </span>
-                      )}
-                    </div>
+                    <p className="text-[10px] tracking-[0.22em] uppercase font-semibold text-amber-700 font-sans mb-1">
+                      {art.categoryLabel}
+                    </p>
                     <h3
                       onClick={() => setSelectedArtwork(art)}
-                      className="font-serif text-lg text-slate-950 font-medium group-hover:text-amber-700 transition-colors cursor-pointer"
+                      className="font-serif text-xl text-slate-950 font-medium group-hover:text-amber-700 transition-colors cursor-pointer line-clamp-1"
                     >
                       {art.title}
                     </h3>
-                    <p className="text-xs text-slate-500 font-light mt-0.5">
+                    <p className="text-xs text-slate-500 font-light mt-1">
                       {art.artistIdentifier} · {art.year}
-                    </p>
-                    <p className="text-xs text-slate-600 line-clamp-2 mt-2.5 font-light leading-relaxed">
-                      {art.hook}
                     </p>
                   </div>
 
-                  <div className="mt-5 pt-3 border-t border-slate-100 flex items-center justify-between">
-                    <div>
-                      <p className="text-sm font-serif font-medium text-slate-950">
-                        {formatPrice(art.priceRwf)}
-                      </p>
-                      <p className="text-[10px] text-slate-400">~${art.priceUsd} USD</p>
-                    </div>
-                    <button
-                      onClick={() => setSelectedArtwork(art)}
-                      className="text-xs font-semibold text-slate-900 hover:text-amber-700 uppercase tracking-wider underline text-[11px]"
+                  <div className="pt-1 border-t border-stone-100">
+                    <Link
+                      to="/gallery"
+                      className="w-full py-2.5 px-4 bg-amber-500 hover:bg-amber-400 text-slate-950 font-sans text-xs font-semibold tracking-wider uppercase rounded-xl transition-all duration-300 flex items-center justify-center gap-2 group/btn shadow-sm hover:shadow-amber-500/20"
                     >
-                      Details
-                    </button>
+                      <span>{t('gallery.viewInGallery')}</span>
+                      <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform" />
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -399,24 +400,25 @@ export default function Home() {
       {/* 6. SECTION 4: WORK WITH US — CLEAR, WARM AMBER BANNER */}
       <section className="py-20 md:py-24 bg-gradient-to-r from-amber-100/70 via-yellow-50 to-amber-100/70 border-y border-amber-200/90 text-slate-900 relative overflow-hidden">
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-xs font-bold tracking-[0.25em] uppercase text-amber-800 mb-3">
-            Collaboration & Community
+          <div className="w-[2px] h-7 sm:h-8 bg-[#C5A059] mx-auto mb-4" />
+          <p className="eyebrow mb-2">
+            {t('collab.eyebrow')}
           </p>
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-light text-slate-950 tracking-tight mb-6">
-            Stronger futures are built together.
+          <h2 className="section-title mb-6">
+            {t('collab.title')}
           </h2>
           <p className="text-base sm:text-lg text-slate-700 font-light leading-relaxed max-w-2xl mx-auto mb-10">
-            Schools, community organizations, galleries, institutions, and individuals can help expand opportunities for young people and families. Let’s discuss a practical way to work together.
+            {t('collab.description')}
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link to="/partner" className="btn-accent shadow-md w-full sm:w-auto">
-              <span>Start a Conversation</span>
+              <span>{t('collab.ctaConversation')}</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
             <Link to="/visit" className="btn-outline w-full sm:w-auto bg-white/80">
               <Calendar className="w-4 h-4" />
-              <span>Schedule a Visit in Kicukiro</span>
+              <span>{t('collab.ctaVisit')}</span>
             </Link>
           </div>
         </div>
@@ -425,7 +427,7 @@ export default function Home() {
       {/* 7. CLOSING STATEMENT BANNER */}
       <section className="py-12 bg-amber-200/70 text-slate-900 text-center px-4 border-b border-amber-300">
         <p className="font-serif text-xl sm:text-2xl md:text-3xl font-light tracking-wide">
-          “One person. One family. One community at a time.”
+          {t('closing.motto')}
         </p>
       </section>
 
@@ -443,14 +445,14 @@ export default function Home() {
                 />
                 <div className="mt-4 flex items-center gap-1.5 px-3 py-1 bg-amber-100/80 rounded-full border border-amber-200 text-amber-900 text-[11px] font-medium">
                   <Award className="w-3.5 h-3.5 text-amber-700" />
-                  <span>Kaze Collection · Signed Original with Certificate</span>
+                  <span>{t('gal.certTag')}</span>
                 </div>
               </div>
               <div className="mt-5 pt-4 border-t border-slate-200 text-center space-y-1">
                 <p className="text-xs text-slate-800 font-semibold">{selectedArtwork.dimensions}</p>
                 <p className="text-[11px] text-slate-600 font-light">{selectedArtwork.medium}</p>
                 <p className="text-[10px] text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded inline-block mt-1 font-medium border border-emerald-200">
-                  100% of proceeds fund youth recovery & artisan vocational independence
+                  {t('gal.proceedsTag')}
                 </p>
               </div>
             </div>
@@ -474,7 +476,7 @@ export default function Home() {
                       {selectedArtwork.title}
                     </h3>
                     <p className="text-xs text-slate-500 mt-0.5">
-                      {selectedArtwork.artistIdentifier} · Created in {selectedArtwork.year}
+                      {selectedArtwork.artistIdentifier} · {t('gal.createdIn')} {selectedArtwork.year}
                     </p>
                   </div>
                   <button
@@ -490,7 +492,7 @@ export default function Home() {
                   {/* Part 1: The Hook */}
                   <div>
                     <p className="text-[11px] uppercase tracking-wider font-bold text-amber-800">
-                      1. The Visual Hook
+                      {t('gal.sec1Title')}
                     </p>
                     <p className="font-serif text-base italic font-normal text-slate-950 mt-1">
                       {selectedArtwork.hook}
@@ -500,7 +502,7 @@ export default function Home() {
                   {/* Part 2: What You See */}
                   <div>
                     <p className="text-[11px] uppercase tracking-wider font-bold text-slate-400">
-                      2. What the Viewer Sees
+                      {t('gal.sec2Title')}
                     </p>
                     <p className="mt-1 text-xs sm:text-sm text-slate-700 leading-relaxed">
                       {selectedArtwork.whatViewerSees}
@@ -510,7 +512,7 @@ export default function Home() {
                   {/* Part 3: Artist's Voice */}
                   <div>
                     <p className="text-[11px] uppercase tracking-wider font-bold text-slate-400">
-                      3. The Artist’s Story & Testimony
+                      {t('gal.sec3Title')}
                     </p>
                     <div className="bg-amber-50 border-l-3 border-amber-500 p-3.5 my-1 text-xs italic text-slate-900 leading-relaxed rounded-r">
                       {selectedArtwork.artistPerspective}
@@ -520,7 +522,7 @@ export default function Home() {
                   {/* Part 4: Why This Artwork Belongs in Your Space */}
                   <div>
                     <p className="text-[11px] uppercase tracking-wider font-bold text-amber-800">
-                      4. Why This Piece Belongs in Your Home
+                      {t('gal.sec4Title')}
                     </p>
                     <p className="mt-1 text-xs sm:text-sm text-slate-800 font-normal leading-relaxed bg-slate-50 p-3 rounded border border-slate-100">
                       {selectedArtwork.whyBuy}
@@ -530,15 +532,15 @@ export default function Home() {
                   {/* Part 5: Craftsmanship & Provenance */}
                   <div>
                     <p className="text-[11px] uppercase tracking-wider font-bold text-slate-400">
-                      5. Craftsmanship & Provenance
+                      {t('gal.sec5Title')}
                     </p>
                     <div className="border border-slate-100 bg-slate-50 p-3 text-xs text-slate-600 space-y-1.5 mt-1 rounded">
-                      <p><strong>Medium:</strong> {selectedArtwork.medium}</p>
-                      <p><strong>Support:</strong> {selectedArtwork.craftDetails.support}</p>
-                      <p><strong>Technique:</strong> {selectedArtwork.craftDetails.technique}</p>
-                      <p><strong>Framing:</strong> {selectedArtwork.framed}</p>
-                      <p><strong>Signature:</strong> {selectedArtwork.craftDetails.signature}</p>
-                      <p><strong>Location:</strong> {selectedArtwork.craftDetails.location}</p>
+                      <p><strong>{t('gal.medium')}</strong> {selectedArtwork.medium}</p>
+                      <p><strong>{t('gal.support')}</strong> {selectedArtwork.craftDetails.support}</p>
+                      <p><strong>{t('gal.technique')}</strong> {selectedArtwork.craftDetails.technique}</p>
+                      <p><strong>{t('gal.framing')}</strong> {selectedArtwork.framed}</p>
+                      <p><strong>{t('gal.signature')}</strong> {selectedArtwork.craftDetails.signature}</p>
+                      <p><strong>{t('gal.location')}</strong> {selectedArtwork.craftDetails.location}</p>
                     </div>
                   </div>
                 </div>
@@ -548,14 +550,14 @@ export default function Home() {
               <div className="pt-4 border-t border-slate-200">
                 <div className="flex items-center justify-between mb-4">
                   <div>
-                    <p className="text-xs uppercase tracking-wider text-slate-400 font-semibold">Original Artwork Price</p>
+                    <p className="text-xs uppercase tracking-wider text-slate-400 font-semibold">{t('gal.priceLabel')}</p>
                     <p className="font-serif text-2xl font-medium text-slate-950">
                       {formatPrice(selectedArtwork.priceRwf)}
                     </p>
                     <p className="text-xs text-slate-500 font-medium">~${selectedArtwork.priceUsd} USD</p>
                   </div>
                   <span className="px-3 py-1 rounded bg-emerald-100 text-emerald-900 text-xs font-semibold uppercase tracking-wider border border-emerald-300">
-                    {selectedArtwork.status === 'available' ? 'Available for Acquisition' : selectedArtwork.status}
+                    {selectedArtwork.status === 'available' ? t('gal.availableForAcquisition') : selectedArtwork.status}
                   </span>
                 </div>
 
@@ -570,7 +572,7 @@ export default function Home() {
                     className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-3 px-4 rounded text-xs flex items-center justify-center gap-2 shadow transition-all duration-200 group"
                   >
                     <MessageCircle className="w-4 h-4 fill-white text-emerald-600 group-hover:scale-110 transition-transform" />
-                    <span>Inquire / Reserve via WhatsApp (+250 798 618 524)</span>
+                    <span>{t('gal.inquireWhatsApp')}</span>
                   </a>
 
                   <Link
@@ -578,7 +580,7 @@ export default function Home() {
                     onClick={() => setSelectedArtwork(null)}
                     className="btn-outline w-full text-center text-xs py-2.5 justify-center"
                   >
-                    <span>Send Atelier Message Online</span>
+                    <span>{t('gal.btnSubmitInquiry')}</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
                 </div>
