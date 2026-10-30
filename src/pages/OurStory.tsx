@@ -107,7 +107,7 @@ export default function OurStory() {
         </div>
 
         {/* Part B: Faith & The Meaning of Ebenezer (Directly on Background) */}
-        <div className="mt-10 sm:mt-12 mb-12 sm:mb-14 text-center max-w-3xl mx-auto">
+        <div className="mt-10 sm:mt-12 text-center max-w-3xl mx-auto">
           <p className="eyebrow mb-2">{t('story.faithTitle')}</p>
 
           <blockquote className="font-serif italic text-3xl sm:text-4xl md:text-[2.65rem] text-slate-950 font-normal leading-tight my-3">
@@ -124,7 +124,7 @@ export default function OurStory() {
         </div>
 
         {/* Part C: Vision & Mission (Editorial 2-Column Split Directly on Background) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-14 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-14 max-w-5xl mx-auto mt-20 sm:mt-28 md:mt-32">
           {/* Vision */}
           <div className="space-y-3">
             <div className="flex items-center gap-3">
