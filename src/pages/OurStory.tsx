@@ -33,7 +33,7 @@ export default function OurStory() {
       </section>
 
       {/* 2. Unified Narrative Section (No Boxed Cards — Directly on Background as 1 Section) */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 sm:pt-24 pb-8 sm:pb-10">
         {/* Part A: Origins & The Founder Story */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
           {/* Founder Portrait Column */}
@@ -128,7 +128,7 @@ export default function OurStory() {
       </section>
 
       {/* 3. Values Section */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 sm:pt-14">
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-2 sm:pt-4">
         <div className="text-center mb-12 sm:mb-14">
           <div className="w-[2px] h-7 sm:h-8 bg-[#C5A059] mx-auto mb-3" />
           <p className="eyebrow mb-2">{t('story.valuesEyebrow')}</p>
