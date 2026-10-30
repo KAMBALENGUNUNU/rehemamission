@@ -143,7 +143,7 @@ export default function OurStory() {
       {/* 4. Next Step Call to Action */}
       <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 sm:pt-20">
         <div className="bg-gradient-to-r from-amber-100/70 via-amber-50/90 to-amber-100/70 border border-amber-200/80 p-8 sm:p-12 text-center rounded-[24px] flex flex-col items-center justify-center space-y-4 shadow-sm">
-          <h3 className="font-serif text-2xl sm:text-3xl font-normal text-slate-950">
+          <h3 className="section-title text-2xl sm:text-3xl md:text-4xl text-slate-950">
             {t('story.ctaQuestion')}
           </h3>
           <p className="text-sm sm:text-base font-light max-w-xl text-stone-700 leading-relaxed">
