@@ -131,18 +131,6 @@ export default function Home() {
                 alt="A Mission Built on Listening — Compassionate listening and recovery dialogue at Rehema Mission Rwanda"
                 className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/15 to-transparent pointer-events-none" />
-              <div className="absolute bottom-6 left-6 right-6 text-white pointer-events-none">
-                <p className="font-serif text-xl sm:text-2xl italic text-amber-200">
-                  {language === 'fr' ? '« L’écoute précède le conseil. »' : '“Listening comes before advice.”'}
-                </p>
-                <p className="text-xs uppercase tracking-wider text-slate-200 mt-1.5 font-medium">
-                  {t('philosophy.founderName')}
-                </p>
-                <p className="text-[11px] text-amber-300/90 font-light">
-                  {t('philosophy.founderSub')}
-                </p>
-              </div>
             </div>
           </div>
 
