@@ -171,8 +171,8 @@ export default function StorytellingDonateSection() {
                         {language === 'fr' ? 'REHEMA · ATELIER KAZE COLLECTIONS' : 'REHEMA · KAZE COLLECTIONS'}
                       </span>
                     </div>
-                    <span className="text-[10px] tracking-widest uppercase font-semibold text-white/70 font-sans">
-                      {language === 'fr' ? 'OPTION 1' : 'WAY 1'}
+                    <span className="font-serif text-2xl sm:text-[1.75rem] font-light tracking-tight text-outline-signature leading-none select-none transition-all duration-500">
+                      {language === 'fr' ? 'Option 1' : 'Way 1'}
                     </span>
                   </div>
 
@@ -287,8 +287,8 @@ export default function StorytellingDonateSection() {
                         {language === 'fr' ? 'REHEMA · DON FINANCIER DIRECT' : 'REHEMA · DIRECT FINANCIAL GIFT'}
                       </span>
                     </div>
-                    <span className="text-[10px] tracking-widest uppercase font-semibold text-white/70 font-sans">
-                      {language === 'fr' ? 'OPTION 2' : 'WAY 2'}
+                    <span className="font-serif text-2xl sm:text-[1.75rem] font-light tracking-tight text-outline-signature leading-none select-none transition-all duration-500">
+                      {language === 'fr' ? 'Option 2' : 'Way 2'}
                     </span>
                   </div>
 
