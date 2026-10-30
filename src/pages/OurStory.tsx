@@ -5,6 +5,7 @@ import { useStore } from '@/store/StoreContext';
 import { TRANSLATIONS, type TranslationKey } from '@/lib/translations';
 import RotatingRingsTheme from '@/components/RotatingRingsTheme';
 import CoreValuesCards from '@/components/CoreValuesCards';
+import Pushpin, { PIN_CARD_THEMES } from '@/components/Pushpin';
 
 export default function OurStory() {
   const settings = useWebsiteSettings();
@@ -137,23 +138,43 @@ export default function OurStory() {
         <CoreValuesCards />
       </section>
 
-      {/* 4. Next Step Call to Action */}
-      <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 sm:pt-20">
-        <div className="bg-gradient-to-r from-amber-100/70 via-amber-50/90 to-amber-100/70 border border-amber-200/80 p-8 sm:p-12 text-center rounded-[24px] flex flex-col items-center justify-center space-y-4 shadow-sm">
-          <h3 className="section-title text-2xl sm:text-3xl md:text-4xl text-slate-950">
-            {t('story.ctaQuestion')}
-          </h3>
-          <p className="text-sm sm:text-base font-light max-w-xl text-stone-700 leading-relaxed">
-            {t('story.ctaDesc')}
-          </p>
-          <div className="pt-2 flex flex-col sm:flex-row gap-4">
-            <Link to="/our-work" className="btn-primary text-xs py-3 px-8 rounded-xl">
-              <span>{t('story.ctaProgrammes')}</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-            <Link to="/gallery" className="btn-outline text-xs py-3 px-8 bg-white/80 rounded-xl">
-              <span>{t('story.ctaGallery')}</span>
-            </Link>
+      {/* 4. Next Step Call to Action with Pushpin Card Design */}
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 sm:pt-24">
+        <div className="relative flex flex-col pt-4 group">
+          {/* 3D Glossy Pushpin centered at top */}
+          <Pushpin id="story-cta-pin" theme={PIN_CARD_THEMES[8]} />
+
+          {/* Outer White Card Frame with rounded corners */}
+          <div className="bg-white rounded-[32px] p-3 sm:p-4 shadow-[0_8px_30px_rgba(0,0,0,0.06)] border border-stone-200/80 transition-all duration-300 group-hover:shadow-[0_18px_44px_rgba(0,0,0,0.11)] group-hover:-translate-y-1 flex flex-col">
+            {/* Inner Pastel Card */}
+            <div
+              className="rounded-[24px] px-8 sm:px-12 pt-10 pb-10 text-center flex flex-col items-center justify-center space-y-5"
+              style={{
+                backgroundColor: PIN_CARD_THEMES[8].bg,
+                border: `1.5px solid ${PIN_CARD_THEMES[8].border}`,
+              }}
+            >
+              {/* Title in Tall Condensed Bold Uppercase (Oswald Font) */}
+              <h3 className="font-['Oswald',sans-serif] text-2xl sm:text-3xl md:text-4xl font-bold uppercase tracking-wide text-stone-950 leading-[1.18] max-w-2xl">
+                {t('story.ctaQuestion')}
+              </h3>
+
+              {/* Description in Clean Geometric Sans (Plus Jakarta Sans Font) */}
+              <p className="font-['Plus_Jakarta_Sans',sans-serif] text-sm sm:text-base font-normal max-w-xl text-stone-700 leading-relaxed">
+                {t('story.ctaDesc')}
+              </p>
+
+              {/* Action Buttons */}
+              <div className="pt-2 flex flex-col sm:flex-row gap-4">
+                <Link to="/our-work" className="btn-primary text-xs py-3 px-8 rounded-full">
+                  <span>{t('story.ctaProgrammes')}</span>
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+                <Link to="/gallery" className="btn-outline text-xs py-3 px-8 bg-white/80 rounded-full">
+                  <span>{t('story.ctaGallery')}</span>
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </section>

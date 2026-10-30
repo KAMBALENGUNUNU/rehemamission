@@ -1,16 +1,12 @@
 import { useState } from 'react';
 import {
-  GraduationCap,
-  Users,
-  Palette,
-  Briefcase,
-  HeartHandshake,
   ArrowRight,
   Check,
 } from 'lucide-react';
 import { useWebsiteSettings } from '@/lib/settings';
 import { useStore } from '@/store/StoreContext';
 import { TRANSLATIONS, type TranslationKey } from '@/lib/translations';
+import Pushpin, { PIN_CARD_THEMES } from '@/components/Pushpin';
 
 export default function Partner() {
   const settings = useWebsiteSettings();
@@ -32,27 +28,22 @@ export default function Partner() {
   const partnershipAreas = [
     {
       title: t('partner.area1Title'),
-      icon: GraduationCap,
       description: t('partner.area1Desc'),
     },
     {
       title: t('partner.area2Title'),
-      icon: Users,
       description: t('partner.area2Desc'),
     },
     {
       title: t('partner.area3Title'),
-      icon: Palette,
       description: t('partner.area3Desc'),
     },
     {
       title: t('partner.area4Title'),
-      icon: Briefcase,
       description: t('partner.area4Desc'),
     },
     {
       title: t('partner.area5Title'),
-      icon: HeartHandshake,
       description: t('partner.area5Desc'),
     },
   ];
@@ -101,24 +92,35 @@ export default function Partner() {
           <div className="w-16 h-[2px] bg-amber-500 mx-auto mt-4" />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {partnershipAreas.map((area) => {
-            const Icon = area.icon;
+        {/* 5 Partnership Areas Grid (Exact 3D Pushpin Card Design) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16 pt-6">
+          {partnershipAreas.map((area, idx) => {
+            const theme = PIN_CARD_THEMES[idx % PIN_CARD_THEMES.length];
             return (
-              <div
-                key={area.title}
-                className="bg-white border border-slate-200 p-8 hover:border-amber-500 hover:shadow-lg transition-all duration-300 flex flex-col justify-between rounded-sm"
-              >
-                <div>
-                  <div className="w-12 h-12 rounded-lg bg-amber-100 text-amber-800 flex items-center justify-center mb-5">
-                    <Icon className="w-6 h-6" />
+              <div key={area.title} className="relative flex flex-col pt-4 group">
+                {/* 3D Glossy Pushpin with colored ambient glow and shadow, centered at top */}
+                <Pushpin id={`partner-pin-${idx}`} theme={theme} />
+
+                {/* Outer White Card Frame with rounded corners */}
+                <div className="bg-white rounded-[32px] p-3 sm:p-3.5 shadow-[0_8px_30px_rgba(0,0,0,0.06)] border border-stone-200/80 transition-all duration-300 group-hover:shadow-[0_18px_44px_rgba(0,0,0,0.11)] group-hover:-translate-y-1 flex flex-col flex-1">
+                  {/* Inner Pastel Card */}
+                  <div
+                    className="rounded-[22px] px-6 sm:px-7 pt-9 pb-8 flex flex-col flex-1 min-h-[250px]"
+                    style={{
+                      backgroundColor: theme.bg,
+                      border: `1.5px solid ${theme.border}`,
+                    }}
+                  >
+                    {/* Title in Tall Condensed Bold Uppercase (Oswald Font) */}
+                    <h3 className="font-['Oswald',sans-serif] text-[20px] sm:text-[22px] font-bold uppercase tracking-wide text-stone-950 leading-[1.18] mb-3">
+                      {area.title}
+                    </h3>
+
+                    {/* Description in Clean Geometric Sans (Plus Jakarta Sans Font) */}
+                    <p className="font-['Plus_Jakarta_Sans',sans-serif] text-[13px] sm:text-[13.5px] text-stone-700 font-normal leading-[1.65]">
+                      {area.description}
+                    </p>
                   </div>
-                  <h3 className="font-serif text-xl font-medium text-slate-950 mb-3">
-                    {area.title}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-slate-600 font-light leading-relaxed">
-                    {area.description}
-                  </p>
                 </div>
               </div>
             );
