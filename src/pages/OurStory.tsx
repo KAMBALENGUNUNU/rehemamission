@@ -107,17 +107,14 @@ export default function OurStory() {
         </div>
 
         {/* Part B: Faith & The Meaning of Ebenezer (Directly on Background) */}
-        <div className="my-16 sm:my-24 py-12 sm:py-16 border-y border-stone-200/80 text-center max-w-4xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/25 text-amber-800 text-xs font-sans font-bold tracking-widest uppercase mb-5">
-            <Sparkles className="w-3.5 h-3.5 text-amber-600" />
-            <span>{t('story.faithTitle')}</span>
-          </div>
+        <div className="mt-10 sm:mt-12 mb-12 sm:mb-14 text-center max-w-3xl mx-auto">
+          <p className="eyebrow mb-2">{t('story.faithTitle')}</p>
 
-          <blockquote className="font-serif italic text-3xl sm:text-4xl md:text-[2.65rem] text-slate-950 font-normal leading-tight my-4">
+          <blockquote className="font-serif italic text-3xl sm:text-4xl md:text-[2.65rem] text-slate-950 font-normal leading-tight my-3">
             {t('story.ebenezerQuote')}
           </blockquote>
 
-          <p className="text-xs uppercase tracking-[0.25em] text-amber-800 font-bold mb-6">
+          <p className="text-xs uppercase tracking-[0.25em] text-amber-800 font-bold mb-4">
             {t('story.ebenezerVerse')}
           </p>
 
@@ -161,7 +158,7 @@ export default function OurStory() {
       </section>
 
       {/* 3. Values Section */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 sm:pt-14 border-t border-stone-200/80">
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 sm:pt-14">
         <div className="text-center mb-12 sm:mb-14">
           <div className="w-[2px] h-7 sm:h-8 bg-[#C5A059] mx-auto mb-3" />
           <p className="eyebrow mb-2">{t('story.valuesEyebrow')}</p>
