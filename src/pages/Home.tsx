@@ -157,15 +157,15 @@ export default function Home() {
       </section>
 
       {/* 4. SECTION 2: WHAT WE DO (4 PILLARS) */}
-      <section className="relative py-20 md:py-28 bg-[#FAF7F2] border-y border-stone-200/60 overflow-hidden">
+      <section className="relative py-16 md:py-24 bg-[#FAF7F2] border-y border-stone-200/60 overflow-hidden">
         {/* Luxury Rotating Rings SVG Theme (The Signature Gallery) in Background & Behind 4 Cards */}
         <RotatingRingsTheme
           className="w-[640px] h-[640px] sm:w-[780px] sm:h-[780px] lg:w-[940px] lg:h-[940px] translate-y-10 sm:translate-y-14"
           glowClassName="w-[520px] h-[360px] translate-y-10 sm:translate-y-14"
         />
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
             <div className="w-[2px] h-7 sm:h-8 bg-[#C5A059] mx-auto mb-4" />
             <p className="eyebrow mb-2">{t('pillars.eyebrow')}</p>
             <h2 className="section-title">{t('pillars.title')}</h2>

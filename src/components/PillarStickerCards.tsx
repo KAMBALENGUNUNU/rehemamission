@@ -8,7 +8,7 @@ function RecoverySticker() {
   return (
     <svg
       viewBox="0 0 240 180"
-      className="w-full h-44 sm:h-48 object-contain mx-auto select-none transition-transform duration-500 group-hover:scale-105"
+      className="w-full h-28 sm:h-32 object-contain mx-auto select-none transition-transform duration-500 group-hover:scale-105"
       fill="none"
       stroke="white"
       strokeWidth="1.8"
@@ -57,7 +57,7 @@ function DialogueSticker() {
   return (
     <svg
       viewBox="0 0 240 180"
-      className="w-full h-44 sm:h-48 object-contain mx-auto select-none transition-transform duration-500 group-hover:scale-105"
+      className="w-full h-28 sm:h-32 object-contain mx-auto select-none transition-transform duration-500 group-hover:scale-105"
       fill="none"
       stroke="white"
       strokeWidth="1.8"
@@ -118,7 +118,7 @@ function FamilySticker() {
   return (
     <svg
       viewBox="0 0 240 180"
-      className="w-full h-44 sm:h-48 object-contain mx-auto select-none transition-transform duration-500 group-hover:scale-105"
+      className="w-full h-28 sm:h-32 object-contain mx-auto select-none transition-transform duration-500 group-hover:scale-105"
       fill="none"
       stroke="white"
       strokeWidth="1.8"
@@ -169,7 +169,7 @@ function AtelierSticker() {
   return (
     <svg
       viewBox="0 0 240 180"
-      className="w-full h-44 sm:h-48 object-contain mx-auto select-none transition-transform duration-500 group-hover:scale-105"
+      className="w-full h-28 sm:h-32 object-contain mx-auto select-none transition-transform duration-500 group-hover:scale-105"
       fill="none"
       stroke="white"
       strokeWidth="1.8"
@@ -281,7 +281,7 @@ export default function PillarStickerCards() {
   ];
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-6 lg:gap-7 items-stretch">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-4.5 lg:gap-5 items-stretch">
       {pillars.map((pillar) => {
         const Icon = pillar.tagIcon;
         const Sticker = pillar.StickerComponent;
@@ -289,47 +289,71 @@ export default function PillarStickerCards() {
         return (
           <div
             key={pillar.id}
-            className={`${pillar.bgColor} rounded-[28px] sm:rounded-[32px] text-white flex flex-col justify-between shadow-[0_18px_40px_rgba(0,0,0,0.16)] hover:shadow-[0_26px_54px_rgba(0,0,0,0.24)] transition-all duration-300 hover:-translate-y-2 p-6 sm:p-7 relative overflow-hidden group select-none min-h-[460px] sm:min-h-[490px]`}
+            className={`${pillar.bgColor} rounded-[22px] sm:rounded-[26px] text-white flex flex-col justify-between shadow-[0_12px_28px_rgba(0,0,0,0.14)] hover:shadow-[0_18px_38px_rgba(0,0,0,0.22)] transition-all duration-300 hover:-translate-y-1.5 p-4 sm:p-5 relative overflow-hidden group select-none min-h-[350px] sm:min-h-[375px]`}
           >
+            {/* 1. Tactile Risograph / Film Grain Fractal Noise Overlay */}
+            <div
+              className="absolute inset-0 pointer-events-none opacity-45 mix-blend-overlay z-[1]"
+              style={{
+                backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+                backgroundSize: '120px 120px',
+              }}
+              aria-hidden="true"
+            />
+
+            {/* 2. Secondary Fine Paper Flecks & Stipple Grain Texture */}
+            <div
+              className="absolute inset-0 pointer-events-none opacity-30 mix-blend-soft-light z-[1]"
+              style={{
+                backgroundImage: `radial-gradient(rgba(255,255,255,0.25) 1px, transparent 1px), radial-gradient(rgba(0,0,0,0.3) 1px, transparent 1px)`,
+                backgroundSize: '4px 4px',
+                backgroundPosition: '0 0, 2px 2px',
+              }}
+              aria-hidden="true"
+            />
+
+            {/* 3. Subtle Inner Vignette for Physical Paper Depth */}
+            <div className="absolute inset-0 pointer-events-none shadow-[inset_0_0_28px_rgba(0,0,0,0.2)] rounded-[inherit] z-[1]" aria-hidden="true" />
+
             {/* Top Inset Hairline (Matching Reference Inset Framing) */}
-            <div className="absolute top-4 left-6 right-6 h-[1px] bg-white/25 pointer-events-none" />
+            <div className="absolute top-3 left-4 right-4 h-[1px] bg-white/20 pointer-events-none z-[2]" />
 
             {/* Bottom Inset Hairline (Matching Reference Inset Framing) */}
-            <div className="absolute bottom-4 left-6 right-6 h-[1px] bg-white/25 pointer-events-none" />
+            <div className="absolute bottom-3 left-4 right-4 h-[1px] bg-white/20 pointer-events-none z-[2]" />
 
             {/* Upper Content: Line-Art Sticker Illustration */}
-            <div className="pt-2 sm:pt-3 pb-3 flex items-center justify-center flex-1">
+            <div className="pt-1.5 sm:pt-2 pb-2 flex items-center justify-center flex-1 relative z-10">
               <Sticker />
             </div>
 
             {/* Lower Content: Tag, Bold Centered Headline, and Learn More Link */}
-            <div className="flex flex-col items-center text-center pb-2">
+            <div className="flex flex-col items-center text-center pb-1 relative z-10">
               {/* Brand Tag with Icon (Matches reference logo & eyebrow) */}
-              <div className="flex items-center justify-center gap-1.5 mb-2.5">
-                <div className="w-4 h-4 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
-                  <Icon className="w-2.5 h-2.5 text-white" />
+              <div className="flex items-center justify-center gap-1.5 mb-2">
+                <div className="w-3.5 h-3.5 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
+                  <Icon className="w-2 h-2 text-white" />
                 </div>
-                <span className="text-[10.5px] sm:text-[11px] font-sans tracking-[0.16em] uppercase font-bold text-white/95">
+                <span className="text-[9.5px] sm:text-[10px] font-sans tracking-[0.16em] uppercase font-bold text-white/95">
                   {pillar.tagLabel}
                 </span>
               </div>
 
               {/* Bold Condensed All-Caps Headline (Matches reference) */}
-              <h3 className="font-sans font-black text-xl sm:text-[1.3rem] lg:text-[1.35rem] leading-[1.18] text-white uppercase tracking-tight max-w-[240px] mx-auto">
+              <h3 className="font-sans font-black text-sm sm:text-[1.05rem] lg:text-[1.12rem] leading-snug text-white uppercase tracking-tight max-w-[210px] mx-auto">
                 <span className="block">{pillar.headlineLine1}</span>
                 <span className="block">{pillar.headlineLine2}</span>
               </h3>
 
               {/* Centered 'learn more >' Link (Matches reference) */}
-              <div className="mt-5 pt-1">
+              <div className="mt-3.5 pt-0.5">
                 <Link
                   to={pillar.href}
-                  className="text-xs sm:text-[13px] font-sans font-medium text-white/95 hover:text-white transition-all inline-flex items-center gap-1.5 group/link py-1 px-2 rounded-full hover:bg-white/10"
+                  className="text-[11.5px] sm:text-xs font-sans font-medium text-white/95 hover:text-white transition-all inline-flex items-center gap-1 group/link py-0.5 px-2 rounded-full hover:bg-white/10"
                 >
                   <span className="tracking-wide lowercase">
                     {language === 'fr' ? 'en savoir plus' : 'learn more'}
                   </span>
-                  <span className="group-hover/link:translate-x-1 transition-transform font-bold text-white text-sm">
+                  <span className="group-hover/link:translate-x-0.5 transition-transform font-bold text-white text-xs">
                     &gt;
                   </span>
                 </Link>
