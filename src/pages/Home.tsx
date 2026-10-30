@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   ArrowRight,
@@ -250,7 +250,7 @@ export default function Home() {
               return (
                 <div
                   key={pillar.id}
-                  className="bg-white/95 backdrop-blur-[2px] rounded-2xl border border-stone-200/80 p-5 sm:p-5 shadow-[0_4px_16px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_28px_rgba(0,0,0,0.07)] transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between group"
+                  className="bg-white/95 backdrop-blur-[2px] rounded-2xl border border-stone-200/90 p-5 sm:p-5 shadow-[0_4px_16px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_28px_rgba(0,0,0,0.07)] transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between group"
                 >
                   <div>
                     {/* Top Eyebrow & Mini Icon */}
@@ -336,7 +336,7 @@ export default function Home() {
             return (
               <div
                 key={art.id}
-                className="bg-white rounded-2xl border border-stone-200/80 overflow-hidden group hover:border-amber-400 hover:shadow-[0_12px_28px_rgba(0,0,0,0.07)] transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between"
+                className="bg-white rounded-2xl border border-stone-200/90 overflow-hidden group hover:border-amber-400 hover:shadow-[0_12px_28px_rgba(0,0,0,0.07)] transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between"
               >
                 {/* Artwork Image */}
                 <div className="relative aspect-[3/4] bg-stone-100 overflow-hidden cursor-pointer" onClick={() => setSelectedArtwork(art)}>
