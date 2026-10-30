@@ -14,6 +14,7 @@ import { formatPrice } from '@/lib/utils';
 import AnnouncementBar from '@/components/AnnouncementBar';
 import RotatingRingsTheme from '@/components/RotatingRingsTheme';
 import PillarStickerCards from '@/components/PillarStickerCards';
+import StorytellingDonateSection from '@/components/StorytellingDonateSection';
 import { TRANSLATIONS } from '@/lib/translations';
 
 export default function Home() {
@@ -178,6 +179,9 @@ export default function Home() {
           <PillarStickerCards />
         </div>
       </section>
+
+      {/* 4.5 SECTION 2.5: STORYTELLING DONATE & ART SUPPORT */}
+      <StorytellingDonateSection />
 
       {/* 5. SECTION 3: THE ART GALLERY SHOWCASE */}
       <section className="py-20 md:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
