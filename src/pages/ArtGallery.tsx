@@ -22,6 +22,7 @@ import { useStore } from '@/store/StoreContext';
 import { formatPrice } from '@/lib/utils';
 import { TRANSLATIONS, type TranslationKey } from '@/lib/translations';
 import KazeLogo from '@/components/logos/KazeLogo';
+import KazeScrollGallery from '@/components/KazeScrollGallery';
 
 export default function ArtGallery() {
   const { toggleFavorite, isFavorite, language } = useStore();
@@ -196,8 +197,11 @@ export default function ArtGallery() {
         </div>
       </section>
 
-      {/* 2. Clear Museum Principle Banner: 100% Impact & Direct Youth Support */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 relative z-20">
+      {/* 2. Interactive Pinned 3-Card Scroll Gallery (Center, Left, Right Carousel) */}
+      <KazeScrollGallery onSelectArtwork={(art) => setSelectedArtwork(art)} />
+
+      {/* 3. Clear Museum Principle Banner: 100% Impact & Direct Youth Support */}
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 sm:mt-16 relative z-20">
         <div className="bg-white border border-amber-300/80 shadow-[0_8px_30px_rgba(217,119,6,0.08)] p-5 sm:p-6 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3.5">
             <div className="p-2.5 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-700 flex-shrink-0">
