@@ -34,10 +34,6 @@ export default function KazeFooter() {
           {/* Atelier Brand & Story (5 cols) */}
           <div className="lg:col-span-5 space-y-5">
             <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-amber-300 text-[10px] tracking-[0.25em] uppercase font-semibold mb-2 shadow-sm">
-                <Palette className="w-3 h-3 text-amber-400" />
-                <span>{t('kazeFooter.atelierTag', 'Ebenezer Vocational Atelier · Kigali')}</span>
-              </div>
               <h3 className="font-serif text-3xl sm:text-4xl font-normal text-white tracking-tight">
                 {t('kazeFooter.title', 'Kaze Collections')}
               </h3>
@@ -50,15 +46,15 @@ export default function KazeFooter() {
               )}
             </p>
 
-            {/* Clear, elegant bridge back to parent mission */}
-            <div className="pt-2 border-t border-white/10 max-w-md">
+            {/* Designed Bridge Button back to Rehema Mission Rwanda */}
+            <div className="pt-2 max-w-md">
               <Link
                 to="/our-story"
-                className="group inline-flex items-center gap-2 text-xs font-semibold tracking-wider uppercase text-amber-400 hover:text-amber-300 transition-colors"
+                className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full border border-amber-400/50 bg-gradient-to-r from-amber-500/15 via-amber-500/10 to-transparent hover:from-amber-400 hover:to-amber-500 text-amber-300 hover:text-slate-950 text-xs font-semibold uppercase tracking-wider transition-all duration-300 shadow-md group"
               >
-                <Sparkles className="w-3.5 h-3.5 text-amber-400 group-hover:rotate-12 transition-transform" />
-                <span>{t('kazeFooter.parentLink', 'Discover Rehema Mission Rwanda’s 26-Year Story')}</span>
-                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                <Sparkles className="w-3.5 h-3.5 text-amber-400 group-hover:text-slate-950 transition-colors" />
+                <span>{t('kazeFooter.parentLink', 'Rehema Mission · Our Story')}</span>
+                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 group-hover:text-slate-950 transition-transform" />
               </Link>
             </div>
           </div>
@@ -150,12 +146,6 @@ export default function KazeFooter() {
                 </a>
               </li>
             </ul>
-
-            {/* Ethical Sales Assurance */}
-            <div className="flex items-center gap-2 text-xs text-stone-400 pt-2 font-light">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-              <span>{t('kazeFooter.assurance', 'Ethical acquisition · Direct youth support')}</span>
-            </div>
           </div>
         </div>
 

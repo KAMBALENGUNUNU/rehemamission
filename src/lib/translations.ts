@@ -137,7 +137,7 @@ export const TRANSLATIONS = {
     'kazeFooter.title': 'Kaze Collections',
     'kazeFooter.desc':
       'Where artistic mastery meets human restoration. Every original painting, drawing, and mixed-media piece in Kaze Collection has been created by young people rebuilding their lives with hope and dignity.',
-    'kazeFooter.parentLink': 'An initiative of Rehema Mission Rwanda · Learn Our Story',
+    'kazeFooter.parentLink': 'Rehema Mission · Our Story',
     'kazeFooter.mediums': 'Mediums',
     'kazeFooter.medium1': 'Acrylic & Clay Canvas',
     'kazeFooter.medium2': 'Charcoal & Graphite',
@@ -555,7 +555,7 @@ export const TRANSLATIONS = {
     'kazeFooter.title': 'Collection Kaze',
     'kazeFooter.desc':
       'Où la maîtrise des arts rencontre la restauration de l’âme humaine. Chaque peinture, dessin et sculpture de la Collection Kaze a été créé par des jeunes reconstruisant leur vie dans l’honneur et l’espérance.',
-    'kazeFooter.parentLink': 'Une initiative de Rehema Mission Rwanda · Découvrir Notre Histoire',
+    'kazeFooter.parentLink': 'Rehema Mission · Notre Histoire',
     'kazeFooter.mediums': 'Techniques',
     'kazeFooter.medium1': 'Toile Acrylique & Argile',
     'kazeFooter.medium2': 'Fusain & Graphite',
