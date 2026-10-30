@@ -2,7 +2,6 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { ChevronLeft, ChevronRight, MessageCircle, ArrowRight, Heart } from 'lucide-react';
 import { type Artwork, REHEMA_ARTWORKS } from '@/lib/artworks';
 import { useStore } from '@/store/StoreContext';
-import { formatPrice } from '@/lib/utils';
 
 interface TriptychCoverflowProps {
   onSelectArtwork: (artwork: Artwork) => void;
@@ -16,8 +15,6 @@ interface CoverflowItem {
   categoryLabel: string;
   medium: string;
   dimensions: string;
-  priceRwf: number;
-  priceUsd: number;
   image: string;
   aboutArt: string;
   artworkRef?: Artwork;
@@ -41,8 +38,6 @@ export default function TriptychCoverflow({ onSelectArtwork }: TriptychCoverflow
       categoryLabel: language === 'fr' ? 'Chef-d’Œuvre Panoramique' : 'Panoramic Masterwork',
       medium: language === 'fr' ? 'Acrylique & pigments naturels sur toile' : 'Acrylic & natural earth pigments on canvas',
       dimensions: '120 × 200 cm (47.2 × 78.7 in)',
-      priceRwf: 750000,
-      priceUsd: 560,
       image: '/kaze-hero.jpg',
       aboutArt: language === 'fr'
         ? 'Une contemplation monumentale des crêtes volcaniques rwandaises baignées par la brume matinale, symbolisant la résilience, la paix sacrée et l’élévation des jeunes artisans.'
@@ -57,8 +52,6 @@ export default function TriptychCoverflow({ onSelectArtwork }: TriptychCoverflow
       categoryLabel: art.categoryLabel,
       medium: art.medium,
       dimensions: art.dimensions,
-      priceRwf: art.priceRwf,
-      priceUsd: art.priceUsd,
       image: art.image,
       aboutArt: art.hook.replace(/^["“]|["”]$/g, '') + ' ' + art.whatViewerSees.slice(0, 140) + '...',
       artworkRef: art,
@@ -313,48 +306,14 @@ export default function TriptychCoverflow({ onSelectArtwork }: TriptychCoverflow
           </h3>
 
           <p className="text-[11px] sm:text-xs text-amber-900 font-semibold uppercase tracking-wider mt-1">
-            {currentItem.artistIdentifier} · {currentItem.dimensions}
+            {currentItem.artistIdentifier} � {currentItem.dimensions}
           </p>
 
           {/* Curatorial Description */}
           <div className="mt-2 max-w-lg mx-auto">
             <p className="text-xs sm:text-sm text-stone-700 font-light leading-relaxed italic line-clamp-2">
-              “{currentItem.aboutArt}”
+              "{currentItem.aboutArt}"
             </p>
-          </div>
-
-          {/* Value Indicator */}
-          <div className="mt-2.5 flex items-center justify-center gap-2">
-            <span className="font-serif text-lg sm:text-xl text-amber-950 font-bold">
-              {formatPrice(currentItem.priceRwf)}
-            </span>
-            <span className="text-[11px] text-stone-600 font-medium">~${currentItem.priceUsd} USD</span>
-          </div>
-
-          {/* Pill-Shaped Call-To-Action Buttons ("Inquire" or "Learn More") */}
-          <div className="mt-3.5 flex items-center justify-center gap-3 flex-wrap">
-            <button
-              type="button"
-              onClick={() => {
-                if (currentItem.artworkRef) onSelectArtwork(currentItem.artworkRef);
-              }}
-              className="px-6 py-2.5 rounded-full bg-slate-950 hover:bg-slate-800 text-white text-xs font-semibold uppercase tracking-wider shadow-md transition-transform hover:scale-105 inline-flex items-center gap-1.5"
-            >
-              <span>{language === 'fr' ? 'En Savoir Plus' : 'Learn More'}</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </button>
-
-            <a
-              href={`https://wa.me/250798618524?text=${encodeURIComponent(
-                `Hello Kaze Collections, I am inquiring about acquiring the artwork "${currentItem.title}" (${formatPrice(currentItem.priceRwf)} / ~$${currentItem.priceUsd} USD).`
-              )}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-6 py-2.5 rounded-full bg-white hover:bg-stone-50 border border-stone-300 text-stone-900 text-xs font-semibold uppercase tracking-wider shadow-sm transition-all inline-flex items-center gap-1.5"
-            >
-              <MessageCircle className="w-3.5 h-3.5 text-emerald-600" />
-              <span>{language === 'fr' ? 'Acquérir / Demander' : 'Inquire'}</span>
-            </a>
           </div>
         </div>
 
@@ -381,6 +340,32 @@ export default function TriptychCoverflow({ onSelectArtwork }: TriptychCoverflow
               }`}
             />
           ))}
+        </div>
+
+        {/* 5. Story & Inquire Buttons � below dot indicators */}
+        <div className="mt-5 flex items-center justify-center gap-3 flex-wrap">
+          <button
+            type="button"
+            onClick={() => {
+              if (currentItem.artworkRef) onSelectArtwork(currentItem.artworkRef);
+            }}
+            className="px-8 py-2.5 rounded-full bg-slate-950 hover:bg-slate-800 text-white text-xs font-semibold uppercase tracking-wider shadow-md transition-transform hover:scale-105 inline-flex items-center gap-1.5"
+          >
+            <span>{language === 'fr' ? 'Histoire' : 'Story'}</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </button>
+
+          <a
+            href={`https://wa.me/250798618524?text=${encodeURIComponent(
+              `Hello Kaze Collections, I am inquiring about the artwork "${currentItem.title}". Please let me know more details.`
+            )}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-6 py-2.5 rounded-full bg-white hover:bg-stone-50 border border-stone-300 text-stone-900 text-xs font-semibold uppercase tracking-wider shadow-sm transition-all inline-flex items-center gap-1.5"
+          >
+            <MessageCircle className="w-3.5 h-3.5 text-emerald-600" />
+            <span>{language === 'fr' ? 'Demander' : 'Inquire'}</span>
+          </a>
         </div>
       </div>
     </section>

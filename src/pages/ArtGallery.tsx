@@ -133,35 +133,6 @@ export default function ArtGallery() {
         {/* Masterwork Interactive Triptych Coverflow Carousel directly on the Beige Background */}
         <TriptychCoverflow onSelectArtwork={(art) => setSelectedArtwork(art)} />
 
-        {/* Museum Principle Banner directly beneath the Coverflow Showcase */}
-        <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 sm:mt-14 mb-12 sm:mb-16">
-          <div className="bg-white/95 border border-amber-300/80 shadow-[0_8px_30px_rgba(217,119,6,0.08)] p-5 sm:p-6 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4 backdrop-blur-sm">
-            <div className="flex items-center gap-3.5">
-              <div className="p-2.5 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-700 flex-shrink-0">
-                <ShieldCheck className="w-5 h-5" />
-              </div>
-              <div>
-                <p className="text-xs font-bold uppercase tracking-wider text-stone-950">
-                  {t('gal.principleTitle', '100% OF ACQUISITIONS FUND YOUTH EMPOWERMENT')}
-                </p>
-                <p className="text-xs text-stone-600 font-light mt-0.5">
-                  {t(
-                    'gal.principleDesc',
-                    'When you acquire a Kaze Collection artwork, 100% of the funds go directly into our youth development fund: art materials, education, health coverage, and daily mentorship.'
-                  )}
-                </p>
-              </div>
-            </div>
-            <Link
-              to="/visit"
-              className="text-xs font-semibold text-amber-800 hover:text-amber-950 uppercase tracking-wider inline-flex items-center gap-1.5 flex-shrink-0 group"
-            >
-              <span>{t('gal.principleLink', 'Schedule an Atelier Viewing')}</span>
-              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform text-amber-600" />
-            </Link>
-          </div>
-        </section>
-
       {/* 3. The Gallery Experience: Transitions, Filters & Catalog */}
       <section id="gallery" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 sm:pt-20 relative z-10 scroll-mt-24">
         {/* Section Header */}
