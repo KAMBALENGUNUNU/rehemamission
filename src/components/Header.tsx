@@ -241,6 +241,7 @@ export default function Header() {
                   <button
                     type="button"
                     onClick={() => setLanguage('en')}
+                    aria-label="Switch to English"
                     className={`px-3 py-1 rounded-full text-xs font-semibold tracking-wider ${
                       language === 'en'
                         ? 'bg-amber-500 text-slate-950 font-bold shadow-sm'
@@ -252,6 +253,7 @@ export default function Header() {
                   <button
                     type="button"
                     onClick={() => setLanguage('fr')}
+                    aria-label="Passer au Français"
                     className={`px-3 py-1 rounded-full text-xs font-semibold tracking-wider ${
                       language === 'fr'
                         ? 'bg-amber-500 text-slate-950 font-bold shadow-sm'
