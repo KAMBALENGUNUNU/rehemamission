@@ -1,19 +1,23 @@
 import React from 'react';
 
 interface ArtGalleryThemePatternProps {
+  id?: string;
   className?: string;
   opacity?: number;
+  strokeWidth?: number;
 }
 
 /**
  * ArtGalleryThemePattern
  * Bespoke fine art gallery vector pattern inspired by creative studio doodles:
  * features painter's palettes, easels, museum frames, classical busts, paint tubes,
- * sculpture pedestals, palette knives, and creative swirls.
+ * sculpture pedestals, palette knives, Rwandan Agaseke baskets, and creative swirls.
  */
 export default function ArtGalleryThemePattern({
+  id = 'kaze-gallery-art-pattern',
   className = '',
   opacity = 0.16,
+  strokeWidth = 1.8,
 }: ArtGalleryThemePatternProps) {
   return (
     <div
@@ -28,7 +32,7 @@ export default function ArtGalleryThemePattern({
       >
         <defs>
           <pattern
-            id="kaze-gallery-art-pattern"
+            id={id}
             width="320"
             height="320"
             patternUnits="userSpaceOnUse"
@@ -36,7 +40,7 @@ export default function ArtGalleryThemePattern({
             <g
               fill="none"
               stroke="currentColor"
-              strokeWidth="1.8"
+              strokeWidth={strokeWidth}
               strokeLinecap="round"
               strokeLinejoin="round"
               opacity={opacity}
@@ -204,7 +208,7 @@ export default function ArtGalleryThemePattern({
           </pattern>
         </defs>
 
-        <rect width="100%" height="100%" fill="url(#kaze-gallery-art-pattern)" />
+        <rect width="100%" height="100%" fill={`url(#${id})`} />
       </svg>
     </div>
   );

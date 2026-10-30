@@ -17,8 +17,13 @@ export default function KazeFooter() {
 
   return (
     <footer className="kaze-footer relative z-30 -mt-12 sm:-mt-16 lg:-mt-20 bg-[#080808] text-stone-300 overflow-hidden rounded-t-[40px] sm:rounded-t-[60px] lg:rounded-t-[76px] shadow-[0_-20px_60px_rgba(0,0,0,0.55)] border-t border-white/10">
-      {/* Bespoke Fine Art Studio SVG Theme Pattern in Black (Matching Hero Motif) */}
-      <ArtGalleryThemePattern opacity={0.14} className="text-white/80" />
+      {/* Bespoke Fine Art Studio SVG Theme Pattern in Luminous Visible White on Black */}
+      <ArtGalleryThemePattern
+        id="kaze-footer-art-pattern"
+        opacity={0.32}
+        strokeWidth={2.2}
+        className="text-stone-100"
+      />
 
       {/* Subtle warm golden ambient halos in background */}
       <div className="absolute top-0 left-1/3 -translate-x-1/2 w-[700px] h-[350px] bg-gradient-radial from-amber-500/15 via-amber-600/5 to-transparent rounded-full blur-3xl pointer-events-none z-0" />
