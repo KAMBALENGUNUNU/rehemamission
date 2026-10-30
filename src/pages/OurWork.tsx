@@ -2,23 +2,90 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   ShieldAlert,
-  Compass,
-  Users,
-  Palette,
   Heart,
-  ShieldCheck,
   Phone,
   MessageCircle,
 } from 'lucide-react';
 import { useStore } from '@/store/StoreContext';
 import { TRANSLATIONS, type TranslationKey } from '@/lib/translations';
 
+// Pushpin SVG component — 3D-style pin matching the reference image
+function Pushpin({ color }: { color: string }) {
+  return (
+    <div className="relative flex justify-center" style={{ height: '52px', marginBottom: '-8px', zIndex: 10 }}>
+      <svg width="44" height="52" viewBox="0 0 44 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+        {/* Pin shadow */}
+        <ellipse cx="22" cy="50" rx="6" ry="2" fill="rgba(0,0,0,0.15)" />
+        {/* Pin needle */}
+        <rect x="20.5" y="33" width="3" height="18" rx="1.5" fill={color} opacity="0.7" />
+        {/* Pin head — outer ring (darker shade for 3D depth) */}
+        <circle cx="22" cy="19" r="18" fill={color} opacity="0.35" />
+        {/* Pin head — main ball */}
+        <circle cx="22" cy="19" r="15" fill={color} />
+        {/* Pin head — highlight (top-left gleam) */}
+        <ellipse cx="16" cy="12" rx="5" ry="3.5" fill="white" opacity="0.45" transform="rotate(-20 16 12)" />
+        {/* Pin head — inner shadow (bottom) */}
+        <ellipse cx="25" cy="26" rx="7" ry="4" fill="black" opacity="0.12" />
+      </svg>
+    </div>
+  );
+}
+
+// 13 distinct colors cycling through the initiatives, matching the vibrant pin palette
+const PIN_COLORS = [
+  '#3B82F6', // blue
+  '#EC4899', // pink
+  '#22C55E', // green
+  '#14B8A6', // teal
+  '#A855F7', // purple
+  '#F97316', // orange
+  '#EF4444', // red
+  '#06B6D4', // cyan
+  '#84CC16', // lime
+  '#F59E0B', // amber
+  '#8B5CF6', // violet
+  '#10B981', // emerald
+  '#F43F5E', // rose
+];
+
+// Matching soft pastel backgrounds for each pin color
+const CARD_BACKGROUNDS = [
+  'bg-blue-50',
+  'bg-pink-50',
+  'bg-green-50',
+  'bg-teal-50',
+  'bg-purple-50',
+  'bg-orange-50',
+  'bg-red-50',
+  'bg-cyan-50',
+  'bg-lime-50',
+  'bg-amber-50',
+  'bg-violet-50',
+  'bg-emerald-50',
+  'bg-rose-50',
+];
+
+// Matching title accent colors for each card
+const TITLE_COLORS = [
+  'text-blue-900',
+  'text-pink-900',
+  'text-green-900',
+  'text-teal-900',
+  'text-purple-900',
+  'text-orange-900',
+  'text-red-900',
+  'text-cyan-900',
+  'text-lime-900',
+  'text-amber-900',
+  'text-violet-900',
+  'text-emerald-900',
+  'text-rose-900',
+];
+
 export default function OurWork() {
   const { language } = useStore();
   const t = (key: TranslationKey, fallback?: string) =>
     TRANSLATIONS[language]?.[key] ?? TRANSLATIONS.en[key] ?? fallback ?? key;
-
-  const [activeTab, setActiveTab] = useState<'all' | 'active' | 'planned' | 'vision'>('all');
 
   const programmesEn = [
     // AVAILABLE NOW / CURRENT WORK
@@ -272,11 +339,6 @@ export default function OurWork() {
 
   const programmes = language === 'fr' ? programmesFr : programmesEn;
 
-  const filteredProgrammes =
-    activeTab === 'all'
-      ? programmes
-      : programmes.filter((p) => p.status === activeTab);
-
   return (
     <div className="page-enter bg-slate-50 min-h-screen text-slate-900 pb-24">
       {/* Header — CLEAR & LIGHT */}
@@ -311,76 +373,52 @@ export default function OurWork() {
         </div>
       </section>
 
-      {/* Filter Tabs */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-16">
-        <div className="flex items-center justify-center gap-2 sm:gap-4 flex-wrap pb-8 border-b border-slate-200">
-          {[
-            { id: 'all', label: t('work.filterAll') },
-            { id: 'active', label: t('work.filterActive') },
-            { id: 'planned', label: t('work.filterPlanned') },
-            { id: 'vision', label: t('work.filterVision') },
-          ].map((tab) => {
-            const active = activeTab === tab.id;
+      {/* Pushpin Card Grid — All 13 Initiatives */}
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-14 pt-6">
+          {programmes.map((prog, idx) => {
+            const pinColor = PIN_COLORS[idx % PIN_COLORS.length];
+            const cardBg = CARD_BACKGROUNDS[idx % CARD_BACKGROUNDS.length];
+            const titleColor = TITLE_COLORS[idx % TITLE_COLORS.length];
             return (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id as any)}
-                className={`px-5 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase transition-all duration-200 ${
-                  active
-                    ? 'bg-slate-900 text-white shadow'
-                    : 'bg-white border border-slate-200 text-slate-600 hover:text-slate-950 hover:border-slate-400'
-                }`}
-              >
-                {tab.label}
-              </button>
+              <div key={prog.title} className="flex flex-col items-center">
+                {/* Pushpin sitting on top of the card */}
+                <Pushpin color={pinColor} />
+
+                {/* Card body */}
+                <div
+                  className={`relative w-full ${cardBg} rounded-2xl shadow-[0_6px_28px_rgba(0,0,0,0.09)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.14)] transition-shadow duration-300 p-7 flex flex-col gap-4`}
+                  style={{ border: `1.5px solid ${pinColor}22` }}
+                >
+                  {/* Category label */}
+                  <p className="text-[10px] tracking-[0.18em] uppercase font-semibold opacity-60 text-slate-700">
+                    {prog.category}
+                  </p>
+
+                  {/* Title */}
+                  <h3 className={`font-sans text-sm font-extrabold uppercase tracking-wide leading-snug ${titleColor}`}>
+                    {prog.title}
+                  </h3>
+
+                  {/* Description */}
+                  <p className="text-xs sm:text-sm text-slate-700 font-light leading-relaxed">
+                    {prog.description}
+                  </p>
+
+                  {/* Audience */}
+                  <p className="text-[11px] text-slate-500 font-medium border-t border-slate-200/60 pt-3 mt-auto">
+                    <span className="font-semibold text-slate-600">{t('work.intendedFor')}</span> {prog.audience}
+                  </p>
+                </div>
+              </div>
             );
           })}
-        </div>
-
-        {/* Programme Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-10">
-          {filteredProgrammes.map((prog) => (
-            <div
-              key={prog.title}
-              className="bg-white border border-slate-200 p-7 hover:border-amber-500 hover:shadow-md transition-all duration-300 flex flex-col justify-between space-y-5 rounded-sm"
-            >
-              <div>
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-[10px] tracking-wider uppercase font-semibold text-amber-700">
-                    {prog.category}
-                  </span>
-                  <span
-                    className={`text-[9px] tracking-widest uppercase font-bold px-2 py-0.5 rounded ${
-                      prog.status === 'active'
-                        ? 'bg-emerald-100 text-emerald-800 border border-emerald-300'
-                        : prog.status === 'planned'
-                        ? 'bg-amber-100 text-amber-900 border border-amber-300'
-                        : 'bg-slate-100 text-slate-700 border border-slate-300'
-                    }`}
-                  >
-                    {prog.statusLabel}
-                  </span>
-                </div>
-
-                <h3 className="font-serif text-xl font-medium text-slate-950 mb-3 leading-snug">
-                  {prog.title}
-                </h3>
-                <p className="text-xs sm:text-sm text-slate-600 font-light leading-relaxed">
-                  {prog.description}
-                </p>
-              </div>
-
-              <div className="pt-4 border-t border-slate-100 text-xs text-slate-500">
-                <span className="font-medium text-slate-700">{t('work.intendedFor')}</span> {prog.audience}
-              </div>
-            </div>
-          ))}
         </div>
       </section>
 
       {/* Recommended Call to Action — CLEAR, WARM CARD */}
-      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-20">
-        <div className="bg-gradient-to-r from-amber-100/80 via-yellow-50 to-amber-100/80 border border-amber-200 p-8 sm:p-12 text-center rounded-sm space-y-6 shadow-sm">
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-24">
+        <div className="bg-gradient-to-r from-amber-100/80 via-yellow-50 to-amber-100/80 border border-amber-200 p-8 sm:p-12 text-center rounded-2xl space-y-6 shadow-sm">
           <div className="w-12 h-12 rounded-full bg-amber-500 text-slate-950 mx-auto flex items-center justify-center">
             <Heart className="w-6 h-6" />
           </div>
