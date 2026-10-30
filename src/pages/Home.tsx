@@ -15,7 +15,6 @@ import AnnouncementBar from '@/components/AnnouncementBar';
 import RotatingRingsTheme from '@/components/RotatingRingsTheme';
 import PillarStickerCards from '@/components/PillarStickerCards';
 import StorytellingDonateSection from '@/components/StorytellingDonateSection';
-import GalleryShowcaseCards from '@/components/GalleryShowcaseCards';
 import { TRANSLATIONS } from '@/lib/translations';
 
 export default function Home() {
@@ -203,13 +202,99 @@ export default function Home() {
           </Link>
         </div>
 
-        {/* Artwork Grid with Mirror Gradient Cards */}
-        <GalleryShowcaseCards
-          artworks={featuredArtworks}
-          onSelectArtwork={setSelectedArtwork}
-          isFavorite={isFavorite}
-          toggleFavorite={toggleFavorite}
-        />
+        {/* Artwork Grid with Precision Black Mirror Gradient Rim Frame */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-7 items-stretch">
+          {featuredArtworks.map((art) => {
+            const fav = isFavorite(art.id);
+            return (
+              <div
+                key={art.id}
+                className="relative group transition-all duration-300 hover:-translate-y-2 flex flex-col"
+              >
+                {/* 1. Ambient Corner Dégradé Glow (Deep obsidian & charcoal ambient aura radiating outside rounded corners) */}
+                <div
+                  className="absolute -inset-[3px] rounded-[30px] opacity-45 group-hover:opacity-85 blur-[10px] transition-all duration-500 pointer-events-none z-0"
+                  style={{
+                    background:
+                      'radial-gradient(circle at 100% 0%, rgba(15, 23, 42, 0.45) 0%, transparent 65%), radial-gradient(circle at 0% 100%, rgba(30, 41, 59, 0.35) 0%, transparent 65%)',
+                  }}
+                  aria-hidden="true"
+                />
+
+                {/* 2. Precision Black Mirror Gradient Rim Frame (2px rounded stroke with specular chrome/mirror reflection) */}
+                <div
+                  className="relative p-[2px] rounded-[26px] z-10 transition-all duration-300 flex-1 flex flex-col h-full"
+                  style={{
+                    background:
+                      'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, #475569 22%, #0f172a 48%, rgba(255, 255, 255, 0.55) 72%, #020617 88%, #334155 100%)',
+                    boxShadow:
+                      '0 14px 34px -4px rgba(0, 0, 0, 0.22), 0 0 20px 2px rgba(15, 23, 42, 0.12)',
+                  }}
+                >
+                  {/* 3. Solid Inner Card Surface */}
+                  <div className="w-full h-full bg-white rounded-[24px] overflow-hidden flex flex-col justify-between shadow-sm relative z-[1]">
+                    {/* Artwork Image */}
+                    <div
+                      className="relative aspect-[3/4] bg-stone-100 overflow-hidden cursor-pointer"
+                      onClick={() => setSelectedArtwork(art)}
+                    >
+                      <img
+                        src={art.image}
+                        alt={art.title}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+
+                      {/* Favorite button */}
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleFavorite(art.id);
+                        }}
+                        className="absolute top-3.5 right-3.5 w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center hover:bg-white text-slate-800 shadow-sm transition-all"
+                        aria-label="Save artwork"
+                      >
+                        <Heart
+                          className={`w-4 h-4 transition-colors ${
+                            fav ? 'fill-rose-500 text-rose-500' : 'text-slate-600 hover:text-slate-950'
+                          }`}
+                        />
+                      </button>
+                    </div>
+
+                    {/* Card Info */}
+                    <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
+                      <div>
+                        <p className="text-[10px] tracking-[0.22em] uppercase font-semibold text-amber-700 font-sans mb-1">
+                          {art.categoryLabel}
+                        </p>
+                        <h3
+                          onClick={() => setSelectedArtwork(art)}
+                          className="font-serif text-xl text-slate-950 font-medium group-hover:text-amber-700 transition-colors cursor-pointer line-clamp-1"
+                        >
+                          {art.title}
+                        </h3>
+                        <p className="text-xs text-slate-500 font-light mt-1">
+                          {art.artistIdentifier} · {art.year}
+                        </p>
+                      </div>
+
+                      <div className="pt-1 border-t border-stone-100">
+                        <Link
+                          to="/gallery"
+                          className="w-full py-2.5 px-4 bg-amber-500 hover:bg-amber-400 text-slate-950 font-sans text-xs font-semibold tracking-wider uppercase rounded-xl transition-all duration-300 flex items-center justify-center gap-2 group/btn shadow-sm hover:shadow-amber-500/20"
+                        >
+                          <span>{t('gallery.viewInGallery')}</span>
+                          <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform" />
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </section>
 
       {/* 6. SECTION 4: WORK WITH US — CLEAR, WARM AMBER BANNER */}
