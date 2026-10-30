@@ -38,22 +38,19 @@ export default function OurStory() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
           {/* Founder Portrait Column */}
           <div className="lg:col-span-5">
-            <div className="relative aspect-[3/4] overflow-hidden rounded-[24px] shadow-xl border border-stone-200/80 group">
+            <div className="relative aspect-[3/4] overflow-hidden rounded-[24px] shadow-2xl border border-stone-200/80 group bg-slate-100">
               <img
-                src="/artworks/founder-portrait.jpg"
-                alt="Assumpta Kayiranga — Founder of Rehema Mission Rwanda"
+                src="/maman.png"
+                alt="Mama Assumpta Kayiranga — Founder of Rehema Mission Rwanda"
                 className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/15 to-transparent" />
               <div className="absolute bottom-5 left-5 right-5 text-white">
-                <p className="font-serif text-xl font-medium text-amber-200">
+                <p className="font-serif text-xl sm:text-2xl font-medium text-amber-200">
                   {t('story.founderName')}
                 </p>
                 <p className="text-xs text-slate-200 font-light mt-0.5">
                   {t('story.founderRole')}
-                </p>
-                <p className="text-[11px] text-amber-300/90 mt-1 font-light">
-                  {t('story.founderPortraitDesc')}
                 </p>
               </div>
             </div>
