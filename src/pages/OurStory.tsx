@@ -1,46 +1,16 @@
 import { Link } from 'react-router-dom';
-import {
-  ArrowRight,
-  Shield,
-  HeartHandshake,
-  Eye,
-  Sparkles,
-  Compass,
-  CheckCircle2,
-} from 'lucide-react';
+import { ArrowRight, Eye, Compass } from 'lucide-react';
 import { useWebsiteSettings } from '@/lib/settings';
 import { useStore } from '@/store/StoreContext';
 import { TRANSLATIONS, type TranslationKey } from '@/lib/translations';
 import RotatingRingsTheme from '@/components/RotatingRingsTheme';
+import CoreValuesCards from '@/components/CoreValuesCards';
 
 export default function OurStory() {
   const settings = useWebsiteSettings();
   const { language } = useStore();
   const t = (key: TranslationKey, fallback?: string) =>
     TRANSLATIONS[language]?.[key] ?? TRANSLATIONS.en[key] ?? fallback ?? key;
-
-  const values = [
-    {
-      title: t('story.val1Title'),
-      description: t('story.val1Desc'),
-      icon: Sparkles,
-    },
-    {
-      title: t('story.val2Title'),
-      description: t('story.val2Desc'),
-      icon: HeartHandshake,
-    },
-    {
-      title: t('story.val3Title'),
-      description: t('story.val3Desc'),
-      icon: Shield,
-    },
-    {
-      title: t('story.val4Title'),
-      description: t('story.val4Desc'),
-      icon: Eye,
-    },
-  ];
 
   return (
     <div className="page-enter bg-[#FAF7F2] min-h-screen text-slate-900 pb-24">
@@ -167,29 +137,7 @@ export default function OurStory() {
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {values.map((v) => {
-            const Icon = v.icon;
-            return (
-              <div
-                key={v.title}
-                className="bg-white/80 backdrop-blur-sm border border-stone-200/80 p-6 sm:p-7 hover:border-amber-400 hover:shadow-lg transition-all duration-300 rounded-[22px] flex flex-col justify-between"
-              >
-                <div>
-                  <div className="w-10 h-10 rounded-full bg-amber-500/10 text-amber-800 flex items-center justify-center mb-4">
-                    <Icon className="w-5 h-5 text-amber-700" />
-                  </div>
-                  <h3 className="font-serif text-lg font-medium text-slate-900 mb-2">
-                    {v.title}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-stone-600 font-light leading-relaxed">
-                    {v.description}
-                  </p>
-                </div>
-              </div>
-            );
-          })}
-        </div>
+        <CoreValuesCards />
       </section>
 
       {/* 4. Next Step Call to Action */}
