@@ -1,4 +1,4 @@
-﻿import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ArrowRight, Shield, HeartHandshake, Eye, Sparkles, CheckCircle2 } from 'lucide-react';
 import { useWebsiteSettings } from '@/lib/settings';
 import { useStore } from '@/store/StoreContext';
@@ -40,7 +40,7 @@ export default function OurStory() {
       <section className="relative bg-[#FAF7F2] min-h-[560px] sm:min-h-[660px] lg:min-h-[740px] flex flex-col items-center justify-center py-24 sm:py-32 md:py-40 px-4 sm:px-6 lg:px-8 border-b border-stone-200/60 overflow-hidden">
         {/* Luxury Rotating Rings SVG Theme (The Signature Gallery) in Background */}
         <RotatingRingsTheme
-          className="w-[580px] h-[580px] sm:w-[720px] sm:h-[720px] lg:w-[860px] lg:h-[860px]"
+          className="w-[480px] h-[480px] sm:w-[600px] sm:h-[600px] lg:w-[720px] lg:h-[720px]"
           glowClassName="w-[480px] h-[350px]"
         />
 
