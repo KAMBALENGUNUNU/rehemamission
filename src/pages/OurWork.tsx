@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   ShieldAlert,
@@ -9,78 +8,251 @@ import {
 import { useStore } from '@/store/StoreContext';
 import { TRANSLATIONS, type TranslationKey } from '@/lib/translations';
 
-// Pushpin SVG component — 3D-style pin matching the reference image
-function Pushpin({ color }: { color: string }) {
+interface PinCardTheme {
+  primary: string;
+  dark: string;
+  light: string;
+  glow: string;
+  bg: string;
+  border: string;
+}
+
+// 13 distinct color themes matching the reference image's vibrant 3D plastic pushpin & soft pastel card design
+const PIN_CARD_THEMES: PinCardTheme[] = [
+  // 1. Blue (like "PRODUCTION")
+  {
+    primary: '#2563EB',
+    dark: '#1D4ED8',
+    light: '#93C5FD',
+    glow: '#3B82F6',
+    bg: '#EEF4FF',
+    border: '#D6E4FF',
+  },
+  // 2. Magenta Pink (like "RESEARCH")
+  {
+    primary: '#E11D48',
+    dark: '#9F1239',
+    light: '#FDA4AF',
+    glow: '#EC4899',
+    bg: '#FDF0F8',
+    border: '#FAD2EC',
+  },
+  // 3. Grass Green (like "PRODUCTION MANAGEMENT")
+  {
+    primary: '#16A34A',
+    dark: '#15803D',
+    light: '#86EFAC',
+    glow: '#22C55E',
+    bg: '#F1FBE9',
+    border: '#D4F6C2',
+  },
+  // 4. Teal / Mint (like "TRADITIONAL MEDIA BUY")
+  {
+    primary: '#0D9488',
+    dark: '#0F766E',
+    light: '#5EEAD4',
+    glow: '#14B8A6',
+    bg: '#E7FAF7',
+    border: '#C2F4EC',
+  },
+  // 5. Electric Purple (like "DIGITAL MEDIA BUY")
+  {
+    primary: '#7C3AED',
+    dark: '#5B21B6',
+    light: '#C4B5FD',
+    glow: '#8B5CF6',
+    bg: '#F6EEFF',
+    border: '#E9D3FF',
+  },
+  // 6. Warm Peach / Coral (like "TRAININGS AND WORKSHOPS")
+  {
+    primary: '#EA580C',
+    dark: '#C2410C',
+    light: '#FDBA74',
+    glow: '#F97316',
+    bg: '#FFF3E7',
+    border: '#FFE0C2',
+  },
+  // 7. Sky Blue
+  {
+    primary: '#0284C7',
+    dark: '#0369A1',
+    light: '#7DD3FC',
+    glow: '#0EA5E9',
+    bg: '#EDF8FF',
+    border: '#CCEBFD',
+  },
+  // 8. Rose Berry
+  {
+    primary: '#DB2777',
+    dark: '#9D174D',
+    light: '#F472B6',
+    glow: '#EC4899',
+    bg: '#FDF2F8',
+    border: '#FBCFE8',
+  },
+  // 9. Warm Amber Gold
+  {
+    primary: '#D97706',
+    dark: '#B45309',
+    light: '#FCD34D',
+    glow: '#F59E0B',
+    bg: '#FEF9E7',
+    border: '#FDE68A',
+  },
+  // 10. Emerald Green
+  {
+    primary: '#059669',
+    dark: '#047857',
+    light: '#6EE7B7',
+    glow: '#10B981',
+    bg: '#ECFDF5',
+    border: '#A7F3D0',
+  },
+  // 11. Royal Indigo
+  {
+    primary: '#4F46E5',
+    dark: '#3730A3',
+    light: '#A5B4FC',
+    glow: '#6366F1',
+    bg: '#EEF2FF',
+    border: '#C7D2FE',
+  },
+  // 12. Crimson Ruby Red
+  {
+    primary: '#DC2626',
+    dark: '#B91C1C',
+    light: '#FCA5A5',
+    glow: '#EF4444',
+    bg: '#FEF2F2',
+    border: '#FECACA',
+  },
+  // 13. Deep Jade Teal
+  {
+    primary: '#0F766E',
+    dark: '#115E59',
+    light: '#5EEAD4',
+    glow: '#14B8A6',
+    bg: '#F0FDFA',
+    border: '#99F6E4',
+  },
+];
+
+// Realistic 3D pushpin matching the exact rendered thumbtack from the reference image
+function Pushpin({ id, theme }: { id: string; theme: PinCardTheme }) {
   return (
-    <div className="relative flex justify-center" style={{ height: '52px', marginBottom: '-8px', zIndex: 10 }}>
-      <svg width="44" height="52" viewBox="0 0 44 52" fill="none" xmlns="http://www.w3.org/2000/svg">
-        {/* Pin shadow */}
-        <ellipse cx="22" cy="50" rx="6" ry="2" fill="rgba(0,0,0,0.15)" />
-        {/* Pin needle */}
-        <rect x="20.5" y="33" width="3" height="18" rx="1.5" fill={color} opacity="0.7" />
-        {/* Pin head — outer ring (darker shade for 3D depth) */}
-        <circle cx="22" cy="19" r="18" fill={color} opacity="0.35" />
-        {/* Pin head — main ball */}
-        <circle cx="22" cy="19" r="15" fill={color} />
-        {/* Pin head — highlight (top-left gleam) */}
-        <ellipse cx="16" cy="12" rx="5" ry="3.5" fill="white" opacity="0.45" transform="rotate(-20 16 12)" />
-        {/* Pin head — inner shadow (bottom) */}
-        <ellipse cx="25" cy="26" rx="7" ry="4" fill="black" opacity="0.12" />
+    <div className="absolute -top-6 left-1/2 -translate-x-1/2 z-20 pointer-events-none select-none">
+      <svg
+        width="54"
+        height="60"
+        viewBox="0 0 54 60"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className="drop-shadow-[0_4px_12px_rgba(0,0,0,0.18)]"
+      >
+        <defs>
+          {/* Ambient colored radial glow onto the paper */}
+          <radialGradient
+            id={`glow-${id}`}
+            cx="50%"
+            cy="65%"
+            r="50%"
+            fx="50%"
+            fy="65%"
+          >
+            <stop offset="0%" stopColor={theme.glow} stopOpacity="0.85" />
+            <stop offset="50%" stopColor={theme.glow} stopOpacity="0.4" />
+            <stop offset="100%" stopColor={theme.glow} stopOpacity="0" />
+          </radialGradient>
+
+          {/* Base flange linear gradient */}
+          <linearGradient id={`base-${id}`} x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor={theme.light} />
+            <stop offset="45%" stopColor={theme.primary} />
+            <stop offset="100%" stopColor={theme.dark} />
+          </linearGradient>
+
+          {/* 3D sphere gradient for the head bulb */}
+          <radialGradient
+            id={`head-${id}`}
+            cx="34%"
+            cy="32%"
+            r="68%"
+            fx="30%"
+            fy="28%"
+          >
+            <stop offset="0%" stopColor="#ffffff" stopOpacity="0.9" />
+            <stop offset="25%" stopColor={theme.light} />
+            <stop offset="68%" stopColor={theme.primary} />
+            <stop offset="100%" stopColor={theme.dark} />
+          </radialGradient>
+
+          {/* Top beveled face cap */}
+          <linearGradient id={`topCap-${id}`} x1="20%" y1="0%" x2="80%" y2="100%">
+            <stop offset="0%" stopColor={theme.light} />
+            <stop offset="60%" stopColor={theme.primary} />
+            <stop offset="100%" stopColor={theme.dark} />
+          </linearGradient>
+        </defs>
+
+        {/* 1. Ambient colored aura / glow spreading onto paper */}
+        <ellipse cx="27" cy="40" rx="23" ry="14" fill={`url(#glow-${id})`} />
+
+        {/* 2. Soft contact drop shadow under the base */}
+        <ellipse cx="30" cy="43" rx="14" ry="6" fill="rgba(0,0,0,0.26)" />
+
+        {/* 3. Base Disc Flange (round bottom that presses against card) */}
+        <ellipse cx="27" cy="41" rx="14" ry="6" fill={theme.dark} opacity="0.65" />
+        <ellipse cx="27" cy="39.5" rx="13.5" ry="5.5" fill={`url(#base-${id})`} />
+        {/* Base rim specular reflection */}
+        <path
+          d="M 15.5 39.5 C 18.5 43 35.5 43 38.5 39.5"
+          stroke="#ffffff"
+          strokeWidth="1.2"
+          strokeLinecap="round"
+          opacity="0.55"
+        />
+
+        {/* 4. Conical Neck / Waist connecting base to head */}
+        <path
+          d="M 21.5 24 C 21.5 31, 19 36, 17 38.5 L 37 38.5 C 35 36, 32.5 31, 32.5 24 Z"
+          fill={`url(#base-${id})`}
+        />
+
+        {/* 5. 3D Head Bulb */}
+        <circle cx="27" cy="20.5" r="13" fill={`url(#head-${id})`} />
+
+        {/* 6. Top Beveled Circular Face */}
+        <ellipse cx="27" cy="17" rx="11" ry="6.8" fill={`url(#topCap-${id})`} />
+
+        {/* 7. Inner Bevel Highlight */}
+        <ellipse cx="26.5" cy="16.5" rx="9.5" ry="5.2" fill={theme.primary} opacity="0.4" />
+
+        {/* 8. Specular Reflections (Glossy 3D shine) */}
+        {/* Arc highlight along top-left rim */}
+        <path
+          d="M 18 16 C 20 13, 26 12, 32 13"
+          stroke="#ffffff"
+          strokeWidth="2.2"
+          strokeLinecap="round"
+          opacity="0.95"
+        />
+        {/* Secondary soft shine spot */}
+        <ellipse
+          cx="22.5"
+          cy="15.5"
+          rx="3.5"
+          ry="1.8"
+          fill="#ffffff"
+          opacity="0.8"
+          transform="rotate(-15 22.5 15.5)"
+        />
+        {/* Hot pinpoint reflection on lower sphere */}
+        <circle cx="21" cy="23.5" r="1.5" fill="#ffffff" opacity="0.75" />
       </svg>
     </div>
   );
 }
-
-// 13 distinct colors cycling through the initiatives, matching the vibrant pin palette
-const PIN_COLORS = [
-  '#3B82F6', // blue
-  '#EC4899', // pink
-  '#22C55E', // green
-  '#14B8A6', // teal
-  '#A855F7', // purple
-  '#F97316', // orange
-  '#EF4444', // red
-  '#06B6D4', // cyan
-  '#84CC16', // lime
-  '#F59E0B', // amber
-  '#8B5CF6', // violet
-  '#10B981', // emerald
-  '#F43F5E', // rose
-];
-
-// Matching soft pastel backgrounds for each pin color
-const CARD_BACKGROUNDS = [
-  'bg-blue-50',
-  'bg-pink-50',
-  'bg-green-50',
-  'bg-teal-50',
-  'bg-purple-50',
-  'bg-orange-50',
-  'bg-red-50',
-  'bg-cyan-50',
-  'bg-lime-50',
-  'bg-amber-50',
-  'bg-violet-50',
-  'bg-emerald-50',
-  'bg-rose-50',
-];
-
-// Matching title accent colors for each card
-const TITLE_COLORS = [
-  'text-blue-900',
-  'text-pink-900',
-  'text-green-900',
-  'text-teal-900',
-  'text-purple-900',
-  'text-orange-900',
-  'text-red-900',
-  'text-cyan-900',
-  'text-lime-900',
-  'text-amber-900',
-  'text-violet-900',
-  'text-emerald-900',
-  'text-rose-900',
-];
 
 export default function OurWork() {
   const { language } = useStore();
@@ -373,42 +545,36 @@ export default function OurWork() {
         </div>
       </section>
 
-      {/* Pushpin Card Grid — All 13 Initiatives */}
+      {/* Pushpin Card Grid — All 13 Initiatives (Exact 3D Pushpin & Pastel Card Design) */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-14 pt-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16 pt-8">
           {programmes.map((prog, idx) => {
-            const pinColor = PIN_COLORS[idx % PIN_COLORS.length];
-            const cardBg = CARD_BACKGROUNDS[idx % CARD_BACKGROUNDS.length];
-            const titleColor = TITLE_COLORS[idx % TITLE_COLORS.length];
+            const theme = PIN_CARD_THEMES[idx % PIN_CARD_THEMES.length];
             return (
-              <div key={prog.title} className="flex flex-col items-center">
-                {/* Pushpin sitting on top of the card */}
-                <Pushpin color={pinColor} />
+              <div key={prog.title} className="relative flex flex-col pt-4 group">
+                {/* 3D Glossy Pushpin with colored ambient glow and shadow, centered at top */}
+                <Pushpin id={`pin-${idx}`} theme={theme} />
 
-                {/* Card body */}
-                <div
-                  className={`relative w-full ${cardBg} rounded-2xl shadow-[0_6px_28px_rgba(0,0,0,0.09)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.14)] transition-shadow duration-300 p-7 flex flex-col gap-4`}
-                  style={{ border: `1.5px solid ${pinColor}22` }}
-                >
-                  {/* Category label */}
-                  <p className="text-[10px] tracking-[0.18em] uppercase font-semibold opacity-60 text-slate-700">
-                    {prog.category}
-                  </p>
+                {/* Outer White Card Frame with rounded corners */}
+                <div className="bg-white rounded-[32px] p-3 sm:p-3.5 shadow-[0_8px_30px_rgba(0,0,0,0.06)] border border-stone-200/80 transition-all duration-300 group-hover:shadow-[0_18px_44px_rgba(0,0,0,0.11)] group-hover:-translate-y-1 flex flex-col flex-1">
+                  {/* Inner Pastel Card */}
+                  <div
+                    className="rounded-[22px] px-6 sm:px-7 pt-9 pb-8 flex flex-col flex-1 min-h-[280px]"
+                    style={{
+                      backgroundColor: theme.bg,
+                      border: `1.5px solid ${theme.border}`,
+                    }}
+                  >
+                    {/* Title in Tall Condensed Bold Uppercase (Oswald Font) */}
+                    <h3 className="font-['Oswald',sans-serif] text-[22px] sm:text-[24px] font-bold uppercase tracking-wide text-stone-950 leading-[1.18] mb-4">
+                      {prog.title}
+                    </h3>
 
-                  {/* Title */}
-                  <h3 className={`font-sans text-sm font-extrabold uppercase tracking-wide leading-snug ${titleColor}`}>
-                    {prog.title}
-                  </h3>
-
-                  {/* Description */}
-                  <p className="text-xs sm:text-sm text-slate-700 font-light leading-relaxed">
-                    {prog.description}
-                  </p>
-
-                  {/* Audience */}
-                  <p className="text-[11px] text-slate-500 font-medium border-t border-slate-200/60 pt-3 mt-auto">
-                    <span className="font-semibold text-slate-600">{t('work.intendedFor')}</span> {prog.audience}
-                  </p>
+                    {/* Description in Clean Geometric Sans (Plus Jakarta Sans Font) */}
+                    <p className="font-['Plus_Jakarta_Sans',sans-serif] text-[13.5px] sm:text-[14px] text-stone-700 font-normal leading-[1.65]">
+                      {prog.description}
+                    </p>
+                  </div>
                 </div>
               </div>
             );
