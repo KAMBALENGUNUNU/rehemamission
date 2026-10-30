@@ -155,6 +155,18 @@ export const TRANSLATIONS = {
     'kazeFooter.copyright': 'Kaze Collection. All artworks created under Rehema Mission Rwanda.',
     'kazeFooter.adminPortal': 'Kaze Admin',
 
+    // Kaze Header Navigation
+    'kazeNav.bridgeTag': 'Atelier Rehema · Kigali, Rwanda',
+    'kazeNav.returnToMission': '← Return to Rehema Mission Rwanda',
+    'kazeNav.collection': 'The Collection',
+    'kazeNav.mediums': 'Mediums & Styles',
+    'kazeNav.visits': 'Atelier Visits',
+    'kazeNav.mission': 'The Story & Mission',
+    'kazeNav.inquire': 'Inquire & Collect',
+    'kazeNav.visitBtn': 'Private Viewing',
+    'kazeNav.parentSubtitle': 'An Initiative of Rehema Mission Rwanda',
+    'kazeNav.savedArtworks': 'Saved Pieces',
+
     // Our Story Page
     'story.badge': 'Our Foundation · Est. 1998',
     'story.headline': 'A place to be heard. A path toward possibility.',
@@ -547,6 +559,18 @@ export const TRANSLATIONS = {
     'kazeFooter.homeLink': 'Accueil Rehema Mission',
     'kazeFooter.copyright': 'Collection Kaze. Toutes les œuvres sont créées sous l’égide de Rehema Mission Rwanda.',
     'kazeFooter.adminPortal': 'Admin Kaze',
+
+    // Kaze Header Navigation (FR)
+    'kazeNav.bridgeTag': 'Atelier Rehema · Kigali, Rwanda',
+    'kazeNav.returnToMission': '← Retour à Rehema Mission Rwanda',
+    'kazeNav.collection': 'La Collection',
+    'kazeNav.mediums': 'Médiums & Styles',
+    'kazeNav.visits': 'Visites d’Atelier',
+    'kazeNav.mission': 'L’Histoire & Mission',
+    'kazeNav.inquire': 'Acquérir & Contacter',
+    'kazeNav.visitBtn': 'Visite Privée',
+    'kazeNav.parentSubtitle': 'Une initiative de Rehema Mission Rwanda',
+    'kazeNav.savedArtworks': 'Œuvres Sauvegardées',
 
     // Our Story Page
     'story.badge': 'Notre Fondation · Depuis 1998',

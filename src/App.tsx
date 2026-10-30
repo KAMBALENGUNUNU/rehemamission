@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-route
 import { useEffect } from 'react';
 import { StoreProvider } from '@/store/StoreContext';
 import Header from '@/components/Header';
+import KazeHeader from '@/components/KazeHeader';
 import Footer from '@/components/Footer';
 import KazeFooter from '@/components/KazeFooter';
 
@@ -39,15 +40,14 @@ function ScrollToTop() {
 
 function StorefrontLayout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
-  const isHome = location.pathname === '/';
   const isKazePage =
     location.pathname.startsWith('/gallery') ||
     location.pathname.startsWith('/kaze');
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900">
-      <Header />
-      <main className="flex-1 pt-16 sm:pt-20">{children}</main>
+    <div className={`min-h-screen flex flex-col ${isKazePage ? 'bg-[#07090E] text-stone-100' : 'bg-slate-50 text-slate-900'}`}>
+      {isKazePage ? <KazeHeader /> : <Header />}
+      <main className={`flex-1 ${isKazePage ? '' : 'pt-16 sm:pt-20'}`}>{children}</main>
       {isKazePage ? <KazeFooter /> : <Footer />}
     </div>
   );
