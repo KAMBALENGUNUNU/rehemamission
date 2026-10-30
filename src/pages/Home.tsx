@@ -105,18 +105,18 @@ export default function Home() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           {/* Image composition */}
           <div className="lg:col-span-5 relative">
-            <div className="relative aspect-[3/4] rounded-none overflow-hidden shadow-xl bg-slate-100 border border-slate-200">
+            <div className="relative aspect-[3/4] rounded-[24px] overflow-hidden shadow-2xl bg-slate-100 border border-stone-200/80 group">
               <img
-                src="/artworks/founder-portrait.jpg"
-                alt="Mama Assumpta Kayiranga — Founder of Rehema Mission Rwanda"
-                className="w-full h-full object-cover object-top transition-transform duration-700 hover:scale-105"
+                src="/listening-mission.jpg"
+                alt="A Mission Built on Listening — Compassionate listening and recovery dialogue at Rehema Mission Rwanda"
+                className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent" />
               <div className="absolute bottom-6 left-6 right-6 text-white">
-                <p className="font-serif text-xl italic text-amber-200">
+                <p className="font-serif text-xl sm:text-2xl italic text-amber-200">
                   {language === 'fr' ? '« L’écoute précède le conseil. »' : '“Listening comes before advice.”'}
                 </p>
-                <p className="text-xs uppercase tracking-wider text-slate-200 mt-1 font-medium">
+                <p className="text-xs uppercase tracking-wider text-slate-200 mt-1.5 font-medium">
                   {t('philosophy.founderName')}
                 </p>
                 <p className="text-[11px] text-amber-300/90 font-light">
@@ -125,7 +125,7 @@ export default function Home() {
               </div>
             </div>
             {/* Ambient accent square */}
-            <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-amber-200/50 -z-10 hidden sm:block rounded" />
+            <div className="absolute -bottom-5 -left-5 w-32 h-32 bg-amber-200/40 -z-10 hidden sm:block rounded-[28px] blur-sm" />
           </div>
 
           {/* Copy block */}
