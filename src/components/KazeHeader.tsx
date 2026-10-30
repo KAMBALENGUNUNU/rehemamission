@@ -40,11 +40,10 @@ export default function KazeHeader() {
   }, [location.pathname, location.hash]);
 
   const navLinks = [
-    { to: '/gallery#gallery', hash: '#gallery', label: t('kazeNav.gallery', 'Curated Gallery'), icon: Layers },
+    { to: '/gallery#gallery', hash: '#gallery', label: t('kazeNav.gallery', 'Gallery'), icon: Layers },
     { to: '/gallery#exhibitions', hash: '#exhibitions', label: t('kazeNav.exhibitions', 'Exhibitions'), icon: Eye },
-    { to: '/gallery#store', hash: '#store', label: t('kazeNav.store', 'Artisan Store'), icon: ShoppingBag },
-    { to: '/visit', hash: '', label: t('kazeNav.visits', 'Atelier Visits'), icon: Calendar },
-    { to: '/gallery#inquire', hash: '#inquire', label: t('kazeNav.inquire', 'Inquire & Collect'), icon: Sparkles },
+    { to: '/gallery#store', hash: '#store', label: t('kazeNav.store', 'Store'), icon: ShoppingBag },
+    { to: '/gallery#inquire', hash: '#inquire', label: t('kazeNav.inquire', 'Inquire'), icon: Sparkles },
   ];
 
   const isLinkActive = (to: string, hash: string) => {
@@ -147,22 +146,22 @@ export default function KazeHeader() {
             <KazeLogo variant="light" size="md" />
           </Link>
 
-          {/* Desktop Navigation Links — Strictly focused on Kaze Collection */}
-          <div className="hidden lg:flex items-center gap-7">
+          {/* Desktop Navigation Links — Strictly focused on Kaze Collection (matching Hero title serif font) */}
+          <div className="hidden lg:flex items-center gap-8">
             {navLinks.map((link) => {
               const active = isLinkActive(link.to, link.hash);
               return (
                 <a
                   key={link.to}
                   href={link.to}
-                  className={`text-xs tracking-[0.16em] uppercase font-sans font-medium transition-colors relative py-1.5 ${
+                  className={`font-serif text-lg sm:text-[1.125rem] tracking-wide transition-colors relative py-1 ${
                     scrolled
                       ? active
                         ? 'text-amber-800 font-bold'
-                        : 'text-stone-700 hover:text-amber-800'
+                        : 'text-stone-700 hover:text-amber-800 font-normal'
                       : active
                       ? 'text-slate-950 font-bold'
-                      : 'text-slate-900/90 hover:text-black font-semibold'
+                      : 'text-slate-900/90 hover:text-black font-medium'
                   }`}
                 >
                   <span>{link.label}</span>
@@ -208,7 +207,7 @@ export default function KazeHeader() {
             {/* Atelier Private Viewing CTA — Exact Pill Outline Button matching Reference Design */}
             <Link
               to="/visit"
-              className="hidden sm:inline-flex items-center gap-2 px-6 py-2 rounded-full font-semibold uppercase text-xs tracking-wider transition-all duration-300 shadow-sm border-2 border-slate-950 text-slate-950 hover:bg-slate-950 hover:text-white"
+              className="hidden sm:inline-flex items-center gap-2 px-6 py-2 rounded-full font-serif text-sm tracking-wide font-semibold transition-all duration-300 shadow-sm border-2 border-slate-950 text-slate-950 hover:bg-slate-950 hover:text-white"
             >
               <Calendar className="w-3.5 h-3.5" />
               <span>{t('kazeNav.visitBtn', 'Private Viewing')}</span>
@@ -275,10 +274,10 @@ export default function KazeHeader() {
                   key={link.to}
                   href={link.to}
                   onClick={() => setMenuOpen(false)}
-                  className={`flex items-center justify-between px-3 py-2.5 rounded-xl text-xs uppercase tracking-wider font-medium transition-colors ${
+                  className={`flex items-center justify-between px-3 py-2.5 rounded-xl font-serif text-base tracking-wide transition-colors ${
                     active
                       ? 'bg-amber-500/15 text-amber-900 font-bold border border-amber-300/50'
-                      : 'text-stone-700 hover:bg-stone-200/50 hover:text-stone-950'
+                      : 'text-stone-700 hover:bg-stone-200/50 hover:text-stone-950 font-medium'
                   }`}
                 >
                   <span className="flex items-center gap-2.5">
