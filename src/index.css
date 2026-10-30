@@ -30,7 +30,7 @@
     @apply w-full px-4 py-3 bg-white border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-colors duration-200 text-sm;
   }
   .section-title {
-    @apply font-serif text-3xl sm:text-4xl md:text-5xl font-light text-slate-950 tracking-tight leading-tight;
+    @apply font-serif text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] font-semibold sm:font-bold text-slate-950 tracking-[-0.015em] leading-[1.12];
   }
   .eyebrow {
     @apply font-sans text-xs tracking-[0.25em] uppercase font-semibold text-amber-700;
