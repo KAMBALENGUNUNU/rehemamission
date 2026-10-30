@@ -221,18 +221,17 @@ export default function Home() {
                   aria-hidden="true"
                 />
 
-                {/* 2. Harmonious 3px Gradient Black Rim Frame matching the Halo */}
+                {/* 2. Subtle, Ultra-Delicate Gradient Black Hairline Rim Frame (Barely-there hairline matching the Halo) */}
                 <div
-                  className="relative p-[2.5px] sm:p-[3px] rounded-[24px] z-10 transition-all duration-300 flex-1 flex flex-col h-full"
+                  className="relative p-[1px] rounded-[24px] z-10 transition-all duration-300 flex-1 flex flex-col h-full"
                   style={{
                     background:
-                      'linear-gradient(145deg, #020617 0%, #1e293b 30%, #0a0f1d 55%, #334155 80%, #000000 100%)',
-                    boxShadow:
-                      '0 8px 24px -2px rgba(0, 0, 0, 0.35), 0 0 16px 2px rgba(0, 0, 0, 0.25)',
+                      'linear-gradient(145deg, rgba(0, 0, 0, 0.3) 0%, rgba(30, 41, 59, 0.15) 30%, rgba(15, 23, 42, 0.25) 65%, rgba(0, 0, 0, 0.2) 100%)',
+                    boxShadow: '0 6px 20px -3px rgba(0, 0, 0, 0.18)',
                   }}
                 >
                   {/* 3. Solid Inner Card Surface */}
-                  <div className="w-full h-full bg-white rounded-[21px] overflow-hidden flex flex-col justify-between shadow-sm relative z-[1]">
+                  <div className="w-full h-full bg-white rounded-[23px] overflow-hidden flex flex-col justify-between shadow-sm relative z-[1]">
                     {/* Artwork Image */}
                     <div
                       className="relative aspect-[3/4] bg-stone-100 overflow-hidden cursor-pointer"
