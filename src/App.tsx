@@ -47,7 +47,7 @@ function StorefrontLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900">
       <Header />
-      <main className={`flex-1 ${isHome ? '' : 'pt-20'}`}>{children}</main>
+      <main className="flex-1 pt-16 sm:pt-20">{children}</main>
       {isKazePage ? <KazeFooter /> : <Footer />}
     </div>
   );
