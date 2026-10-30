@@ -45,9 +45,6 @@ export default function OurStory() {
         />
 
         <div className="max-w-4xl mx-auto text-center relative z-10 w-full my-auto">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-100/90 border border-amber-300 text-amber-900 text-xs tracking-[0.2em] uppercase font-semibold font-sans mb-5 shadow-sm backdrop-blur-sm">
-            <span>{t('story.badge')}</span>
-          </div>
           <h1 className="font-serif text-3xl sm:text-5xl md:text-6xl lg:text-[4rem] font-bold text-slate-950 tracking-[-0.015em] leading-[1.12]">
             {language === 'fr' ? t('story.headline') : (settings.about_headline || t('story.headline'))}
           </h1>
