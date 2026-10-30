@@ -325,7 +325,7 @@ export default function Home() {
 
       {/* 7. CLOSING STATEMENT BANNER */}
       <section className="py-12 bg-amber-200/70 text-slate-900 text-center px-4 border-b border-amber-300">
-        <p className="font-serif text-xl sm:text-2xl md:text-3xl font-light tracking-wide">
+        <p className="section-title">
           {t('closing.motto')}
         </p>
       </section>
