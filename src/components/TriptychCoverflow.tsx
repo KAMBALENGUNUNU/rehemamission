@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { ChevronLeft, ChevronRight, MessageCircle, ArrowRight, Sparkles, Heart } from 'lucide-react';
+import { ChevronLeft, ChevronRight, MessageCircle, ArrowRight, Heart } from 'lucide-react';
 import { type Artwork, REHEMA_ARTWORKS } from '@/lib/artworks';
 import { useStore } from '@/store/StoreContext';
 import { formatPrice } from '@/lib/utils';
@@ -27,7 +27,8 @@ export default function TriptychCoverflow({ onSelectArtwork }: TriptychCoverflow
   const { toggleFavorite, isFavorite, language } = useStore();
   const [activeIndex, setActiveIndex] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
-  const wheelLockRef = useRef(false);
+  const isTransitioningRef = useRef(false);
+  const wheelAccumulatorRef = useRef(0);
   const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Curated masterwork collection for the Triptych Coverflow
@@ -66,20 +67,40 @@ export default function TriptychCoverflow({ onSelectArtwork }: TriptychCoverflow
 
   const total = items.length;
 
+  // Very slow, majestic slide transition: locked for 1250ms to ensure calm graceful flow
   const handleNext = useCallback(() => {
+    if (isTransitioningRef.current) return;
+    isTransitioningRef.current = true;
     setActiveIndex((prev) => (prev + 1) % total);
+    setTimeout(() => {
+      isTransitioningRef.current = false;
+      wheelAccumulatorRef.current = 0;
+    }, 1250);
   }, [total]);
 
   const handlePrev = useCallback(() => {
+    if (isTransitioningRef.current) return;
+    isTransitioningRef.current = true;
     setActiveIndex((prev) => (prev - 1 + total) % total);
+    setTimeout(() => {
+      isTransitioningRef.current = false;
+      wheelAccumulatorRef.current = 0;
+    }, 1250);
   }, [total]);
 
-  // Hover transition with slight intent delay (prevents accidental trigger on casual pass)
+  // Intentional side hover: triggers smoothly after deliberate hover pause
   const handleSideHover = (targetIndex: number) => {
+    if (isTransitioningRef.current) return;
     if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
     hoverTimeoutRef.current = setTimeout(() => {
-      setActiveIndex(targetIndex);
-    }, 140);
+      if (!isTransitioningRef.current) {
+        if (targetIndex > activeIndex || (activeIndex === total - 1 && targetIndex === 0)) {
+          handleNext();
+        } else {
+          handlePrev();
+        }
+      }
+    }, 300);
   };
 
   const handleSideHoverLeave = () => {
@@ -89,26 +110,25 @@ export default function TriptychCoverflow({ onSelectArtwork }: TriptychCoverflow
     }
   };
 
-  // Scroll / Wheel gesture support: scrolling toward either side transitions the card
+  // Scroll gesture: requires deliberate scroll momentum and transitions VERY slowly
   const handleWheel = (e: React.WheelEvent) => {
+    if (isTransitioningRef.current) return;
+
     const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
-    if (Math.abs(delta) < 22) return;
+    wheelAccumulatorRef.current += delta;
 
-    if (wheelLockRef.current) return;
-    wheelLockRef.current = true;
+    // Generous threshold so small accidental flicks don't jump
+    if (Math.abs(wheelAccumulatorRef.current) < 65) return;
 
-    if (delta > 0) {
+    if (wheelAccumulatorRef.current > 0) {
       handleNext();
     } else {
       handlePrev();
     }
-
-    setTimeout(() => {
-      wheelLockRef.current = false;
-    }, 400);
+    wheelAccumulatorRef.current = 0;
   };
 
-  // Keyboard left/right arrow navigation
+  // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'ArrowRight') handleNext();
@@ -124,14 +144,14 @@ export default function TriptychCoverflow({ onSelectArtwork }: TriptychCoverflow
     <section
       ref={containerRef}
       onWheel={handleWheel}
-      className="relative w-full overflow-hidden py-16 sm:py-24 text-white select-none transition-colors duration-700"
+      className="relative w-full overflow-hidden pt-10 sm:pt-14 pb-16 sm:pb-24 text-white select-none transition-colors duration-1000"
     >
       {/* 1. DYNAMIC FULL-BLEED MIRROR BACKGROUND WITH HEAVY GAUSSIAN BLUR & DARK VIGNETTE */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none select-none">
         {items.map((item, idx) => (
           <div
             key={item.id}
-            className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
+            className={`absolute inset-0 transition-opacity duration-[1250ms] ease-in-out ${
               idx === activeIndex ? 'opacity-100' : 'opacity-0'
             }`}
           >
@@ -139,37 +159,21 @@ export default function TriptychCoverflow({ onSelectArtwork }: TriptychCoverflow
               src={item.image}
               alt=""
               aria-hidden="true"
-              className="w-full h-full object-cover scale-110 filter blur-[40px] brightness-[0.6] saturate-150"
+              className="w-full h-full object-cover scale-110 filter blur-[40px] brightness-[0.58] saturate-150"
               style={{ backdropFilter: 'blur(40px)' }}
             />
           </div>
         ))}
 
         {/* Dark Vignette Overlay for High Contrast */}
-        <div className="absolute inset-0 bg-stone-950/40" />
+        <div className="absolute inset-0 bg-stone-950/45" />
         <div className="absolute inset-0 bg-radial-vignette" />
         <div className="absolute inset-0 bg-gradient-to-b from-stone-950/70 via-transparent to-stone-950/80" />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Curatorial Header */}
-        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-400/15 border border-amber-400/30 text-amber-300 text-xs font-semibold uppercase tracking-[0.2em] mb-3">
-            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-            <span>{language === 'fr' ? 'Triptyque de la Galerie' : 'Triptych Coverflow Gallery'}</span>
-          </div>
-          <h2 className="font-serif text-3xl sm:text-4xl text-white font-normal tracking-tight">
-            {language === 'fr' ? 'Immersion au Cœur de la Création' : 'The Focal Art Collection'}
-          </h2>
-          <p className="text-xs sm:text-sm text-stone-300 font-light mt-2">
-            {language === 'fr'
-              ? 'Survolez ou défilez sur les œuvres latérales pour les amener au centre de la scène.'
-              : 'Hover or scroll toward either preview card to bring it into focal perspective.'}
-          </p>
-        </div>
-
         {/* 2. THE TRIPTYCH COVERFLOW CAROUSEL (Center Tall & Large On Top of Left & Right) */}
-        <div className="relative w-full max-w-6xl mx-auto flex items-center justify-center h-[460px] sm:h-[560px] md:h-[640px] lg:h-[700px]">
+        <div className="relative w-full max-w-6xl mx-auto flex items-center justify-center h-[480px] sm:h-[580px] md:h-[650px] lg:h-[720px]">
           {items.map((item, index) => {
             // Circular positioning: -1 (left), 0 (center), 1 (right)
             let diff = (index - activeIndex + total) % total;
@@ -188,22 +192,22 @@ export default function TriptychCoverflow({ onSelectArtwork }: TriptychCoverflow
             let cursor = 'cursor-default';
 
             if (isCenter) {
-              // Center card: LARGER, substantially TALLER, razor sharp, and ON TOP (z-40) of left and right cards
+              // Center card: LARGER, TALLER, SHARP, ON TOP (z-40) of left and right cards
               transformStyle = 'translateX(0) scale(1)';
               filterStyle = 'blur(0px)';
               opacityStyle = 1;
               zIndex = 40;
               cursor = 'cursor-pointer';
             } else if (isLeft) {
-              // Left card: SMALLER (scale 0.74), SHORTER, BLURRED (3.5px), tucked BEHIND the center card (z-10)
-              transformStyle = 'translateX(calc(-56% - 8px)) scale(0.74)';
+              // Left card: SMALLER (scale 0.73), SHORTER, BLURRED (3.5px), tucked BEHIND the center card (z-10)
+              transformStyle = 'translateX(calc(-56% - 10px)) scale(0.73)';
               filterStyle = 'blur(3.5px)';
               opacityStyle = 0.65;
               zIndex = 10;
               cursor = 'cursor-pointer';
             } else if (isRight) {
-              // Right card: SMALLER (scale 0.74), SHORTER, BLURRED (3.5px), tucked BEHIND the center card (z-10)
-              transformStyle = 'translateX(calc(56% + 8px)) scale(0.74)';
+              // Right card: SMALLER (scale 0.73), SHORTER, BLURRED (3.5px), tucked BEHIND the center card (z-10)
+              transformStyle = 'translateX(calc(56% + 10px)) scale(0.73)';
               filterStyle = 'blur(3.5px)';
               opacityStyle = 0.65;
               zIndex = 10;
@@ -235,7 +239,7 @@ export default function TriptychCoverflow({ onSelectArtwork }: TriptychCoverflow
                   else if (isRight) handleNext();
                   else if (isCenter && item.artworkRef) onSelectArtwork(item.artworkRef);
                 }}
-                className={`absolute top-0 w-[78vw] sm:w-[400px] md:w-[460px] lg:w-[520px] aspect-[3/4] transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${cursor}`}
+                className={`absolute top-0 w-[80vw] sm:w-[420px] md:w-[480px] lg:w-[540px] aspect-[3/4] transition-all duration-[1250ms] ease-[cubic-bezier(0.2,1,0.35,1)] ${cursor}`}
                 style={{
                   transform: transformStyle,
                   filter: filterStyle,
@@ -246,7 +250,7 @@ export default function TriptychCoverflow({ onSelectArtwork }: TriptychCoverflow
               >
                 {/* Rounded-Rectangle Card Frame with Deep Drop Shadow */}
                 <div
-                  className={`w-full h-full rounded-2xl sm:rounded-3xl overflow-hidden bg-stone-900 border transition-all duration-500 relative group ${
+                  className={`w-full h-full rounded-2xl sm:rounded-3xl overflow-hidden bg-stone-900 border transition-all duration-700 relative group ${
                     isCenter
                       ? 'border-amber-400 shadow-[0_30px_90px_rgba(0,0,0,0.85)] ring-2 ring-white/30'
                       : 'border-white/15 shadow-[0_15px_40px_rgba(0,0,0,0.5)] hover:border-amber-400/50'
@@ -255,24 +259,17 @@ export default function TriptychCoverflow({ onSelectArtwork }: TriptychCoverflow
                   <img
                     src={item.image}
                     alt={item.title}
-                    className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
+                    className="w-full h-full object-cover object-center transition-transform duration-1000 group-hover:scale-105"
                   />
 
-                  {/* Corner Status Pill */}
-                  <div className="absolute top-3.5 left-3.5 z-10">
-                    <span className="px-3 py-1 rounded-full bg-stone-950/80 backdrop-blur-md text-[10px] font-semibold uppercase tracking-wider text-amber-300 border border-white/10 shadow">
-                      {item.categoryLabel}
-                    </span>
-                  </div>
-
-                  {/* Favorite Pill */}
+                  {/* Favorite Button on Top Right */}
                   <button
                     type="button"
                     onClick={(e) => {
                       e.stopPropagation();
                       toggleFavorite(item.id);
                     }}
-                    className="absolute top-3.5 right-3.5 z-10 w-8 h-8 rounded-full bg-stone-950/70 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-stone-900 transition-all shadow"
+                    className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-stone-950/70 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-stone-900 transition-all shadow"
                     aria-label="Save to favorites"
                   >
                     <Heart
@@ -284,7 +281,7 @@ export default function TriptychCoverflow({ onSelectArtwork }: TriptychCoverflow
 
                   {/* Center Card Click-To-Open Cue Overlay */}
                   {isCenter && (
-                    <div className="absolute inset-0 bg-stone-950/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <div className="absolute inset-0 bg-stone-950/25 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                       <span className="px-5 py-2.5 rounded-full bg-amber-500 text-slate-950 text-xs font-semibold uppercase tracking-wider shadow-lg flex items-center gap-1.5 transform hover:scale-105 transition-transform">
                         <span>{language === 'fr' ? 'Détails & Histoire' : 'View 5-Part Story'}</span>
                         <ArrowRight className="w-3.5 h-3.5" />
@@ -295,7 +292,7 @@ export default function TriptychCoverflow({ onSelectArtwork }: TriptychCoverflow
                   {/* Side Card Hover Guide Hint */}
                   {!isCenter && (
                     <div className="absolute inset-0 bg-stone-950/20 hover:bg-transparent transition-colors flex items-center justify-center">
-                      <span className="text-[11px] font-medium uppercase tracking-wider text-white/90 bg-stone-950/60 backdrop-blur-sm px-3 py-1 rounded-full border border-white/20 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <span className="text-[11px] font-medium uppercase tracking-wider text-white/90 bg-stone-950/60 backdrop-blur-sm px-3.5 py-1.5 rounded-full border border-white/20 opacity-0 group-hover:opacity-100 transition-opacity">
                         {language === 'fr' ? 'Cliquer pour centrer' : 'Click to center'}
                       </span>
                     </div>
@@ -310,9 +307,9 @@ export default function TriptychCoverflow({ onSelectArtwork }: TriptychCoverflow
             type="button"
             onClick={handlePrev}
             aria-label="Previous artwork"
-            className="absolute -left-2 sm:-left-6 md:-left-10 top-1/2 -translate-y-1/2 z-50 w-11 h-11 rounded-full bg-stone-950/80 hover:bg-amber-500 text-white hover:text-slate-950 border border-white/20 hover:border-amber-400 backdrop-blur-md flex items-center justify-center shadow-2xl transition-all duration-200"
+            className="absolute -left-2 sm:-left-6 md:-left-12 top-1/2 -translate-y-1/2 z-50 w-12 h-12 rounded-full bg-stone-950/80 hover:bg-amber-500 text-white hover:text-slate-950 border border-white/20 hover:border-amber-400 backdrop-blur-md flex items-center justify-center shadow-2xl transition-all duration-300"
           >
-            <ChevronLeft className="w-5 h-5" />
+            <ChevronLeft className="w-6 h-6" />
           </button>
 
           {/* Right Arrow Button */}
@@ -320,48 +317,36 @@ export default function TriptychCoverflow({ onSelectArtwork }: TriptychCoverflow
             type="button"
             onClick={handleNext}
             aria-label="Next artwork"
-            className="absolute -right-2 sm:-right-6 md:-right-10 top-1/2 -translate-y-1/2 z-50 w-11 h-11 rounded-full bg-stone-950/80 hover:bg-amber-500 text-white hover:text-slate-950 border border-white/20 hover:border-amber-400 backdrop-blur-md flex items-center justify-center shadow-2xl transition-all duration-200"
+            className="absolute -right-2 sm:-right-6 md:-right-12 top-1/2 -translate-y-1/2 z-50 w-12 h-12 rounded-full bg-stone-950/80 hover:bg-amber-500 text-white hover:text-slate-950 border border-white/20 hover:border-amber-400 backdrop-blur-md flex items-center justify-center shadow-2xl transition-all duration-300"
           >
-            <ChevronRight className="w-5 h-5" />
+            <ChevronRight className="w-6 h-6" />
           </button>
         </div>
 
-        {/* 3. CAPTION SYNC METADATA BLOCK DIRECTLY BENEATH CENTRAL CARD */}
+        {/* 3. CAPTION SYNC METADATA BLOCK DIRECTLY BENEATH CENTRAL CARD (Clean, Tag-Free) */}
         <div
           key={currentItem.id}
           className="animate-caption-sync mt-8 sm:mt-10 text-center max-w-2xl mx-auto px-4 z-20 relative"
         >
-          {/* Subtle Category & Specs */}
-          <div className="flex items-center justify-center gap-2 text-xs text-amber-300 font-medium uppercase tracking-widest mb-1.5">
-            <span>{currentItem.categoryLabel}</span>
-            <span>·</span>
-            <span>{currentItem.dimensions}</span>
-            <span>·</span>
-            <span>{currentItem.year}</span>
-          </div>
-
           {/* Artwork Title */}
-          <h3 className="font-serif text-2xl sm:text-3xl md:text-4xl text-white font-normal tracking-tight">
+          <h3 className="font-serif text-3xl sm:text-4xl md:text-5xl text-white font-normal tracking-tight">
             {currentItem.title}
           </h3>
 
-          <p className="text-xs text-amber-400/90 font-medium uppercase tracking-wider mt-1">
-            {currentItem.artistIdentifier}
+          <p className="text-xs sm:text-sm text-amber-400 font-medium uppercase tracking-wider mt-2">
+            {currentItem.artistIdentifier} · {currentItem.dimensions}
           </p>
 
-          {/* Curatorial Description ("About This Art") */}
-          <div className="mt-3 max-w-xl mx-auto">
-            <p className="text-xs uppercase tracking-[0.2em] font-semibold text-stone-400 mb-1">
-              {language === 'fr' ? 'À propos de cette œuvre' : 'About this art'}
-            </p>
+          {/* Curatorial Description */}
+          <div className="mt-3.5 max-w-xl mx-auto">
             <p className="text-sm sm:text-base text-stone-200 font-light leading-relaxed italic">
               “{currentItem.aboutArt}”
             </p>
           </div>
 
           {/* Value Indicator */}
-          <div className="mt-4 flex items-center justify-center gap-2">
-            <span className="font-serif text-lg sm:text-xl text-amber-300 font-normal">
+          <div className="mt-4 flex items-center justify-center gap-2.5">
+            <span className="font-serif text-xl sm:text-2xl text-amber-300 font-normal">
               {formatPrice(currentItem.priceRwf)}
             </span>
             <span className="text-xs text-stone-400">~${currentItem.priceUsd} USD</span>
@@ -374,10 +359,10 @@ export default function TriptychCoverflow({ onSelectArtwork }: TriptychCoverflow
               onClick={() => {
                 if (currentItem.artworkRef) onSelectArtwork(currentItem.artworkRef);
               }}
-              className="px-6 py-2.5 rounded-full bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-semibold uppercase tracking-wider shadow-lg transition-transform hover:scale-105 inline-flex items-center gap-1.5"
+              className="px-7 py-3 rounded-full bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-semibold uppercase tracking-wider shadow-lg transition-transform hover:scale-105 inline-flex items-center gap-2"
             >
               <span>{language === 'fr' ? 'En Savoir Plus' : 'Learn More'}</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+              <ArrowRight className="w-4 h-4" />
             </button>
 
             <a
@@ -386,26 +371,34 @@ export default function TriptychCoverflow({ onSelectArtwork }: TriptychCoverflow
               )}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-6 py-2.5 rounded-full bg-white/15 hover:bg-white/25 border border-white/30 text-white text-xs font-semibold uppercase tracking-wider backdrop-blur-md transition-all inline-flex items-center gap-1.5"
+              className="px-7 py-3 rounded-full bg-white/15 hover:bg-white/25 border border-white/30 text-white text-xs font-semibold uppercase tracking-wider backdrop-blur-md transition-all inline-flex items-center gap-2"
             >
-              <MessageCircle className="w-3.5 h-3.5 text-amber-300" />
+              <MessageCircle className="w-4 h-4 text-amber-300" />
               <span>{language === 'fr' ? 'Acquérir / Demander' : 'Inquire'}</span>
             </a>
           </div>
         </div>
 
         {/* 4. Bottom Dot Indicators */}
-        <div className="mt-8 flex items-center justify-center gap-2">
+        <div className="mt-8 flex items-center justify-center gap-2.5">
           {items.map((item, idx) => (
             <button
               key={item.id}
               type="button"
-              onClick={() => setActiveIndex(idx)}
+              onClick={() => {
+                if (!isTransitioningRef.current) {
+                  isTransitioningRef.current = true;
+                  setActiveIndex(idx);
+                  setTimeout(() => {
+                    isTransitioningRef.current = false;
+                  }, 1250);
+                }
+              }}
               aria-label={`Show ${item.title}`}
-              className={`transition-all duration-300 rounded-full ${
+              className={`transition-all duration-500 rounded-full ${
                 idx === activeIndex
-                  ? 'w-8 h-2 bg-amber-400 shadow'
-                  : 'w-2 h-2 bg-white/35 hover:bg-white/70'
+                  ? 'w-9 h-2.5 bg-amber-400 shadow'
+                  : 'w-2.5 h-2.5 bg-white/35 hover:bg-white/70'
               }`}
             />
           ))}
