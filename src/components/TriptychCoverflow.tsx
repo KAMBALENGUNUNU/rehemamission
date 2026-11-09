@@ -35,7 +35,7 @@ export default function TriptychCoverflow({ onSelectArtwork }: TriptychCoverflow
       title: language === 'fr' ? 'Symphonie des Mille Collines' : 'Symphony of the Thousand Hills',
       artistIdentifier: 'KAZE Collection',
       year: 2025,
-      categoryLabel: language === 'fr' ? 'Chef-d’Œuvre Panoramique' : 'Panoramic Masterwork',
+      categoryLabel: language === 'fr' ? "Chef-d'Œuvre Panoramique" : 'Panoramic Masterwork',
       medium: language === 'fr' ? 'Acrylique & pigments naturels sur toile' : 'Acrylic & natural earth pigments on canvas',
       dimensions: '120 × 200 cm (47.2 × 78.7 in)',
       image: '/kaze-hero.jpg',
@@ -44,7 +44,7 @@ export default function TriptychCoverflow({ onSelectArtwork }: TriptychCoverflow
         : 'A monumental contemplation of Rwanda’s volcanic ridges bathed in morning mist, translating resilience, inner stillness, and collective elevation into layered chromatic harmony.',
       artworkRef: REHEMA_ARTWORKS[1],
     },
-    ...REHEMA_ARTWORKS.slice(0, 5).map((art) => ({
+    ...REHEMA_ARTWORKS.slice(0, 10).map((art) => ({
       id: art.id,
       title: art.title,
       artistIdentifier: art.artistIdentifier,
@@ -306,7 +306,7 @@ export default function TriptychCoverflow({ onSelectArtwork }: TriptychCoverflow
           </h3>
 
           <p className="text-[11px] sm:text-xs text-amber-900 font-semibold uppercase tracking-wider mt-1">
-            {currentItem.artistIdentifier} � {currentItem.dimensions}
+            {currentItem.artistIdentifier} � {currentItem.dimensions}
           </p>
 
           {/* Curatorial Description */}
@@ -342,7 +342,7 @@ export default function TriptychCoverflow({ onSelectArtwork }: TriptychCoverflow
           ))}
         </div>
 
-        {/* 5. Story & Inquire Buttons � below dot indicators */}
+        {/* 5. Story & Inquire Buttons � below dot indicators */}
         <div className="mt-5 flex items-center justify-center gap-3 flex-wrap">
           <button
             type="button"
