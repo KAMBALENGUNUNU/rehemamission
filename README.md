@@ -28,6 +28,12 @@ A luxury, bilingual (English & French) digital platform for **Rehema Mission Rwa
 - **Solid Sticky Navbar**: Removed transparency in favor of a crisp, non-distracting white backdrop with sticky elevation.
 - **Refined Showcase**: Streamlined artwork cards with yellow *View in Gallery* buttons and removal of price tags for gallery emphasis.
 
+### 4. Kaze Collection Fine Art Catalog & Atelier Integration
+- **37 Authentic Masterworks**: High-resolution catalog showcasing original works by youth artisans at Ebenezer Atelier in Kigali.
+- **Thematic Depth**: Spiritual allegories (Ephesians 6, Jeremiah 17, Job 14), recovery and personal breakthrough journeys, wildlife sanctuaries (Akagera), and vibrant Kigali cultural street scenes.
+- **3D Triptych Coverflow**: Interactive perspective stage with smooth inertia scroll, synchronized caption metadata, and WhatsApp inquiry links.
+- **Curated Multi-Filter Gallery**: Instant category switching across All Masterworks, Original Paintings, Cultural & Wildlife, Drawings & Ink, and Mixed Media & Relief.
+
 ---
 
 ## Technology Stack
