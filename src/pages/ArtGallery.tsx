@@ -347,6 +347,7 @@ export default function ArtGallery() {
             {[
               { id: 'all', label: t('gal.catAll', 'All Masterworks') },
               { id: 'paintings', label: t('gal.catPaintings', 'Paintings') },
+              { id: 'cultural', label: language === 'fr' ? 'Culture & Faune' : 'Culture & Wildlife' },
               { id: 'drawings', label: t('gal.catDrawings', 'Drawings & Ink') },
               { id: 'mixed-media', label: t('gal.catMixed', 'Mixed Media') },
             ].map((tab) => {
