@@ -170,6 +170,7 @@ export default function Partner() {
                       setFormData({
                         name: '',
                         organization: '',
+                        role: '',
                         email: '',
                         phone: '',
                         area: 'Youth awareness and prevention workshops',
