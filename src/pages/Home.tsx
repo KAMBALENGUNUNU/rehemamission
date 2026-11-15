@@ -24,7 +24,13 @@ export default function Home() {
 
   const t = (key: keyof typeof TRANSLATIONS.en) => TRANSLATIONS[language]?.[key] ?? TRANSLATIONS.en[key];
 
-  const featuredArtworks = REHEMA_ARTWORKS.slice(0, 4);
+  // Curated showcase: Keep Kubohorwa (Breaking the Ropes) + WA0049, WA0017, WA0044
+  const featuredArtworks: Artwork[] = [
+    REHEMA_ARTWORKS.find((a) => a.id === 'kaze-01') || REHEMA_ARTWORKS[0],
+    REHEMA_ARTWORKS.find((a) => a.id === 'kaze-22' || a.image.includes('WA0049'))!,
+    REHEMA_ARTWORKS.find((a) => a.id === 'kaze-26' || a.image.includes('WA0017'))!,
+    REHEMA_ARTWORKS.find((a) => a.id === 'kaze-21' || a.image.includes('WA0044'))!,
+  ].filter(Boolean);
 
   return (
     <div className="page-enter bg-slate-50 min-h-screen text-slate-900">
