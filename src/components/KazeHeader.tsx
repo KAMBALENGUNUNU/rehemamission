@@ -43,6 +43,34 @@ export default function KazeHeader() {
     setMenuOpen(false);
   }, [location.pathname, location.hash]);
 
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [menuOpen]);
+
+  // Close drawer on Escape or resize to desktop
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setMenuOpen(false);
+    };
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) setMenuOpen(false);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   const navLinks = [
     { to: '/gallery#gallery', hash: '#gallery', label: t('kazeNav.gallery', 'Gallery'), icon: Layers },
     { to: '/gallery#exhibitions', hash: '#exhibitions', label: t('kazeNav.exhibitions', 'Exhibitions'), icon: Eye },
@@ -151,7 +179,7 @@ export default function KazeHeader() {
           </Link>
 
           {/* Desktop Navigation Links — Strictly focused on Kaze Collection (matching Hero title serif font) */}
-          <div className="hidden lg:flex items-center gap-8">
+          <div className="hidden lg:flex items-center gap-5 xl:gap-8">
             {navLinks.map((link) => {
               const active = isLinkActive(link.to, link.hash);
               return (
@@ -236,7 +264,7 @@ export default function KazeHeader() {
 
       {/* 3. Mobile Navigation Drawer (LIGHT, CLEAR, ELEGANT) */}
       {menuOpen && (
-        <div className="lg:hidden bg-[#faf7f2]/98 backdrop-blur-xl border-b border-stone-200 shadow-xl px-4 py-6 space-y-4 animate-fade-in text-stone-900">
+        <div className="lg:hidden bg-[#faf7f2]/98 backdrop-blur-xl border-b border-stone-200 shadow-xl px-4 py-6 space-y-4 animate-fade-in text-stone-900 max-h-[calc(100dvh-110px)] overflow-y-auto overscroll-contain">
           {/* Atelier Badge in Mobile */}
           <div className="flex items-center justify-between pb-3 border-b border-stone-200">
             <div className="flex items-center gap-2">

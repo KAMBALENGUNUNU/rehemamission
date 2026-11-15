@@ -72,17 +72,17 @@ export default function Home() {
             style={{ animationDelay: '0.24s' }}
           >
             <Link
-              to="/gallery"
+              to="/our-story"
               className="btn-accent shadow-lg text-xs sm:text-sm px-8 py-3.5 text-center font-semibold uppercase tracking-wider"
             >
-              <span>{t('hero.ctaGallery')}</span>
+              <span>{t('hero.ctaMission')}</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
             <Link
-              to="/our-story"
+              to="/our-work"
               className="px-8 py-3.5 rounded text-xs sm:text-sm font-semibold tracking-wider uppercase text-white border border-white/40 hover:bg-white/15 hover:border-white transition-all backdrop-blur-sm"
             >
-              <span>{t('hero.ctaMission')}</span>
+              <span>{t('hero.ctaWork')}</span>
             </Link>
           </div>
 
@@ -125,9 +125,9 @@ export default function Home() {
             />
 
             {/* Rounded Image Container with Transparent Border */}
-            <div className="relative z-10 aspect-[3/4] rounded-[24px] sm:rounded-[26px] overflow-hidden shadow-2xl bg-slate-100">
+            <div className="relative z-10 aspect-square sm:aspect-[4/5] rounded-[24px] sm:rounded-[26px] overflow-hidden shadow-2xl bg-slate-100">
               <img
-                src="/listening-mission.jpg"
+                src="/rehema-caregiver-listening.jpg"
                 alt="A Mission Built on Listening — Compassionate listening and recovery dialogue at Rehema Mission Rwanda"
                 className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
               />

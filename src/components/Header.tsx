@@ -37,6 +37,34 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [menuOpen]);
+
+  // Close drawer on Escape or resize to desktop
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setMenuOpen(false);
+    };
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) setMenuOpen(false);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   const links = language === 'fr' ? navLinksFr : navLinksEn;
 
   return (
@@ -49,7 +77,7 @@ export default function Header() {
               <img
                 src="/logo.png"
                 alt="Logo"
-                className="h-9 sm:h-11 w-auto max-w-[200px] object-contain transition-transform duration-200 group-hover:scale-[1.02]"
+                className="h-8 sm:h-9 md:h-11 w-auto max-w-[130px] sm:max-w-[170px] lg:max-w-[200px] object-contain transition-transform duration-200 group-hover:scale-[1.02]"
                 onError={(e) => {
                   const target = e.currentTarget;
                   if (!target.dataset.triedSvg) {
@@ -76,14 +104,14 @@ export default function Header() {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-7">
+          <nav className="hidden lg:flex items-center gap-3.5 xl:gap-5 2xl:gap-7">
             {links.map((link) => (
               <NavLink
                 key={link.to}
                 to={link.to}
                 end={link.to === '/'}
                 className={({ isActive }) =>
-                  `text-xs tracking-[0.14em] uppercase transition-colors duration-200 relative group py-1.5 ${
+                  `text-[11px] xl:text-xs tracking-[0.08em] xl:tracking-[0.14em] uppercase transition-colors duration-200 relative group py-1.5 whitespace-nowrap ${
                     isActive
                       ? 'text-slate-950 font-bold'
                       : 'text-slate-600 hover:text-slate-950 font-medium'
@@ -171,7 +199,7 @@ export default function Header() {
       {menuOpen && (
         <div className="fixed inset-0 z-50 lg:hidden">
           <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm" onClick={() => setMenuOpen(false)} />
-          <div className="absolute right-0 top-0 h-full w-80 max-w-[85vw] bg-white shadow-2xl animate-slide-in-right flex flex-col justify-between">
+          <div className="absolute right-0 top-0 h-full w-80 max-w-[85vw] bg-white shadow-2xl animate-slide-in-right flex flex-col justify-between overflow-y-auto overscroll-contain">
             <div>
               {/* Drawer Header */}
               <div className="flex items-center justify-between p-6 border-b border-slate-100 bg-slate-50">

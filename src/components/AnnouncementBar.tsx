@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Sparkles, X } from 'lucide-react';
+import { X } from 'lucide-react';
 import { useWebsiteSettings } from '@/lib/settings';
 
 export default function AnnouncementBar() {
@@ -25,8 +25,7 @@ export default function AnnouncementBar() {
         <div className="animate-marquee flex items-center whitespace-nowrap cursor-pointer">
           {items.map((i) => (
             <div key={i} className="flex items-center gap-6 md:gap-10 px-4 md:px-8">
-              <span className="inline-flex items-center gap-2.5">
-                <Sparkles className="w-3.5 h-3.5 text-amber-600 flex-shrink-0 animate-pulse" />
+              <span className="inline-flex items-center gap-2">
                 <span className="font-serif italic text-amber-900 text-xs sm:text-sm font-semibold tracking-wide">
                   Ebenezer:
                 </span>
@@ -34,7 +33,7 @@ export default function AnnouncementBar() {
                   {rawMessage.replace(/^[“"]?Thus far the Lord has helped us[”"]?\s*\(1 Samuel 7:12\)\s*—?\s*/i, '').trim() || rawMessage}
                 </span>
               </span>
-              <span className="text-amber-400 text-xs">✦</span>
+              <span className="text-amber-400 text-xs font-bold">•</span>
             </div>
           ))}
         </div>
