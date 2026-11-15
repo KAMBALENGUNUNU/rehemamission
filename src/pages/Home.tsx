@@ -15,6 +15,7 @@ import AnnouncementBar from '@/components/AnnouncementBar';
 import RotatingRingsTheme from '@/components/RotatingRingsTheme';
 import PillarStickerCards from '@/components/PillarStickerCards';
 import StorytellingDonateSection from '@/components/StorytellingDonateSection';
+import SEOHead from '@/components/SEOHead';
 import { TRANSLATIONS } from '@/lib/translations';
 
 export default function Home() {
@@ -34,6 +35,20 @@ export default function Home() {
 
   return (
     <div className="page-enter bg-slate-50 min-h-screen text-slate-900">
+      <SEOHead
+        title={
+          language === 'fr'
+            ? 'Rehema Mission Rwanda | Foi, Accompagnement & Restauration des Jeunes à Kigali'
+            : 'Rehema Mission Rwanda | Faith, Healing & Youth Restoration Kigali'
+        }
+        description={
+          language === 'fr'
+            ? 'Fondée en 1998 par Assumpta Kayiranga à Kigali, Rehema Mission Rwanda chemine aux côtés des jeunes et des familles par l’écoute bienveillante, l’accompagnement et la Collection Kaze.'
+            : 'Founded in 1998 by Assumpta Kayiranga in Kigali, Rehema Mission Rwanda supports youth and families through compassionate listening, recovery care, and Kaze Collection fine art.'
+        }
+        canonicalPath="/"
+        keywords="Rehema Mission Rwanda, Assumpta Kayiranga, Kaze Collection, art gallery in Rwanda, art in Kigali, youth recovery Rwanda, Ebenezer Kigali, African fine art"
+      />
       {/* 1. HERO SECTION — FULL-WIDTH IMAGE WITH CENTERED TEXT DIRECTLY ON TOP */}
       <section className="relative w-full min-h-[85vh] sm:min-h-[88vh] lg:min-h-[92vh] flex items-center justify-center overflow-hidden border-b border-slate-200/80 bg-slate-950">
         {/* Full-Width Artwork Canvas */}
@@ -251,7 +266,7 @@ export default function Home() {
                     >
                       <img
                         src={art.image}
-                        alt={art.title}
+                        alt={`${art.title} — Original Rwandan Fine Art by Kaze Collection Kigali`}
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                       />
 

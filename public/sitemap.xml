@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <!-- 1. Home / Rehema Mission Rwanda -->
+  <url>
+    <loc>https://rehemamission.org/</loc>
+    <lastmod>2026-11-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rehemamission.org/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://rehemamission.org/" />
+  </url>
+
+  <!-- 2. Kaze Collection Fine Art Gallery in Rwanda -->
+  <url>
+    <loc>https://rehemamission.org/gallery</loc>
+    <lastmod>2026-11-15</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rehemamission.org/gallery" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://rehemamission.org/gallery" />
+  </url>
+
+  <!-- 3. Our Story / Assumpta Kayiranga & Origins (Est. 1998) -->
+  <url>
+    <loc>https://rehemamission.org/our-story</loc>
+    <lastmod>2026-11-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.90</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rehemamission.org/our-story" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://rehemamission.org/our-story" />
+  </url>
+
+  <!-- 4. Our Work / Youth Recovery & Restoration in Kigali -->
+  <url>
+    <loc>https://rehemamission.org/our-work</loc>
+    <lastmod>2026-11-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rehemamission.org/our-work" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://rehemamission.org/our-work" />
+  </url>
+
+  <!-- 5. Visit / Private Atelier Viewing in Kicukiro, Kigali -->
+  <url>
+    <loc>https://rehemamission.org/visit</loc>
+    <lastmod>2026-11-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rehemamission.org/visit" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://rehemamission.org/visit" />
+  </url>
+
+  <!-- 6. Partner With Us / Collaborations & Support -->
+  <url>
+    <loc>https://rehemamission.org/partner</loc>
+    <lastmod>2026-11-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rehemamission.org/partner" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://rehemamission.org/partner" />
+  </url>
+
+  <!-- 7. Contact / Rehema Mission & Assumpta Kayiranga -->
+  <url>
+    <loc>https://rehemamission.org/contact</loc>
+    <lastmod>2026-11-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rehemamission.org/contact" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://rehemamission.org/contact" />
+  </url>
+</urlset>

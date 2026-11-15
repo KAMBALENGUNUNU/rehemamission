@@ -24,6 +24,7 @@ import { useStore } from '@/store/StoreContext';
 import { TRANSLATIONS, type TranslationKey } from '@/lib/translations';
 import KazeLogo from '@/components/logos/KazeLogo';
 import TriptychCoverflow from '@/components/TriptychCoverflow';
+import SEOHead from '@/components/SEOHead';
 import ArtGalleryThemePattern from '@/components/ArtGalleryThemePattern';
 
 interface PushpinTheme {
@@ -235,6 +236,42 @@ export default function ArtGallery() {
 
   return (
     <div className="page-enter bg-[#F9EB9A] min-h-screen text-stone-900 pb-0 relative overflow-hidden">
+      <SEOHead
+        title={
+          language === 'fr'
+            ? 'Collection Kaze | Galerie d’Art Contemporain & Atelier de Jeunesse au Rwanda, Kigali'
+            : 'Kaze Collection | Premier Contemporary Art Gallery in Rwanda & Kigali Atelier'
+        }
+        description={
+          language === 'fr'
+            ? 'Explorez la Collection Kaze, galerie d’art contemporain à Kigali au Rwanda. Découvrez des tableaux originaux, des toiles en relief et des chefs-d’œuvre peints par nos jeunes artisans de Rehema Mission.'
+            : 'Discover Kaze Collection, a premier fine art gallery in Kigali, Rwanda. Explore original paintings, textured impasto, and cultural masterworks handcrafted by emerging youth artisans of Rehema Mission.'
+        }
+        canonicalPath="/gallery"
+        keywords="Kaze Collection, art gallery in Rwanda, art gallery in Kigali, contemporary art Rwanda, Rwandan paintings, buy original African art, Kigali art exhibitions, Kicukiro art atelier, Rehema Mission youth art"
+        ogImage="/artworks/IMG-20261025-WA0025.jpg"
+        schema={{
+          '@context': 'https://schema.org',
+          '@type': 'ArtGallery',
+          name: 'Kaze Collection',
+          alternateName: 'Collection Kaze',
+          url: 'https://rehemamission.org/gallery',
+          description:
+            'Premier contemporary Rwandan fine art gallery and youth vocational atelier located in Kicukiro, Kigali, Rwanda.',
+          image: 'https://rehemamission.org/artworks/IMG-20261025-WA0025.jpg',
+          address: {
+            '@type': 'PostalAddress',
+            streetAddress: 'Kicukiro Sector',
+            addressLocality: 'Kigali',
+            addressCountry: 'RW',
+          },
+          parentOrganization: {
+            '@type': 'NGO',
+            name: 'Rehema Mission Rwanda',
+            url: 'https://rehemamission.org',
+          },
+        }}
+      />
       {/* 1. Kaze Collection Hero Section with Bespoke Fine Art SVG Theme Pattern in Soft Muted Yellow */}
       <section className="relative z-10 pt-28 sm:pt-36 lg:pt-44 pb-28 sm:pb-36 lg:pb-44 px-4 sm:px-6 lg:px-8 overflow-hidden bg-gradient-to-b from-[#FEF2B8] via-[#F9E68C] to-[#F2D668] text-slate-950">
         {/* Delicate, subtle watermark Fine Art Studio Vector Pattern in background */}
@@ -432,7 +469,7 @@ export default function ArtGallery() {
                   >
                     <img
                       src={art.image}
-                      alt={art.title}
+                      alt={`${art.title} — Original Fine Art Painting by Kaze Collection Atelier Kigali`}
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
 

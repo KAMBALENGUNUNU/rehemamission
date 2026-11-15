@@ -11,6 +11,7 @@ import { useWebsiteSettings } from '@/lib/settings';
 import { useStore } from '@/store/StoreContext';
 import { TRANSLATIONS, type TranslationKey } from '@/lib/translations';
 import Pushpin, { PIN_CARD_THEMES } from '@/components/Pushpin';
+import SEOHead from '@/components/SEOHead';
 
 export default function Visit() {
   const settings = useWebsiteSettings();
@@ -46,6 +47,20 @@ export default function Visit() {
 
   return (
     <div className="page-enter bg-slate-50 min-h-screen text-slate-900 pb-24">
+      <SEOHead
+        title={
+          language === 'fr'
+            ? 'Visiter la Galerie d’Art Collection Kaze | Kicukiro, Kigali, Rwanda'
+            : 'Visit Kaze Collection Art Gallery | Kicukiro, Kigali, Rwanda'
+        }
+        description={
+          language === 'fr'
+            ? 'Organisez votre visite privée à la galerie d’art Collection Kaze à Kicukiro, Kigali. Découvrez nos toiles contemporaines rwandaises et rencontrez nos artistes.'
+            : 'Schedule a private viewing at Kaze Collection art gallery in Kicukiro, Kigali. Experience Rwanda’s premier contemporary fine art and meet our emerging youth artisans.'
+        }
+        canonicalPath="/visit"
+        keywords="visit art gallery in Rwanda, Kigali art gallery tour, Kaze Collection Kigali, private art viewing Rwanda, Kicukiro art atelier, buy Rwandan paintings Kigali"
+      />
       {/* Header — CLEAR & LIGHT */}
       <section className="bg-gradient-to-b from-amber-50/80 via-white to-slate-50 text-slate-900 py-16 sm:py-20 px-4 sm:px-6 lg:px-8 border-b border-slate-200 relative">
         <div className="max-w-4xl mx-auto text-center">

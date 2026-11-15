@@ -1,0 +1,10 @@
+# robots.txt for Rehema Mission Rwanda & Kaze Collection
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+Disallow: /login
+Disallow: /signup
+Disallow: /profile
+
+Sitemap: https://rehemamission.org/sitemap.xml

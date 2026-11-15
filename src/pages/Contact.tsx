@@ -13,6 +13,7 @@ import { useWebsiteSettings } from '@/lib/settings';
 import { useStore } from '@/store/StoreContext';
 import { TRANSLATIONS, type TranslationKey } from '@/lib/translations';
 import Pushpin, { PIN_CARD_THEMES } from '@/components/Pushpin';
+import SEOHead from '@/components/SEOHead';
 
 export default function Contact() {
   const settings = useWebsiteSettings();
@@ -113,6 +114,20 @@ export default function Contact() {
 
   return (
     <div className="page-enter bg-slate-50 min-h-screen text-slate-900 pb-24">
+      <SEOHead
+        title={
+          language === 'fr'
+            ? 'Contactez Rehema Mission Rwanda & Assumpta Kayiranga | Kicukiro, Kigali'
+            : 'Contact Rehema Mission Rwanda & Assumpta Kayiranga | Kicukiro, Kigali'
+        }
+        description={
+          language === 'fr'
+            ? 'Entrez en contact avec Assumpta Kayiranga et l’équipe de Rehema Mission Rwanda à Kicukiro, Kigali. Écoute confidentielle, questions sur la Collection Kaze ou partenariats.'
+            : 'Contact Assumpta Kayiranga and the Rehema Mission Rwanda team in Kicukiro, Kigali. Confidential listening, Kaze Collection art inquiries, and partnership requests.'
+        }
+        canonicalPath="/contact"
+        keywords="contact Rehema Mission Rwanda, Assumpta Kayiranga email, Kaze Collection contact, visit Rehema Kigali, youth support contact Rwanda"
+      />
       {/* Header — CLEAR & LIGHT */}
       <section className="bg-gradient-to-b from-amber-50/80 via-white to-slate-50 text-slate-900 py-16 sm:py-20 px-4 sm:px-6 lg:px-8 border-b border-slate-200 relative">
         <div className="max-w-4xl mx-auto text-center">

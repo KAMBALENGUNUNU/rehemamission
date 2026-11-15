@@ -4,6 +4,7 @@ import { useStore } from '@/store/StoreContext';
 import { REHEMA_ARTWORKS } from '@/lib/artworks';
 import { formatPrice } from '@/lib/utils';
 import { TRANSLATIONS, type TranslationKey } from '@/lib/translations';
+import SEOHead from '@/components/SEOHead';
 
 export default function Favorites() {
   const { favorites, toggleFavorite, language } = useStore();
@@ -15,6 +16,11 @@ export default function Favorites() {
   if (savedArtworks.length === 0) {
     return (
       <div className="page-enter max-w-2xl mx-auto px-4 py-32 text-center text-slate-900">
+        <SEOHead
+          title={language === 'fr' ? 'Œuvres Sauvegardées | Collection Kaze' : 'Saved Artworks | Kaze Collection'}
+          description="View your saved fine art pieces and curated paintings from Kaze Collection."
+          canonicalPath="/favorites"
+        />
         <Heart className="w-16 h-16 mx-auto text-slate-300 mb-8" strokeWidth={1} />
         <h1 className="font-serif text-3xl sm:text-4xl font-light text-slate-950 mb-4">
           {t('fav.emptyTitle')}
@@ -31,6 +37,11 @@ export default function Favorites() {
 
   return (
     <div className="page-enter max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 text-slate-900">
+      <SEOHead
+        title={language === 'fr' ? 'Œuvres Sauvegardées | Collection Kaze' : 'Saved Artworks | Kaze Collection'}
+        description="View your saved fine art pieces and curated paintings from Kaze Collection."
+        canonicalPath="/favorites"
+      />
       <div className="text-center mb-12">
         <p className="eyebrow mb-2">{t('fav.eyebrow')}</p>
         <h1 className="section-title text-3xl sm:text-4xl">

@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import { useStore } from '@/store/StoreContext';
 import { TRANSLATIONS, type TranslationKey } from '@/lib/translations';
+import SEOHead from '@/components/SEOHead';
 
 interface PinCardTheme {
   primary: string;
@@ -513,6 +514,20 @@ export default function OurWork() {
 
   return (
     <div className="page-enter bg-slate-50 min-h-screen text-slate-900 pb-24">
+      <SEOHead
+        title={
+          language === 'fr'
+            ? 'Notre Action | Accompagnement, Écoute & Réinsertion des Jeunes | Rehema Mission Rwanda'
+            : 'Our Work | Youth Restoration, Addiction Recovery & Care | Rehema Mission Rwanda'
+        }
+        description={
+          language === 'fr'
+            ? 'Découvrez les programmes de Rehema Mission Rwanda : écoute active, accompagnement familial, prévention en milieu scolaire et formation artisanale à Kigali.'
+            : 'Discover Rehema Mission Rwanda programs: compassionate listening, family accompaniment, youth addiction recovery, prevention, and creative vocational training in Kigali.'
+        }
+        canonicalPath="/our-work"
+        keywords="youth recovery Rwanda, addiction support Kigali, Rehema Mission Rwanda programs, family accompaniment Rwanda, youth vocational training Kigali"
+      />
       {/* Header — CLEAR & LIGHT */}
       <section className="bg-gradient-to-b from-amber-50/80 via-white to-slate-50 text-slate-900 py-16 sm:py-20 px-4 sm:px-6 lg:px-8 border-b border-slate-200 relative">
         <div className="max-w-4xl mx-auto text-center">

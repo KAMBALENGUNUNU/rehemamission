@@ -6,6 +6,7 @@ import { TRANSLATIONS, type TranslationKey } from '@/lib/translations';
 import RotatingRingsTheme from '@/components/RotatingRingsTheme';
 import CoreValuesCards from '@/components/CoreValuesCards';
 import Pushpin, { PIN_CARD_THEMES } from '@/components/Pushpin';
+import SEOHead from '@/components/SEOHead';
 
 export default function OurStory() {
   const settings = useWebsiteSettings();
@@ -15,6 +16,39 @@ export default function OurStory() {
 
   return (
     <div className="page-enter bg-[#FAF7F2] min-h-screen text-slate-900 pb-24">
+      <SEOHead
+        title={
+          language === 'fr'
+            ? 'Assumpta Kayiranga & Notre Histoire | Rehema Mission Rwanda (Depuis 1998)'
+            : 'Assumpta Kayiranga & Our Story | Rehema Mission Rwanda (Est. 1998)'
+        }
+        description={
+          language === 'fr'
+            ? 'Découvrez l’histoire d’Assumpta Kayiranga, fondatrice de Rehema Mission Rwanda en 1998 à Kigali, et plus de 26 ans d’engagement pour l’écoute, la dignité et la restauration des jeunes.'
+            : 'Learn about Assumpta Kayiranga, founder of Rehema Mission Rwanda in 1998 in Kigali, and over 26 years of dedicated compassionate listening, youth restoration, and family care.'
+        }
+        canonicalPath="/our-story"
+        keywords="Assumpta Kayiranga, Mama Assumpta, Rehema Mission Rwanda, founder Rehema Mission, youth recovery Kigali, Ebenezer Rwanda, Kaze Collection founder, Kigali community leader"
+        ogImage="/maman.png"
+        schema={{
+          '@context': 'https://schema.org',
+          '@type': 'AboutPage',
+          mainEntity: {
+            '@type': 'Person',
+            name: 'Assumpta Kayiranga',
+            alternateName: 'Mama Assumpta',
+            jobTitle: 'Founder & Visionary Leader',
+            worksFor: {
+              '@type': 'NGO',
+              name: 'Rehema Mission Rwanda',
+              url: 'https://rehemamission.org',
+            },
+            description:
+              'Assumpta Kayiranga founded Rehema Mission Rwanda in 1998, establishing compassionate listening and vocational art mentorship for youth in Kigali.',
+            image: 'https://rehemamission.org/maman.png',
+          },
+        }}
+      />
       {/* 1. Page Header Hero Section */}
       <section className="relative bg-[#FAF7F2] min-h-[520px] sm:min-h-[620px] lg:min-h-[680px] flex flex-col items-center justify-center py-20 sm:py-28 md:py-36 px-4 sm:px-6 lg:px-8 overflow-hidden">
         {/* Luxury Rotating Rings SVG Theme (The Signature Gallery) in Background */}

@@ -7,6 +7,7 @@ import { useWebsiteSettings } from '@/lib/settings';
 import { useStore } from '@/store/StoreContext';
 import { TRANSLATIONS, type TranslationKey } from '@/lib/translations';
 import Pushpin, { PIN_CARD_THEMES } from '@/components/Pushpin';
+import SEOHead from '@/components/SEOHead';
 
 export default function Partner() {
   const settings = useWebsiteSettings();
@@ -67,6 +68,20 @@ export default function Partner() {
 
   return (
     <div className="page-enter bg-slate-50 min-h-screen text-slate-900 pb-24">
+      <SEOHead
+        title={
+          language === 'fr'
+            ? 'Devenir Partenaire | Collaborations Éducatives & Mécénat | Rehema Mission Rwanda'
+            : 'Partner With Us | Education, Health & Community Collaboration | Rehema Mission Rwanda'
+        }
+        description={
+          language === 'fr'
+            ? 'Collaborez avec Rehema Mission Rwanda : établissements scolaires, associations, mécènes et institutions unissent leurs forces pour la jeunesse et les familles à Kigali.'
+            : 'Partner with Rehema Mission Rwanda: schools, health centers, organizations, and cultural patrons working together for youth restoration and community care in Kigali.'
+        }
+        canonicalPath="/partner"
+        keywords="partner Rehema Mission Rwanda, NGO partnerships Rwanda, CSR Rwanda, donate youth education Kigali, art sponsorship Rwanda"
+      />
       {/* Header — CLEAR & LIGHT */}
       <section className="bg-gradient-to-b from-amber-50/80 via-white to-slate-50 text-slate-900 py-16 sm:py-20 px-4 sm:px-6 lg:px-8 border-b border-slate-200 relative">
         <div className="max-w-4xl mx-auto text-center">
