@@ -631,24 +631,48 @@ export default function ArtGallery() {
 
             {/* Right Hero Exhibition Image Card (5 cols) */}
             <div className="lg:col-span-5">
-              <div className="relative rounded-2xl overflow-hidden shadow-2xl bg-stone-100 border border-amber-200">
-                <img
-                  src="/kaze-hero.jpg"
-                  alt="Horizons of the Thousand Hills - Kaze Collection Exhibition"
-                  className="w-full h-[360px] object-cover object-center"
-                />
-                <div className="p-4 bg-white/95 backdrop-blur-md border-t border-stone-200">
-                  <p className="text-xs uppercase tracking-wider text-amber-800 font-semibold">
-                    {language === 'fr' ? 'Pièce Maîtresse' : 'Exhibition Centerpiece'}
-                  </p>
-                  <p className="font-serif text-lg text-stone-950 font-normal">
-                    {language === 'fr' ? 'Symphonie des Mille Collines' : 'Symphony of the Thousand Hills'}
-                  </p>
-                  <p className="text-[11px] text-stone-500">
-                    {language === 'fr' ? 'Atelier Kaze · Kicukiro, Kigali' : 'Kaze Atelier · Kicukiro, Kigali'}
-                  </p>
-                </div>
-              </div>
+              {(() => {
+                const centerpiece =
+                  REHEMA_ARTWORKS.find((a) => a.id === 'kaze-32' || a.image.includes('WA0025')) ||
+                  REHEMA_ARTWORKS[1];
+                return (
+                  <div
+                    onClick={() => setSelectedArtwork(centerpiece)}
+                    className="relative rounded-2xl overflow-hidden shadow-2xl bg-stone-100 border border-amber-200 cursor-pointer group transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(217,119,6,0.18)]"
+                    title={language === 'fr' ? "Cliquer pour voir l'œuvre en détail" : 'Click to inspect artwork details'}
+                  >
+                    <div className="overflow-hidden aspect-[16/10] sm:aspect-[16/9] lg:h-[340px] w-full bg-stone-900">
+                      <img
+                        src="/artworks/IMG-20261025-WA0025.jpg"
+                        alt="Horizons of the Thousand Hills - Ikirere cy’Amahoro - Kaze Collection Exhibition Centerpiece"
+                        className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
+                      />
+                    </div>
+                    <div className="p-4 bg-white/95 backdrop-blur-md border-t border-stone-200">
+                      <div className="flex items-center justify-between">
+                        <p className="text-xs uppercase tracking-wider text-amber-800 font-semibold">
+                          {language === 'fr' ? 'Pièce Maîtresse' : 'Exhibition Centerpiece'}
+                        </p>
+                        <span className="text-[10px] uppercase font-bold text-amber-900 bg-amber-100/90 px-2 py-0.5 rounded-full">
+                          {centerpiece.status === 'available'
+                            ? language === 'fr'
+                              ? 'Disponible'
+                              : 'Available'
+                            : centerpiece.status}
+                        </span>
+                      </div>
+                      <p className="font-serif text-lg text-stone-950 font-medium group-hover:text-amber-800 transition-colors mt-0.5">
+                        {language === 'fr'
+                          ? 'Ikirere cy’Amahoro · Horizons des Mille Collines'
+                          : 'Ikirere cy’Amahoro (Horizons of the Thousand Hills)'}
+                      </p>
+                      <p className="text-[11px] text-stone-500">
+                        {centerpiece.dimensions} · {language === 'fr' ? 'Atelier Kaze · Kicukiro, Kigali' : 'Kaze Atelier · Kicukiro, Kigali'}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })()}
             </div>
           </div>
         </div>

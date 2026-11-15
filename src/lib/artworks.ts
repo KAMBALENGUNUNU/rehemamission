@@ -1002,7 +1002,7 @@ export const REHEMA_ARTWORKS: Artwork[] = [
     priceRwf: 510000,
     priceUsd: 380,
     status: 'available',
-    image: '/artworks/kaze-serene-horizon.jpg',
+    image: '/artworks/IMG-20261025-WA0025.jpg',
     detailImage: '/artworks/IMG-20261025-WA0025.jpg',
     emotionalTheme: 'Terraced Earth, Quiet Lakes & Serene Horizons',
     hook: '“Heavy textural ridges of terracotta, ochre, and dark earth meet the mist-covered green hills of the Rwandan horizon.”',

@@ -38,11 +38,11 @@ export default function TriptychCoverflow({ onSelectArtwork }: TriptychCoverflow
       categoryLabel: language === 'fr' ? "Chef-d'Œuvre Panoramique" : 'Panoramic Masterwork',
       medium: language === 'fr' ? 'Acrylique & pigments naturels sur toile' : 'Acrylic & natural earth pigments on canvas',
       dimensions: '120 × 200 cm (47.2 × 78.7 in)',
-      image: '/kaze-hero.jpg',
+      image: '/artworks/IMG-20261025-WA0025.jpg',
       aboutArt: language === 'fr'
         ? 'Une contemplation monumentale des crêtes volcaniques rwandaises baignées par la brume matinale, symbolisant la résilience, la paix sacrée et l’élévation des jeunes artisans.'
         : 'A monumental contemplation of Rwanda’s volcanic ridges bathed in morning mist, translating resilience, inner stillness, and collective elevation into layered chromatic harmony.',
-      artworkRef: REHEMA_ARTWORKS[1],
+      artworkRef: REHEMA_ARTWORKS.find((a) => a.id === 'kaze-32' || a.image.includes('WA0025')) || REHEMA_ARTWORKS[1],
     },
     ...REHEMA_ARTWORKS.slice(0, 10).map((art) => ({
       id: art.id,
