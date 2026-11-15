@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Mail, Phone, MapPin, Lock, Palette, ArrowRight, Heart, Sparkles, CheckCircle2, ArrowUp } from 'lucide-react';
+import { Mail, Phone, MapPin, Lock, Palette, ArrowRight, Heart, CheckCircle2, ArrowUp } from 'lucide-react';
 import { useWebsiteSettings } from '@/lib/settings';
 import { useStore } from '@/store/StoreContext';
 import { TRANSLATIONS, type TranslationKey } from '@/lib/translations';
@@ -52,7 +52,6 @@ export default function KazeFooter() {
                 to="/our-story"
                 className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full border border-amber-400/50 bg-gradient-to-r from-amber-500/15 via-amber-500/10 to-transparent hover:from-amber-400 hover:to-amber-500 text-amber-300 hover:text-slate-950 text-xs font-semibold uppercase tracking-wider transition-all duration-300 shadow-md group"
               >
-                <Sparkles className="w-3.5 h-3.5 text-amber-400 group-hover:text-slate-950 transition-colors" />
                 <span>{t('kazeFooter.parentLink', 'Rehema Mission · Our Story')}</span>
                 <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 group-hover:text-slate-950 transition-transform" />
               </Link>

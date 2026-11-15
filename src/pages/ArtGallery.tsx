@@ -250,13 +250,50 @@ export default function ArtGallery() {
               : 'Where Rwandan Heritage Meets Contemporary Haute Artistry'}
           </h1>
 
-          {/* Subtitle */}
+          {/* Subtitle with clickable Rehema Mission Rwanda redirect */}
           <p className="mt-6 text-base sm:text-lg md:text-xl text-slate-900/90 font-medium max-w-2xl mx-auto leading-relaxed">
-            {t(
-              'gal.subtitle',
-              'Original paintings, fine drawings, and collector pieces handcrafted by talented youth at the Ebenezer vocational atelier in Kigali. 100% of acquisition proceeds fund their education, health, and vocational independence.'
+            {language === 'fr' ? (
+              <>
+                La Collection Kaze réunit des œuvres authentiques créées par des jeunes accompagnés et guidés au sein de{' '}
+                <Link
+                  to="/"
+                  className="font-bold text-slate-950 underline underline-offset-4 decoration-amber-700/80 hover:text-amber-900 hover:decoration-amber-900 transition-colors"
+                  title="Visiter Rehema Mission Rwanda"
+                >
+                  Rehema Mission Rwanda
+                </Link>
+                . À travers l’art, ils expriment la renaissance, la résilience et l’espérance. Les toiles sont créées et vendues au profit direct des jeunes artisans pour leur offrir autonomie, dignité professionnelle et avenir durable.
+              </>
+            ) : (
+              <>
+                Kaze Collection brings together authentic original artworks created by the young people supported and mentored through{' '}
+                <Link
+                  to="/"
+                  className="font-bold text-slate-950 underline underline-offset-4 decoration-amber-700/80 hover:text-amber-900 hover:decoration-amber-900 transition-colors"
+                  title="Visit Rehema Mission Rwanda"
+                >
+                  Rehema Mission Rwanda
+                </Link>
+                . Through art, they express renewal, raw experience, and hope. The artworks are created and sold under Kaze Collection to build self-reliance, vocational dignity, and sustainable futures for each young artisan.
+              </>
             )}
           </p>
+
+          {/* Direct Redirect Pill to Rehema Mission Rwanda Page */}
+          <div className="mt-5 flex items-center justify-center">
+            <Link
+              to="/"
+              className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-950 bg-black/5 hover:bg-black/10 border border-slate-900/25 px-5 py-2 rounded-full transition-all group shadow-sm hover:scale-[1.02]"
+              title="Return to Rehema Mission Rwanda"
+            >
+              <ArrowLeft className="w-3.5 h-3.5 text-amber-800 group-hover:-translate-x-1 transition-transform" />
+              <span>
+                {language === 'fr'
+                  ? 'Découvrir la mission : Rehema Mission Rwanda'
+                  : 'Discover Our Foundation: Rehema Mission Rwanda'}
+              </span>
+            </Link>
+          </div>
 
           {/* Quick Section Jump Pills */}
           <div className="mt-8 flex items-center justify-center gap-3.5 flex-wrap text-xs">

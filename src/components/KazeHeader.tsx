@@ -91,76 +91,7 @@ export default function KazeHeader() {
         hidden ? '-translate-y-full opacity-0 pointer-events-none' : 'translate-y-0 opacity-100'
       }`}
     >
-      {/* 1. Luminous Atelier Bridge Strip: Clear Connection to Rehema Mission Rwanda */}
-      <div
-        className={`transition-colors duration-300 text-[11px] px-4 sm:px-6 lg:px-8 py-2 relative z-20 ${
-          scrolled
-            ? 'bg-[#f8f5ee] border-b border-stone-200/90 text-stone-700'
-            : 'bg-black/10 border-b border-black/10 text-slate-800'
-        }`}
-      >
-        <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
-          {/* Atelier Brand Tag */}
-          <div className="flex items-center gap-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-amber-600 animate-pulse" />
-            <span className={`tracking-[0.2em] uppercase font-semibold hidden sm:inline ${scrolled ? 'text-amber-900' : 'text-amber-950'}`}>
-              {t('kazeNav.bridgeTag', 'Atelier Rehema · Kigali, Rwanda')}
-            </span>
-            <span className={`text-[10px] hidden md:inline ${scrolled ? 'text-stone-500' : 'text-slate-700'}`}>
-              · {t('kazeNav.parentSubtitle', 'An Initiative of Rehema Mission Rwanda')}
-            </span>
-          </div>
-
-          {/* Direct Bridge Link back to Rehema Mission Rwanda */}
-          <div className="flex items-center gap-4">
-            <Link
-              to="/"
-              className={`inline-flex items-center gap-1.5 text-xs font-medium transition-colors group ${
-                scrolled ? 'text-amber-800 hover:text-amber-950' : 'text-slate-900 hover:text-black font-semibold'
-              }`}
-            >
-              <ArrowLeft className={`w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform ${scrolled ? 'text-amber-600' : 'text-slate-900'}`} />
-              <span className="underline underline-offset-4 decoration-amber-600/50 group-hover:decoration-slate-900 font-serif tracking-wide font-normal">
-                {t('kazeNav.returnToMission', '← Return to Rehema Mission Rwanda')}
-              </span>
-            </Link>
-
-            {/* Quick Language Toggle Pill on Top Bar */}
-            <div className={`hidden sm:flex items-center border rounded-full p-0.5 ${scrolled ? 'bg-stone-200/70 border-stone-300/80' : 'bg-black/10 border-black/15'}`}>
-              <button
-                type="button"
-                onClick={() => setLanguage('en')}
-                aria-label="Switch to English"
-                className={`px-2 py-0.5 rounded-full text-[10px] font-semibold tracking-wider transition-all ${
-                  language === 'en'
-                    ? 'bg-slate-950 text-white font-bold shadow-sm'
-                    : scrolled
-                    ? 'text-stone-600 hover:text-stone-950'
-                    : 'text-slate-800 hover:text-black'
-                }`}
-              >
-                EN
-              </button>
-              <button
-                type="button"
-                onClick={() => setLanguage('fr')}
-                aria-label="Passer au Français"
-                className={`px-2 py-0.5 rounded-full text-[10px] font-semibold tracking-wider transition-all ${
-                  language === 'fr'
-                    ? 'bg-slate-950 text-white font-bold shadow-sm'
-                    : scrolled
-                    ? 'text-stone-600 hover:text-stone-950'
-                    : 'text-slate-800 hover:text-black'
-                }`}
-              >
-                FR
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* 2. Main Gallery Navigation Bar (Transparent on Yellow Hero, Matching Reference Image) */}
+      {/* Main Gallery Navigation Bar (Transparent on Yellow Hero, Solid White on Scroll) */}
       <nav
         className={`transition-all duration-300 ${
           scrolled
@@ -207,8 +138,47 @@ export default function KazeHeader() {
             })}
           </div>
 
-          {/* Right Controls: Favorites + Reference Pill Outline Button + Mobile Toggle */}
-          <div className="flex items-center gap-3 sm:gap-4">
+          {/* Right Controls: Language Switcher + Favorites + Reference Pill Outline Button + Mobile Toggle */}
+          <div className="flex items-center gap-2 sm:gap-3.5">
+            {/* Language Switcher in Main Navigation Bar */}
+            <div
+              className={`flex items-center border rounded-full p-0.5 transition-colors ${
+                scrolled
+                  ? 'bg-stone-100 border-stone-300 shadow-inner'
+                  : 'bg-black/5 border-black/15 shadow-inner'
+              }`}
+              title={language === 'en' ? 'Switch to French' : 'Passer à l\'anglais'}
+            >
+              <button
+                type="button"
+                onClick={() => setLanguage('en')}
+                aria-label="Switch to English"
+                className={`px-2.5 py-0.5 rounded-full text-[11px] font-semibold tracking-wider transition-all ${
+                  language === 'en'
+                    ? 'bg-slate-950 text-white font-bold shadow-sm'
+                    : scrolled
+                    ? 'text-stone-600 hover:text-stone-950'
+                    : 'text-slate-800 hover:text-black'
+                }`}
+              >
+                EN
+              </button>
+              <button
+                type="button"
+                onClick={() => setLanguage('fr')}
+                aria-label="Passer au Français"
+                className={`px-2.5 py-0.5 rounded-full text-[11px] font-semibold tracking-wider transition-all ${
+                  language === 'fr'
+                    ? 'bg-slate-950 text-white font-bold shadow-sm'
+                    : scrolled
+                    ? 'text-stone-600 hover:text-stone-950'
+                    : 'text-slate-800 hover:text-black'
+                }`}
+              >
+                FR
+              </button>
+            </div>
+
             {/* Saved Artworks Counter Pill */}
             <Link
               to="/favorites"
