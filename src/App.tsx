@@ -1,5 +1,51 @@
 import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, Component, type ReactNode } from 'react';
+
+class ErrorBoundary extends Component<{ children: ReactNode }, { hasError: boolean; error: Error | null }> {
+  constructor(props: { children: ReactNode }) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+
+  static getDerivedStateFromError(error: Error) {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error: Error, errorInfo: any) {
+    console.error('Unhandled runtime error in React tree:', error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="min-h-screen bg-slate-900 text-white flex flex-col items-center justify-center p-6 text-center">
+          <div className="max-w-md w-full bg-slate-800/90 border border-slate-700 p-8 rounded-2xl shadow-2xl space-y-4">
+            <h2 className="font-serif text-2xl text-amber-400">Rehema Mission Rwanda</h2>
+            <p className="text-slate-300 text-sm">
+              We encountered a temporary display issue. Please refresh or return to the home page.
+            </p>
+            <div className="pt-2 flex items-center justify-center gap-3">
+              <button
+                type="button"
+                onClick={() => window.location.reload()}
+                className="px-5 py-2 rounded-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-semibold text-xs uppercase tracking-wider transition-all"
+              >
+                Reload Page
+              </button>
+              <a
+                href="/"
+                className="px-5 py-2 rounded-full bg-slate-700 hover:bg-slate-600 text-white text-xs uppercase tracking-wider transition-all"
+              >
+                Go Home
+              </a>
+            </div>
+          </div>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
 import { StoreProvider } from '@/store/StoreContext';
 import Header from '@/components/Header';
 import KazeHeader from '@/components/KazeHeader';
@@ -55,10 +101,11 @@ function StorefrontLayout({ children }: { children: React.ReactNode }) {
 
 function App() {
   return (
-    <StoreProvider>
-      <BrowserRouter>
-        <ScrollToTop />
-        <Routes>
+    <ErrorBoundary>
+      <StoreProvider>
+        <BrowserRouter>
+          <ScrollToTop />
+          <Routes>
           {/* Admin routes */}
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin" element={<AdminLayout />}>
@@ -95,6 +142,7 @@ function App() {
         </Routes>
       </BrowserRouter>
     </StoreProvider>
+  </ErrorBoundary>
   );
 }
 
