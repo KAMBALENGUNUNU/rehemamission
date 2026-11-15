@@ -88,7 +88,7 @@ export default function KazeHeader() {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
-        hidden ? '-translate-y-full opacity-0 pointer-events-none' : 'translate-y-0 opacity-100'
+        (hidden && !menuOpen) ? '-translate-y-full opacity-0 pointer-events-none' : 'translate-y-0 opacity-100'
       }`}
     >
       {/* Main Gallery Navigation Bar (Transparent on Yellow Hero, Solid White on Scroll) */}

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import { Heart, Menu, X, ShieldCheck, Globe } from 'lucide-react';
 import { useStore } from '@/store/StoreContext';
 
@@ -27,6 +27,12 @@ export default function Header() {
   const { favorites, language, setLanguage } = useStore();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const location = useLocation();
+
+  // Close dropdown on route change
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [location.pathname, location.hash]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -185,118 +191,104 @@ export default function Header() {
 
             {/* Mobile menu toggle */}
             <button
-              onClick={() => setMenuOpen(true)}
-              className="lg:hidden p-2 rounded-md text-slate-800 hover:text-slate-950"
-              aria-label="Open menu"
+              type="button"
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="lg:hidden p-2 rounded-lg text-slate-800 hover:text-slate-950 hover:bg-slate-100 transition-colors focus:outline-none"
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={menuOpen}
             >
-              <Menu className="w-6 h-6" />
+              {menuOpen ? <X className="w-6 h-6 text-slate-950" /> : <Menu className="w-6 h-6 text-slate-950" />}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Drawer */}
+      {/* Mobile Navigation Dropdown Menu (Direct Dropdown Below Header) */}
       {menuOpen && (
-        <div className="fixed inset-0 z-50 lg:hidden">
-          <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm" onClick={() => setMenuOpen(false)} />
-          <div className="absolute right-0 top-0 h-full w-80 max-w-[85vw] bg-white shadow-2xl animate-slide-in-right flex flex-col justify-between overflow-y-auto overscroll-contain">
-            <div>
-              {/* Drawer Header */}
-              <div className="flex items-center justify-between p-6 border-b border-slate-100 bg-slate-50">
-                <Link to="/" onClick={() => setMenuOpen(false)} className="h-10 flex items-center">
-                  <img
-                    src="/logo.png"
-                    alt="Logo"
-                    className="h-8 w-auto max-w-[150px] object-contain"
-                    onError={(e) => {
-                      const target = e.currentTarget;
-                      if (!target.dataset.triedSvg) {
-                        target.dataset.triedSvg = 'true';
-                        target.src = '/logo.svg';
-                      }
-                    }}
-                  />
-                </Link>
+        <div className="lg:hidden bg-white/98 backdrop-blur-xl border-b border-slate-200/90 shadow-2xl px-4 sm:px-6 py-5 space-y-4 animate-fade-in text-slate-900 max-h-[calc(100dvh-70px)] overflow-y-auto overscroll-contain">
+          {/* Navigation Links */}
+          <nav className="flex flex-col space-y-1">
+            {links.map((link) => (
+              <NavLink
+                key={link.to}
+                to={link.to}
+                end={link.to === '/'}
+                onClick={() => setMenuOpen(false)}
+                className={({ isActive }) =>
+                  `flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold tracking-wider uppercase transition-all ${
+                    isActive
+                      ? 'bg-amber-500/15 text-amber-950 font-bold border border-amber-300/60'
+                      : 'text-slate-700 hover:bg-slate-100 hover:text-slate-950 font-medium'
+                  }`
+                }
+              >
+                <span>{link.label}</span>
+                <span className="text-amber-600 text-xs font-bold">→</span>
+              </NavLink>
+            ))}
+
+            {/* Saved Artworks Link */}
+            <NavLink
+              to="/favorites"
+              onClick={() => setMenuOpen(false)}
+              className={({ isActive }) =>
+                `flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold tracking-wider uppercase transition-all ${
+                  isActive
+                    ? 'bg-amber-500/15 text-amber-950 font-bold border border-amber-300/60'
+                    : 'text-slate-700 hover:bg-slate-100 hover:text-slate-950 font-medium'
+                }`
+              }
+            >
+              <div className="flex items-center gap-2.5">
+                <Heart className="w-4 h-4 text-amber-600" />
+                <span>{language === 'fr' ? 'Œuvres sauvegardées' : 'Saved Artworks'}</span>
+              </div>
+              {favorites.length > 0 && (
+                <span className="bg-amber-500 text-slate-950 text-xs px-2.5 py-0.5 rounded-full font-bold shadow-xs">
+                  {favorites.length}
+                </span>
+              )}
+            </NavLink>
+          </nav>
+
+          {/* Mobile Footer & Language Switcher */}
+          <div className="pt-4 border-t border-slate-200 space-y-3.5">
+            <div className="flex items-center justify-between">
+              <span className="text-xs uppercase tracking-wider text-slate-500 font-semibold">
+                {language === 'fr' ? 'Langue' : 'Language'}
+              </span>
+              <div className="flex items-center bg-slate-100 border border-slate-200 rounded-full p-0.5 shadow-xs">
                 <button
-                  onClick={() => setMenuOpen(false)}
-                  className="p-1.5 rounded-full text-slate-500 hover:text-slate-900 hover:bg-slate-200/50"
-                  aria-label="Close menu"
+                  type="button"
+                  onClick={() => setLanguage('en')}
+                  className={`px-3.5 py-1 rounded-full text-xs font-semibold tracking-wider transition-all ${
+                    language === 'en'
+                      ? 'bg-amber-500 text-slate-950 font-bold shadow-xs'
+                      : 'text-slate-600 hover:text-slate-950'
+                  }`}
                 >
-                  <X className="w-5 h-5" />
+                  EN
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setLanguage('fr')}
+                  className={`px-3.5 py-1 rounded-full text-xs font-semibold tracking-wider transition-all ${
+                    language === 'fr'
+                      ? 'bg-amber-500 text-slate-950 font-bold shadow-xs'
+                      : 'text-slate-600 hover:text-slate-950'
+                  }`}
+                >
+                  FR
                 </button>
               </div>
-
-              {/* Navigation Links */}
-              <nav className="flex flex-col p-6 gap-3">
-                {links.map((link) => (
-                  <NavLink
-                    key={link.to}
-                    to={link.to}
-                    end={link.to === '/'}
-                    onClick={() => setMenuOpen(false)}
-                    className={({ isActive }) =>
-                      `text-sm tracking-[0.14em] uppercase py-2 border-b border-slate-100 transition-colors ${
-                        isActive ? 'text-slate-950 font-bold border-amber-500' : 'text-slate-600 hover:text-slate-950'
-                      }`
-                    }
-                  >
-                    {link.label}
-                  </NavLink>
-                ))}
-                <NavLink
-                  to="/favorites"
-                  onClick={() => setMenuOpen(false)}
-                  className="text-sm tracking-[0.14em] uppercase py-2 text-slate-600 flex items-center justify-between"
-                >
-                  <span>{language === 'fr' ? 'Œuvres sauvegardées' : 'Saved Artworks'}</span>
-                  {favorites.length > 0 && (
-                    <span className="bg-amber-500 text-slate-950 text-xs px-2 py-0.5 rounded-full font-bold">
-                      {favorites.length}
-                    </span>
-                  )}
-                </NavLink>
-              </nav>
             </div>
 
-            {/* Drawer Footer */}
-            <div className="p-6 bg-slate-50 border-t border-slate-100 space-y-4">
-              {/* Language Switcher in Drawer */}
-              <div className="flex items-center justify-between">
-                <span className="text-xs uppercase tracking-wider text-slate-500 font-medium">
-                  {language === 'fr' ? 'Langue' : 'Language'}
-                </span>
-                <div className="flex items-center bg-white border border-slate-200 rounded-full p-0.5 shadow-sm">
-                  <button
-                    type="button"
-                    onClick={() => setLanguage('en')}
-                    aria-label="Switch to English"
-                    className={`px-3 py-1 rounded-full text-xs font-semibold tracking-wider ${
-                      language === 'en'
-                        ? 'bg-amber-500 text-slate-950 font-bold shadow-sm'
-                        : 'text-slate-500'
-                    }`}
-                  >
-                    EN
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setLanguage('fr')}
-                    aria-label="Passer au Français"
-                    className={`px-3 py-1 rounded-full text-xs font-semibold tracking-wider ${
-                      language === 'fr'
-                        ? 'bg-amber-500 text-slate-950 font-bold shadow-sm'
-                        : 'text-slate-500'
-                    }`}
-                  >
-                    FR
-                  </button>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-2 text-xs text-slate-600 pt-1">
+            <div className="flex items-center justify-between text-xs text-slate-600 pt-1">
+              <div className="flex items-center gap-2">
                 <ShieldCheck className="w-4 h-4 text-amber-700" />
                 <span>Est. 1998 · Rehema Mission Rwanda</span>
               </div>
+              <span className="text-[11px] text-slate-400">Kigali, Rwanda</span>
             </div>
           </div>
         </div>
